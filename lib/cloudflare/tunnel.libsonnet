@@ -1,0 +1,85 @@
+local k = import 'k.libsonnet';
+
+{
+  cloudflare+: {
+    tunnel: {
+      labels:: { app: 'cloudflared' },
+
+      config:: {
+        tunnel: 'homelab',
+        // Name of the tunnel you want to run
+        'credentials-file': '/etc/cloudflared/creds/credentials.json',
+        // Serves the metrics server under /metrics and the readiness server under /ready
+        metrics: '0.0.0.0:2000',
+        // Autoupdates applied in a k8s pod will be lost when the pod is removed or restarted, so
+        // autoupdate doesn't make sense in Kubernetes. However, outside of Kubernetes, we strongly
+        // recommend using autoupdate.
+        'no-autoupdate': true,
+        // The `ingress` block tells cloudflared which local service to route incoming
+        // requests to. For more about ingress rules, see
+        // https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/configuration/ingress
+        ingress: [
+          {
+            hostname: 'hass-cf.nlowe.dev',
+            service: 'http://hass.smart-home.svc.cluster.local.:8123',
+          },
+
+          { service: 'http_status:503' },
+        ],
+      },
+
+      local cm = k.core.v1.configMap,
+      configMap:
+        cm.new('cloudflared', {
+          'config.yaml': std.manifestYamlDoc($.cloudflare.tunnel.config),
+        }) +
+        cm.metadata.withNamespace($.cloudflare.namespace.metadata.name) +
+        cm.metadata.withLabels($.cloudflare.tunnel.labels),
+
+      local container = k.core.v1.container,
+      local mount = k.core.v1.volumeMount,
+      container::
+        container.new('cloudflared', 'cloudflare/cloudflared:2025.1.0') +
+        container.withArgs([
+          'tunnel',
+          '--config',
+          '/etc/cloudflared/config/config.yaml',
+          'run',
+        ]) +
+        container.livenessProbe.httpGet.withPath('/ready') +
+        container.livenessProbe.httpGet.withPort(2000) +
+        container.livenessProbe.withFailureThreshold(1) +
+        container.livenessProbe.withInitialDelaySeconds(10) +
+        container.livenessProbe.withPeriodSeconds(10) +
+        container.withVolumeMounts([
+          mount.new('config', '/etc/cloudflared/config', readOnly=true),
+          mount.new('creds', '/etc/cloudflared/creds', readOnly=true),
+        ]),
+
+      local deploy = k.apps.v1.deployment,
+      local volume = k.core.v1.volume,
+      local tsc = k.core.v1.topologySpreadConstraint,
+      deployment:
+        deploy.new('cloudflared', 3, [$.cloudflare.tunnel.container], $.cloudflare.tunnel.labels) +
+        deploy.metadata.withNamespace($.cloudflare.namespace.metadata.name) +
+        deploy.metadata.withLabels($.cloudflare.tunnel.labels) +
+        deploy.spec.template.metadata.withAnnotations({
+          'config-hash': std.md5(std.toString($.cloudflare.tunnel.configMap)),
+        }) +
+        deploy.spec.template.spec.withTopologySpreadConstraints([
+          tsc.withMaxSkew(1) +
+          tsc.withTopologyKey('kubernetes.io/hostname') +
+          tsc.withWhenUnsatisfiable('DoNotSchedule') +
+          tsc.labelSelector.withMatchLabels($.cloudflare.tunnel.labels) +
+          tsc.withMatchLabelKeys(['pod-template-hash']),
+        ]) +
+        deploy.spec.template.spec.withVolumes([
+          // TODO: Vault?
+          volume.fromSecret('creds', 'tunnel-credentials'),
+          volume.fromConfigMap('config', $.cloudflare.tunnel.configMap.metadata.name, [
+            { key: 'config.yaml', path: 'config.yaml' },
+          ]),
+        ]),
+    },
+  },
+}

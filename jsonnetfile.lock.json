@@ -1,0 +1,86 @@
+{
+  "version": 1,
+  "dependencies": [
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/grafana/jsonnet-libs.git",
+          "subdir": "ksonnet-util"
+        }
+      },
+      "version": "4baa491e9b2da98e131f55ab53638e237a5f9c7b",
+      "sum": "0y3AFX9LQSpfWTxWKSwoLgbt0Wc9nnCwhMH2szKzHv0="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/grafana/jsonnet-libs.git",
+          "subdir": "tanka-util"
+        }
+      },
+      "version": "4baa491e9b2da98e131f55ab53638e237a5f9c7b",
+      "sum": "ShSIissXdvCy1izTCDZX6tY7qxCoepE5L+WJ52Hw7ZQ="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/jsonnet-libs/cert-manager-libsonnet.git",
+          "subdir": "1.15"
+        }
+      },
+      "version": "a446f72305009ebcacba37e7fa793bd571c4c5e4",
+      "sum": "pVU2z2a9dlMyrc9dTvsQM+8wfmHI92c/s3+zHMnHUfU="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/jsonnet-libs/cilium-libsonnet.git",
+          "subdir": "1.16"
+        }
+      },
+      "version": "831362d44ec66506008adb15cca0683e92cac202",
+      "sum": "NGOYYiRTjBCPIVRAE0F+hN4q/FXXhoAbq18WY90Pvks="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/jsonnet-libs/docsonnet.git",
+          "subdir": "doc-util"
+        }
+      },
+      "version": "6ac6c69685b8c29c54515448eaca583da2d88150",
+      "sum": "BrAL/k23jq+xy9oA7TWIhUx07dsA/QLm3g7ktCwe//U="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/jsonnet-libs/gateway-api-libsonnet.git",
+          "subdir": "1.1"
+        }
+      },
+      "version": "d54902f3b6e444480b098d377f4df609ca9915c2",
+      "sum": "ScZlZDR5Z9BS81qZFNhbCQLI8zMwFKisrxaiBG9KXp4="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/jsonnet-libs/k8s-libsonnet.git",
+          "subdir": "1.31"
+        }
+      },
+      "version": "f8b0d65c573f3b36040258fa69e90e13e7129083",
+      "sum": "kpJdKXXxo1wLQVzsTitBesQlidq6xS9d2W4HS9txlhc="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/kubernetes-sigs/gateway-api.git",
+          "subdir": "config/crd/experimental"
+        }
+      },
+      "version": "690f754646e8326128fd686e3e46117ac479cfdf",
+      "sum": "z8tgUmM/OCzTrLf2mEneAXYngyNjmwUgkrASu0cz6SQ="
+    }
+  ],
+  "legacyImports": false
+}
