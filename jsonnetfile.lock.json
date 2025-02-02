@@ -4,6 +4,76 @@
     {
       "source": {
         "git": {
+          "remote": "https://github.com/grafana/alloy.git",
+          "subdir": "operations/alloy-mixin"
+        }
+      },
+      "version": "cd6b29a42f62ac41bcd910e3f88399a5efc2dc99",
+      "sum": "5elgTywKhjGlHvoTWktoyjlF3MCXeTuSmh93G2b0FiM="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/grafana/alloy.git",
+          "subdir": "operations/alloy-syntax-jsonnet"
+        }
+      },
+      "version": "cd6b29a42f62ac41bcd910e3f88399a5efc2dc99",
+      "sum": "zwiaUyS5FnXOWvkZO7NTnztmJdnjXU9AM5L6wLt4fAE="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/grafana/grafonnet.git",
+          "subdir": "gen/grafonnet-v10.0.0"
+        }
+      },
+      "version": "d20e609202733790caf5b554c9945d049f243ae3",
+      "sum": "xdcrJPJlpkq4+5LpGwN4tPAuheNNLXZjE6tDcyvFjr0="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/grafana/grafonnet.git",
+          "subdir": "gen/grafonnet-v11.0.0"
+        }
+      },
+      "version": "d20e609202733790caf5b554c9945d049f243ae3",
+      "sum": "0BvzR0i4bS4hc2O3xDv6i9m52z7mPrjvqxtcPrGhynA="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/grafana/jsonnet-libs.git",
+          "subdir": "consul"
+        }
+      },
+      "version": "39bc80b6c67e08f6fec0d1edfdfdf908cecf66a7",
+      "sum": "Po3c1Ic96ngrJCtOazic/7OsLkoILOKZWXWyZWl+od8="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/grafana/jsonnet-libs.git",
+          "subdir": "etcd-operator"
+        }
+      },
+      "version": "39bc80b6c67e08f6fec0d1edfdfdf908cecf66a7",
+      "sum": "duHm6wmUju5KHQurOe6dnXoKgl5gTUsfGplgbmAOsHw="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/grafana/jsonnet-libs.git",
+          "subdir": "jaeger-agent-mixin"
+        }
+      },
+      "version": "39bc80b6c67e08f6fec0d1edfdfdf908cecf66a7",
+      "sum": "h/nMdmRK8Ep4bnRXKOuVL+RlUm85hhtD0LGIsf2THAY="
+    },
+    {
+      "source": {
+        "git": {
           "remote": "https://github.com/grafana/jsonnet-libs.git",
           "subdir": "ksonnet-util"
         }
@@ -15,11 +85,51 @@
       "source": {
         "git": {
           "remote": "https://github.com/grafana/jsonnet-libs.git",
+          "subdir": "logs-lib/"
+        }
+      },
+      "version": "39bc80b6c67e08f6fec0d1edfdfdf908cecf66a7",
+      "sum": "n7l6VHKOdgwM2e0qhG+t4UNa8dAwv8HwgrTTWhmUGL0="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/grafana/jsonnet-libs.git",
+          "subdir": "logs-lib/logs"
+        }
+      },
+      "version": "39bc80b6c67e08f6fec0d1edfdfdf908cecf66a7",
+      "sum": "HtSjRSUiGBEyOsY0470HgC5C4+2rZhiQh1E7R5aYlPU="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/grafana/jsonnet-libs.git",
+          "subdir": "memcached"
+        }
+      },
+      "version": "39bc80b6c67e08f6fec0d1edfdfdf908cecf66a7",
+      "sum": "Cc715Y3rgTuimgDFIw+FaKzXSJGRYwt1pFTMbdrNBD8="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/grafana/jsonnet-libs.git",
           "subdir": "tanka-util"
         }
       },
       "version": "4baa491e9b2da98e131f55ab53638e237a5f9c7b",
       "sum": "ShSIissXdvCy1izTCDZX6tY7qxCoepE5L+WJ52Hw7ZQ="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/grafana/mimir.git",
+          "subdir": "operations/mimir"
+        }
+      },
+      "version": "dbda652b102979f5402b4d4095a64c40a00fd4ca",
+      "sum": "5Ejg9ZSv+BVv+Up2QAfYmKSEmMuoeA2KT3fXuPxp134="
     },
     {
       "source": {
@@ -74,12 +184,32 @@
     {
       "source": {
         "git": {
+          "remote": "https://github.com/jsonnet-libs/xtd.git",
+          "subdir": ""
+        }
+      },
+      "version": "1199b50e9d2ff53d4bb5fb2304ad1fb69d38e609",
+      "sum": "LfbgcJbilu4uBdKYZSvmkoOTPwEAzg10L3/VqKAIWtA="
+    },
+    {
+      "source": {
+        "git": {
           "remote": "https://github.com/kubernetes-sigs/gateway-api.git",
           "subdir": "config/crd/experimental"
         }
       },
       "version": "690f754646e8326128fd686e3e46117ac479cfdf",
       "sum": "z8tgUmM/OCzTrLf2mEneAXYngyNjmwUgkrASu0cz6SQ="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/rancher/local-path-provisioner.git",
+          "subdir": "deploy"
+        }
+      },
+      "version": "7b1dad8fbdc8f7df05e221e29e0062d1efd1a56a",
+      "sum": "1Q/lQIrUg04FHCbWOl8e3LsYEHHwUF5Et8vYZqmEqsQ="
     }
   ],
   "legacyImports": false

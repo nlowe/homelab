@@ -6,6 +6,8 @@ repositories:
   url: https://democratic-csi.github.io/charts/
 - name: jetstack
   url: https://charts.jetstack.io
+- name: grafana
+  url: https://grafana.github.io/helm-charts
 requires:
 - chart: dcsi/democratic-csi
   version: 0.14.7
@@ -13,4 +15,6 @@ requires:
   version: v1.16.3
 - chart: jetstack/cert-manager-csi-driver
   version: v0.10.2
+- chart: grafana/alloy
+  version: 0.11.0
 version: 1
