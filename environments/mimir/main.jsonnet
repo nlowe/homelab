@@ -1,6 +1,8 @@
 local k = import 'k.libsonnet';
 
-local mimir = import 'mimir/mimir.libsonnet';
+local mixin = import 'github.com/grafana/mimir/operations/mimir-mixin/mixin.libsonnet';
+local mimir = import 'github.com/grafana/mimir/operations/mimir/mimir.libsonnet';
+local prom = import 'github.com/jsonnet-libs/prometheus-operator-libsonnet/0.77/main.libsonnet';
 
 mimir {
   _config+:: {
@@ -48,6 +50,7 @@ mimir {
 
       ruler_max_rules_per_rule_group: 0,
       ruler_max_rule_groups_per_tenant: 0,
+      ruler_max_independent_rule_evaluation_concurrency_per_tenant: 0,
 
       // TODO: Tune compactor
       compactor_blocks_retention_period: '9500h',  // ~13 months
@@ -69,4 +72,79 @@ mimir {
   mimir_write_container+:: $.mountMinioSecret,
   mimir_read_container+:: $.mountMinioSecret,
   mimir_backend_container+:: $.mountMinioSecret,
+
+  monitoring: {
+    local pr = prom.monitoring.v1.prometheusRule,
+    rules:
+      pr.new('mimir') +
+      pr.spec.withGroups(
+        mixin.prometheusRules.groups +
+        mixin.prometheusAlerts.groups,
+      ),
+
+    podMonitors: {
+      local pm = prom.monitoring.v1.podMonitor,
+      local endpoint = pm.spec.podMetricsEndpoints,
+
+      dependencies: {
+        memcached: {
+          main:
+            pm.new('memcached') +
+            pm.spec.withPodMetricsEndpoints([
+              endpoint.withPort('http-metrics'),
+            ]) +
+            pm.spec.selector.withMatchLabels({ name: 'memcached' }),
+
+          frontend:
+            pm.new('memcached-frontend') +
+            pm.spec.withPodMetricsEndpoints([
+              endpoint.withPort('http-metrics'),
+            ]) +
+            pm.spec.selector.withMatchLabels({ name: 'memcached-frontend' }),
+
+          indexQueries:
+            pm.new('memcached-index-queries') +
+            pm.spec.withPodMetricsEndpoints([
+              endpoint.withPort('http-metrics'),
+            ]) +
+            pm.spec.selector.withMatchLabels({ name: 'memcached-index-queries' }),
+
+          metadata:
+            pm.new('memcached-metadata') +
+            pm.spec.withPodMetricsEndpoints([
+              endpoint.withPort('http-metrics'),
+            ]) +
+            pm.spec.selector.withMatchLabels({ name: 'memcached-metadata' }),
+        },
+      },
+
+      read:
+        pm.new('mimir-read') +
+        pm.spec.withPodMetricsEndpoints([
+          endpoint.withPort('http-metrics'),
+        ]) +
+        pm.spec.selector.withMatchLabels({ name: 'mimir-read' }),
+
+      write:
+        pm.new('mimir-write') +
+        pm.spec.withPodMetricsEndpoints([
+          endpoint.withPort('http-metrics'),
+        ]) +
+        pm.spec.selector.withMatchLabels({ 'rollout-group': 'mimir-write' }),
+
+      backend:
+        pm.new('mimir-backend') +
+        pm.spec.withPodMetricsEndpoints([
+          endpoint.withPort('http-metrics'),
+        ]) +
+        pm.spec.selector.withMatchLabels({ 'rollout-group': 'mimir-backend' }),
+
+      rolloutOperator:
+        pm.new('rollout-operator') +
+        pm.spec.withPodMetricsEndpoints([
+          endpoint.withPort('http-metrics'),
+        ]) +
+        pm.spec.selector.withMatchLabels({ name: 'rollout-operator' }),
+    },
+  },
 }

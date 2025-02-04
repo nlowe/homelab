@@ -65,6 +65,16 @@
       "source": {
         "git": {
           "remote": "https://github.com/grafana/jsonnet-libs.git",
+          "subdir": "grafana-builder"
+        }
+      },
+      "version": "39bc80b6c67e08f6fec0d1edfdfdf908cecf66a7",
+      "sum": "yxqWcq/N3E/a/XreeU6EuE6X7kYPnG0AspAQFKOjASo="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/grafana/jsonnet-libs.git",
           "subdir": "jaeger-agent-mixin"
         }
       },
@@ -115,6 +125,16 @@
       "source": {
         "git": {
           "remote": "https://github.com/grafana/jsonnet-libs.git",
+          "subdir": "mixin-utils"
+        }
+      },
+      "version": "39bc80b6c67e08f6fec0d1edfdfdf908cecf66a7",
+      "sum": "SRElwa/XrKAN8aZA9zvdRUx8iebl2It7KNQ7VFvMcBA="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/grafana/jsonnet-libs.git",
           "subdir": "tanka-util"
         }
       },
@@ -130,6 +150,16 @@
       },
       "version": "dbda652b102979f5402b4d4095a64c40a00fd4ca",
       "sum": "5Ejg9ZSv+BVv+Up2QAfYmKSEmMuoeA2KT3fXuPxp134="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/grafana/mimir.git",
+          "subdir": "operations/mimir-mixin"
+        }
+      },
+      "version": "dbda652b102979f5402b4d4095a64c40a00fd4ca",
+      "sum": "avTe9ZZWDnyFlQnImuVaJkaaBjuJcue4glmb9RoXkBY="
     },
     {
       "source": {
@@ -184,6 +214,16 @@
     {
       "source": {
         "git": {
+          "remote": "https://github.com/jsonnet-libs/prometheus-operator-libsonnet.git",
+          "subdir": "0.77"
+        }
+      },
+      "version": "8055c684fc951ae857bd0e09cf14cb2aeb57b813",
+      "sum": "pjNJAI6ch15p0EwHy50FKncuXVcghJwrIKD578Ho8NU="
+    },
+    {
+      "source": {
+        "git": {
           "remote": "https://github.com/jsonnet-libs/xtd.git",
           "subdir": ""
         }
@@ -200,6 +240,36 @@
       },
       "version": "690f754646e8326128fd686e3e46117ac479cfdf",
       "sum": "z8tgUmM/OCzTrLf2mEneAXYngyNjmwUgkrASu0cz6SQ="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/kubernetes/kube-state-metrics.git",
+          "subdir": "jsonnet/kube-state-metrics"
+        }
+      },
+      "version": "4a585c91beffdbd1378833ce5f102b401e7e57c5",
+      "sum": "3bioG7CfTfY9zeu5xU4yon6Zt3kYvNkyl492nOhQxnM="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/kubernetes/kube-state-metrics.git",
+          "subdir": "jsonnet/kube-state-metrics-mixin"
+        }
+      },
+      "version": "4a585c91beffdbd1378833ce5f102b401e7e57c5",
+      "sum": "qclI7LwucTjBef3PkGBkKxF0mfZPbHnn4rlNWKGtR4c="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/prometheus-operator/prometheus-operator.git",
+          "subdir": "jsonnet/prometheus-operator"
+        }
+      },
+      "version": "b12e3cbec283ae8d778ba64299d664d98e711c15",
+      "sum": "gOCVfxMEvdSyPdh7c3UJPZoxHOUUTT6z5G2sZ8PACCM="
     },
     {
       "source": {

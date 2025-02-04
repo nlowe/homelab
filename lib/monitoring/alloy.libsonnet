@@ -48,6 +48,11 @@ local helm = tk.helm.new(std.thisFile);
                   mountPath: '/host/run/udev/data',
                   readOnly: true,
                 },
+                {
+                  name: 'containerd',
+                  mountPath: '/host/run/k3s/containerd',
+                  readOnly: true,
+                },
               ],
             },
           },
@@ -73,6 +78,13 @@ local helm = tk.helm.new(std.thisFile);
                   name: 'udev',
                   hostPath: {
                     path: '/run/udev/data',
+                    type: '',
+                  },
+                },
+                {
+                  name: 'containerd',
+                  hostPath: {
+                    path: '/run/k3s/containerd',
                     type: '',
                   },
                 },

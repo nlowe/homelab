@@ -18,11 +18,9 @@ local cf = issuer.spec.acme.solvers.dns01.cloudflare;
       prometheus: {
         enabled: true,
 
-        // TODO: Enable podmonitor
-        // podmonitor: {
-        //   enabled: true,
-        //   prometheusInstance: 'k8s',
-        // },
+        podmonitor: {
+          enabled: true,
+        },
       },
     },
   },
