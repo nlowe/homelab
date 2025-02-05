@@ -15,6 +15,8 @@ local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.1/main.libson
             '127.0.0.1',
           ],
         },
+
+        smartir: {},
       },
     },
   },
@@ -107,6 +109,8 @@ local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.1/main.libson
         }) +
         sts.spec.template.metadata.withLabels($.smartHome.homeAssistant.labels) +
         sts.spec.template.spec.withHostNetwork(true) +
+        sts.spec.template.spec.withDnsPolicy('ClusterFirstWithHostNet') +
+        sts.spec.template.spec.dnsConfig.withOptions([{ name: 'ndots', value: '1' }]) +
         sts.spec.template.spec.withVolumes([
           volume.fromSecret('config', $.smartHome.homeAssistant.configSecret.metadata.name),
         ]),
