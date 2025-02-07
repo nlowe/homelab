@@ -1,5 +1,6 @@
 local k = import 'k.libsonnet';
 
+(import 'esphome.libsonnet') +
 (import 'home-assistant.libsonnet') +
 (import 'zwave-js-ui.libsonnet') +
 {
