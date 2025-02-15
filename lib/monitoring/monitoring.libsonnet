@@ -3,6 +3,7 @@ local k = import 'k.libsonnet';
 (import 'alloy.libsonnet') +
 (import 'ksm.libsonnet') +
 (import 'grafana.libsonnet') +
+(import 'unifi_exporter.libsonnet') +
 {
   monitoring+: {
     namespace: k.core.v1.namespace.new('monitoring'),
