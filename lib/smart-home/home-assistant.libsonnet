@@ -6,6 +6,10 @@ local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.1/main.libson
     smartHome+: {
       homeAssistant: {
         version:: '2025.1.4',
+        // std.manifestYamlDoc escapes tags, so this string gets appended raw to the marshaled config
+        appendRawConfig:: |||
+          automation ui: !include automations.yaml
+        |||,
 
         default_config: {},
         http: {
@@ -62,7 +66,11 @@ local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.1/main.libson
         secret.new('hass-config', null, 'Opaque') +
         secret.metadata.withNamespace($.smartHome.namespace.metadata.name) +
         secret.withStringData({
-          'configuration.yaml': std.manifestYamlDoc($._config.smartHome.homeAssistant),
+          'configuration.yaml':
+            std.join('\n', [
+              std.manifestYamlDoc($._config.smartHome.homeAssistant),
+              $._config.smartHome.homeAssistant.appendRawConfig,
+            ]),
         }),
 
       local container = k.core.v1.container,

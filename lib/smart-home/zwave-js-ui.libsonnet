@@ -78,7 +78,10 @@ local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.1/main.libson
         sts.metadata.withLabels(self.labels) +
         sts.spec.withServiceName(self.service.headless.metadata.name) +
         sts.spec.selector.withMatchLabels(self.labels) +
-        sts.spec.template.metadata.withLabels(self.labels),
+        sts.spec.template.metadata.withLabels(self.labels) +
+        sts.spec.template.spec.withHostNetwork(true) +
+        sts.spec.template.spec.withDnsPolicy('ClusterFirstWithHostNet') +
+        sts.spec.template.spec.dnsConfig.withOptions([{ name: 'ndots', value: '1' }]),
 
       local route = g.v1.httpRoute,
       local rule = route.spec.rules,
