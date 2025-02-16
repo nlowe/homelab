@@ -1,5 +1,6 @@
 local k = import 'k.libsonnet';
 local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.1/main.libsonnet').gateway;
+local prom = import 'github.com/jsonnet-libs/prometheus-operator-libsonnet/0.77/main.libsonnet';
 
 {
   _config+:: {
@@ -18,6 +19,10 @@ local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.1/main.libson
             '10.0.0.0/8',
             '127.0.0.1',
           ],
+        },
+
+        prometheus: {
+          namespace: 'hass',
         },
 
         smartir: {},
@@ -79,7 +84,7 @@ local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.1/main.libson
         container.new('home-assistant', 'ghcr.io/home-assistant/home-assistant:%s' % $._config.smartHome.homeAssistant.version) +
         container.resources.withRequests({ memory: '8Gi' }) +
         container.resources.withLimits({ memory: '8Gi' }) +
-        container.withPorts([{ containerPort: 8123 }]) +
+        container.withPorts([{ name: 'http', containerPort: 8123 }]) +
         container.securityContext.withPrivileged(true) +
         container.withVolumeMounts([
           mount.withMountPath('/config') +
@@ -122,6 +127,20 @@ local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.1/main.libson
         sts.spec.template.spec.withVolumes([
           volume.fromSecret('config', $.smartHome.homeAssistant.configSecret.metadata.name),
         ]),
+
+      local pm = prom.monitoring.v1.podMonitor,
+      podMonitor:
+        pm.new('hass') +
+        pm.metadata.withNamespace($.smartHome.namespace.metadata.name) +
+        pm.spec.withPodMetricsEndpoints([
+          pm.spec.podMetricsEndpoints.withPort('http') +
+          pm.spec.podMetricsEndpoints.withPath('/api/prometheus') +
+          // TODO: Vault + AVP this
+          pm.spec.podMetricsEndpoints.authorization.withType('Bearer') +
+          pm.spec.podMetricsEndpoints.authorization.credentials.withName('hass-prometheus-token') +
+          pm.spec.podMetricsEndpoints.authorization.credentials.withKey('token'),
+        ]) +
+        pm.spec.selector.withMatchLabels($.smartHome.homeAssistant.statefulSet.spec.template.metadata.labels),
 
       local route = g.v1.httpRoute,
       local rule = route.spec.rules,

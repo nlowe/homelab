@@ -88,6 +88,10 @@ alloy.manifestAlloy({
 
     scrape_interval: default_interval,
     scrape_timeout: default_interval,
+
+    [alloy.block('clustering')]: {
+      enabled: true,
+    },
   },
 
   // TODO: Logs
