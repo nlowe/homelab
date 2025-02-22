@@ -11,9 +11,9 @@ mimir {
     external_url: 'https://mimir.home.nlowe.dev',
 
     deployment_mode: 'read-write',
-    mimir_write_data_disk_class: 'mimir-local',
+    mimir_write_data_disk_class: 'local-ssd',
     mimir_write_allow_multiple_replicas_on_same_node: true,
-    mimir_backend_data_disk_class: 'mimir-local',
+    mimir_backend_data_disk_class: 'local-ssd',
     mimir_backend_allow_multiple_replicas_on_same_node: true,
 
     mimir_read_replicas: 3,

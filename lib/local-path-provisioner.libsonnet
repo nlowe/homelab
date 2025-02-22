@@ -13,19 +13,11 @@ local manifests = {
   _config+:: {
     localPathProvisioner: {
       storageClassConfigs: {
-        [$.localPathProvisioner.storageClasses.mimir.metadata.name]: {
+        [$.localPathProvisioner.storageClasses.localSSD.metadata.name]: {
           nodePathMap: [
             {
               node: 'DEFAULT_PATH_FOR_NON_LISTED_NODES',
-              paths: ['/mnt/mimir'],
-            },
-          ],
-        },
-        [$.localPathProvisioner.storageClasses.loki.metadata.name]: {
-          nodePathMap: [
-            {
-              node: 'DEFAULT_PATH_FOR_NON_LISTED_NODES',
-              paths: ['/mnt/loki'],
+              paths: ['/mnt/k8s'],
             },
           ],
         },
@@ -42,21 +34,11 @@ local manifests = {
 
     local sc = k.storage.v1.storageClass,
     storageClasses+: {
-      mimir:
-        sc.new('mimir-local') +
+      localSSD:
+        sc.new('local-ssd') +
         sc.withProvisioner($.localPathProvisioner.provisionerName) +
         sc.withParameters({
-          nodePath: '/mnt/mimir',
-          pathPattern: '{{ .PVC.Namespace }}/{{ .PVC.Name }}',
-        }) +
-        sc.withVolumeBindingMode('WaitForFirstConsumer') +
-        sc.withReclaimPolicy('Delete'),
-
-      loki:
-        sc.new('loki-local') +
-        sc.withProvisioner($.localPathProvisioner.provisionerName) +
-        sc.withParameters({
-          nodePath: '/mnt/loki',
+          nodePath: '/mnt/k8s',
           pathPattern: '{{ .PVC.Namespace }}/{{ .PVC.Name }}',
         }) +
         sc.withVolumeBindingMode('WaitForFirstConsumer') +
