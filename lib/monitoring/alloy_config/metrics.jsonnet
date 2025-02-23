@@ -1,15 +1,10 @@
 local alloy = import 'github.com/grafana/alloy/operations/alloy-syntax-jsonnet/main.libsonnet';
 
-alloy.manifestAlloy({
+{
   local this = self,
 
   local default_interval = '15s',
   local tenant_id = 'homelab',
-
-  [alloy.block('logging')]: {
-    level: 'info',
-    format: 'logfmt',
-  },
 
   // ========================
   // Inputs
@@ -94,8 +89,6 @@ alloy.manifestAlloy({
     },
   },
 
-  // TODO: Logs
-
   // TrueNAS
   [alloy.block('prometheus.scrape', 'truenas')]: {
     forward_to: [this.mimir],
@@ -122,28 +115,22 @@ alloy.manifestAlloy({
   [alloy.block('prometheus.operator.podmonitors', 'all')]: {
     forward_to: [this.mimir],
 
-    [alloy.block('clustering')]: {
-      enabled: true,
-    },
-
     [alloy.block('scrape')]: {
       default_scrape_interval: default_interval,
       default_scrape_timeout: default_interval,
     },
 
-    // Inject Node Label
+    // Only monitor pods on this node
     [alloy.block('rule', index=0)]: {
       source_labels: ['__meta_kubernetes_pod_node_name'],
-      target_label: 'node',
+      action: 'keep',
+      regex: alloy.expr('sys.env("K8S_NODE_NAME")'),
     },
-  },
 
-  // PrometheusRules
-  [alloy.block('mimir.rules.kubernetes', 'local')]: {
-    address: 'http://mimir-backend.mimir.svc.cluster.local.:8080',
-    tenant_id: tenant_id,
-    external_labels: {
-      cluster: tenant_id,
+    // Inject Node Label
+    [alloy.block('rule', index=1)]: {
+      source_labels: ['__meta_kubernetes_pod_node_name'],
+      target_label: 'node',
     },
   },
 
@@ -174,7 +161,7 @@ alloy.manifestAlloy({
     },
 
     [alloy.block('endpoint')]: {
-      url: 'http://mimir-write.mimir.svc.cluster.local:8080/api/v1/push',
+      url: 'http://mimir-write.mimir.svc.cluster.local.:8080/api/v1/push',
       send_native_histograms: true,
 
       headers: {
@@ -182,7 +169,4 @@ alloy.manifestAlloy({
       },
     },
   },
-
-  // TODO: Loki
-
-})
+}

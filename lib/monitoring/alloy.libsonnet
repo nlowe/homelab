@@ -117,7 +117,7 @@ local helm = tk.helm.new(std.thisFile);
       local cm = k.core.v1.configMap,
       config:
         cm.new('alloy-config', {
-          'config.alloy': (import 'alloy_config.jsonnet'),
+          'config.alloy': (import 'monitoring/alloy_config/config.jsonnet'),
         }) +
         cm.metadata.withNamespace($.monitoring.namespace.metadata.name) +
         cm.metadata.withLabels($.monitoring.alloy.labels),

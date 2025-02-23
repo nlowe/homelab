@@ -40,6 +40,24 @@
     {
       "source": {
         "git": {
+          "remote": "https://github.com/grafana/loki.git",
+          "subdir": "production/ksonnet/loki"
+        }
+      },
+      "version": "v3.4.2"
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/grafana/loki.git",
+          "subdir": "production/loki-mixin"
+        }
+      },
+      "version": "v3.4.2"
+    },
+    {
+      "source": {
+        "git": {
           "remote": "https://github.com/grafana/mimir.git",
           "subdir": "operations/mimir"
         }
