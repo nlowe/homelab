@@ -91,6 +91,33 @@ local alloy = import 'github.com/grafana/alloy/operations/alloy-syntax-jsonnet/m
     forward_to: [this.loki],
   },
 
+  // Syslog for unifi switches
+  [alloy.block('loki.relabel', 'syslog')]: {
+    forward_to: [],
+
+    [alloy.block('rule', index=0)]: {
+      action: 'labelmap',
+      regex: '__syslog_message_(.+)',
+      replacement: '$1',
+    },
+  },
+  [alloy.block('loki.source.syslog', 'ingest')]: {
+    forward_to: [this.loki],
+    relabel_rules: alloy.expr('loki.relabel.syslog.rules'),
+
+    [alloy.block('listener', index=0)]: {
+      address: '0.0.0.0:5514',
+      protocol: 'udp',
+      syslog_format: 'rfc3164',
+      // TODO: Alloy can't currently parse rfc3164 timestamps, see https://github.com/grafana/alloy/pull/2755
+      use_incoming_timestamp: false,
+      labels: {
+        component: 'loki.source.syslog',
+        protocol: 'udp',
+      },
+    },
+  },
+
   // Loki Output
   loki:: alloy.expr('loki.write.loki.receiver'),
   [alloy.block('loki.write', 'loki')]: {

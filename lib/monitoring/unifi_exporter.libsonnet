@@ -23,7 +23,7 @@ local k = import 'k.libsonnet';
 
               save_dpi: true,
 
-              // TODO: Un-comment when we deploy loki
+              // These are sent directly to alloy via syslog
               // save_ids: true,
               // save_events: true,
               // save_alarms: true,

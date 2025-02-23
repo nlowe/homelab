@@ -248,17 +248,12 @@ local cm = import 'github.com/jsonnet-libs/cert-manager-libsonnet/1.15/main.libs
         port.newNamed('http3', 443, 443) + port.withProtocol('UDP') + port.withAppProtocol('http3'),
       ]) +
       service.metadata.withNamespace($.caddy.namespace.metadata.name) +
-      service.metadata.withAnnotations({
-        'lbipam.cilium.io/ips': '10.200.200.10',
-      }) +
       service.metadata.withLabels(
-        $.caddy.labels +
-        $.cilium.bgp.labels + {
+        $.caddy.labels {
           // caddy-gateway hard-codes this check
           'gateway.caddyserver.com/owning-gateway': $.caddy.gateway.def.metadata.name,
         }
       ) +
-      service.spec.withType('LoadBalancer') +
-      service.spec.withLoadBalancerClass('io.cilium/bgp-control-plane'),
+      $.cilium.bgp.serviceMixins.caddy,
   },
 }

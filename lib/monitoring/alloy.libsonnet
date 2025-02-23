@@ -7,6 +7,12 @@ local helm = tk.helm.new(std.thisFile);
   _config+:: {
     monitoring+: {
       alloy: {
+        local port = k.core.v1.servicePort,
+        syslogPorts:: [
+          port.newNamed('udp-syslog', 514, 5514) +
+          port.withProtocol('UDP'),
+        ],
+
         helmValues:: {
           alloy: {
             configMap: {
@@ -22,6 +28,8 @@ local helm = tk.helm.new(std.thisFile);
             },
 
             enableReporting: false,
+
+            extraPorts: $._config.monitoring.alloy.syslogPorts,
 
             local env = k.core.v1.envVar,
             extraEnv: [
@@ -121,6 +129,17 @@ local helm = tk.helm.new(std.thisFile);
         }) +
         cm.metadata.withNamespace($.monitoring.namespace.metadata.name) +
         cm.metadata.withLabels($.monitoring.alloy.labels),
+
+      local svc = k.core.v1.service,
+      syslogService:
+        svc.new(
+          'alloy-syslog',
+          $.monitoring.alloy.manifests.daemon_set_alloy.spec.template.metadata.labels,
+          $._config.monitoring.alloy.syslogPorts,
+        ) +
+        svc.metadata.withNamespace($.monitoring.namespace.metadata.name) +
+        svc.metadata.withLabels($.monitoring.alloy.labels) +
+        $.cilium.bgp.serviceMixins.alloy_syslog,
     },
   },
 }
