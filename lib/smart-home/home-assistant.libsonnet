@@ -10,6 +10,8 @@ local prom = import 'github.com/jsonnet-libs/prometheus-operator-libsonnet/0.77/
         // std.manifestYamlDoc escapes tags, so this string gets appended raw to the marshaled config
         appendRawConfig:: |||
           automation ui: !include automations.yaml
+          fan: !include_dir_merge_list automations/fan/
+          switch: !include_dir_merge_list automations/switch/
         |||,
 
         default_config: {},
@@ -24,8 +26,6 @@ local prom = import 'github.com/jsonnet-libs/prometheus-operator-libsonnet/0.77/
         prometheus: {
           namespace: 'hass',
         },
-
-        smartir: {},
       },
     },
   },
@@ -38,18 +38,26 @@ local prom = import 'github.com/jsonnet-libs/prometheus-operator-libsonnet/0.77/
         local svc = k.core.v1.service,
         local port = k.core.v1.servicePort,
 
-        port::
-          port.withName('http') +
-          port.withProtocol('TCP') +
-          port.withPort(8123) +
-          port.withTargetPort(8123),
+        ports:: {
+          hass:
+            port.withName('http') +
+            port.withProtocol('TCP') +
+            port.withPort(8123) +
+            port.withTargetPort(8123),
+
+          code:
+            port.withName('http-code') +
+            port.withProtocol('TCP') +
+            port.withPort(8443) +
+            port.withTargetPort(8443),
+        },
 
         headless:
           svc.new(
             'hass-headless',
             $.smartHome.homeAssistant.labels,
             [
-              $.smartHome.homeAssistant.service.port,
+              $.smartHome.homeAssistant.service.ports.hass,
             ]
           ) +
           svc.metadata.withNamespace($.smartHome.namespace.metadata.name) +
@@ -60,7 +68,8 @@ local prom = import 'github.com/jsonnet-libs/prometheus-operator-libsonnet/0.77/
             'hass',
             $.smartHome.homeAssistant.labels,
             [
-              $.smartHome.homeAssistant.service.port,
+              $.smartHome.homeAssistant.service.ports.hass,
+              $.smartHome.homeAssistant.service.ports.code,
             ]
           ) +
           svc.metadata.withNamespace($.smartHome.namespace.metadata.name),
@@ -78,23 +87,45 @@ local prom = import 'github.com/jsonnet-libs/prometheus-operator-libsonnet/0.77/
             ]),
         }),
 
-      local container = k.core.v1.container,
-      local mount = k.core.v1.volumeMount,
-      container::
-        container.new('home-assistant', 'ghcr.io/home-assistant/home-assistant:%s' % $._config.smartHome.homeAssistant.version) +
-        container.resources.withRequests({ memory: '8Gi' }) +
-        container.resources.withLimits({ memory: '8Gi' }) +
-        container.withPorts([{ name: 'http', containerPort: 8123 }]) +
-        container.securityContext.withPrivileged(true) +
-        container.withVolumeMounts([
-          mount.withMountPath('/config') +
-          mount.withName('data'),
+      containers:: {
+        local container = k.core.v1.container,
+        local env = k.core.v1.envVar,
+        local mount = k.core.v1.volumeMount,
 
-          mount.withMountPath('/config/configuration.yaml') +
-          mount.withSubPath('configuration.yaml') +
-          mount.withName('config') +
-          mount.withReadOnly(true),
-        ]),
+        hass:
+          container.new('home-assistant', 'ghcr.io/home-assistant/home-assistant:%s' % $._config.smartHome.homeAssistant.version) +
+          container.resources.withRequests({ memory: '8Gi' }) +
+          container.resources.withLimits({ memory: '8Gi' }) +
+          container.withPorts([{ name: 'http', containerPort: 8123 }]) +
+          container.securityContext.withPrivileged(true) +
+          container.withVolumeMounts([
+            mount.withMountPath('/config') +
+            mount.withName('data'),
+
+            mount.withMountPath('/config/configuration.yaml') +
+            mount.withSubPath('configuration.yaml') +
+            mount.withName('config') +
+            mount.withReadOnly(true),
+          ]),
+
+        code:
+          container.new('code-server', 'linuxserver/code-server:4.97.2') +
+          container.resources.withRequests({ memory: '4Gi' }) +
+          container.resources.withLimits({ memory: '4Gi' }) +
+          container.withPorts([{ name: 'http-code', containerPort: 8443 }]) +
+          container.withEnv([
+            env.new('PUID', '0'),
+            env.new('PGID', '0'),
+            env.new('DEFAULT_WORKSPACE', '/config/workspace'),
+          ]) +
+          container.withVolumeMounts([
+            mount.withMountPath('/config') +
+            mount.withName('code-server'),
+
+            mount.withMountPath('/config/workspace') +
+            mount.withName('data'),
+          ]),
+      },
 
       local sts = k.apps.v1.statefulSet,
       local volume = k.core.v1.volume,
@@ -104,12 +135,17 @@ local prom = import 'github.com/jsonnet-libs/prometheus-operator-libsonnet/0.77/
           'hass',
           1,
           [
-            $.smartHome.homeAssistant.container,
+            $.smartHome.homeAssistant.containers.hass,
+            $.smartHome.homeAssistant.containers.code,
           ],
           [
             pvc.new('data') +
             pvc.spec.withAccessModes(['ReadWriteOnce']) +
             pvc.spec.resources.withRequests({ storage: '100Gi' }),
+
+            pvc.new('code-server') +
+            pvc.spec.withAccessModes(['ReadWriteOnce']) +
+            pvc.spec.resources.withRequests({ storage: '5Gi' }),
           ],
           // Stupid auto name label
           null,
@@ -153,6 +189,33 @@ local prom = import 'github.com/jsonnet-libs/prometheus-operator-libsonnet/0.77/
         ]) +
         route.spec.withHostnames(['hass.home.nlowe.dev']) +
         route.spec.withRules([
+          // This is required because code-server requires a trailing / in the URL to work on a sub-path
+          rule.withMatches([
+            rule.matches.path.withType('Exact') +
+            rule.matches.path.withValue('/_code_server'),
+          ]) +
+          rule.withFilters([
+            rule.filters.withType('RequestRedirect') +
+            rule.filters.requestRedirect.path.withType('ReplaceFullPath') +
+            rule.filters.requestRedirect.path.withReplaceFullPath('/_code_server/'),
+          ]),
+
+          rule.withMatches([
+            rule.matches.path.withType('PathPrefix') +
+            // We need to omit the trailing / here so caddy-gateway doesn't strip off the leading "/", otherwise static assets won't load
+            rule.matches.path.withValue('/_code_server'),
+          ]) +
+          rule.withFilters([
+            rule.filters.withType('URLRewrite') +
+            rule.filters.urlRewrite.path.withType('ReplacePrefixMatch') +
+            rule.filters.urlRewrite.path.withReplacePrefixMatch('/'),
+          ]) +
+          rule.withBackendRefs([
+            rule.backendRefs.withName($.smartHome.homeAssistant.service.app.metadata.name) +
+            rule.backendRefs.withNamespace($.smartHome.homeAssistant.service.app.metadata.namespace) +
+            rule.backendRefs.withPort(8443),
+          ]),
+
           rule.withBackendRefs([
             rule.backendRefs.withName($.smartHome.homeAssistant.service.app.metadata.name) +
             rule.backendRefs.withNamespace($.smartHome.homeAssistant.service.app.metadata.namespace) +
