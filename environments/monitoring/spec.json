@@ -2,12 +2,12 @@
   "apiVersion": "tanka.dev/v1alpha1",
   "kind": "Environment",
   "metadata": {
-    "name": "environments/mimir"
+    "name": "environments/monitoring"
   },
   "spec": {
     "apiServer": "https://k8s.home.nlowe.dev:6443",
     "applyStrategy": "server",
-    "namespace": "mimir",
+    "namespace": "monitoring",
     "resourceDefaults": {},
     "expectVersions": {}
   }

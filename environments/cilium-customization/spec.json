@@ -2,12 +2,13 @@
   "apiVersion": "tanka.dev/v1alpha1",
   "kind": "Environment",
   "metadata": {
-    "name": "environments/mimir"
+    "name": "environments/cilium-customization",
+    "namespace": "environments/cilium-customization/main.jsonnet"
   },
   "spec": {
     "apiServer": "https://k8s.home.nlowe.dev:6443",
     "applyStrategy": "server",
-    "namespace": "mimir",
+    "namespace": "kube-system",
     "resourceDefaults": {},
     "expectVersions": {}
   }

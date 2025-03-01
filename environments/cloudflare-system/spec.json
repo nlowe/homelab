@@ -2,13 +2,12 @@
   "apiVersion": "tanka.dev/v1alpha1",
   "kind": "Environment",
   "metadata": {
-    "name": "environments/default",
-    "namespace": "environments/default/main.jsonnet"
+    "name": "environments/cloudflare-system"
   },
   "spec": {
     "apiServer": "https://k8s.home.nlowe.dev:6443",
     "applyStrategy": "server",
-    "namespace": "default",
+    "namespace": "cloudflare-system",
     "resourceDefaults": {},
     "expectVersions": {}
   }

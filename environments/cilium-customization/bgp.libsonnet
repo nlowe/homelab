@@ -16,24 +16,6 @@ local k = import 'k.libsonnet';
 
   cilium+: {
     bgp+: {
-      labels:: { advertise: 'bgp' },
-
-      local svc = k.core.v1.service,
-      loadBalancerMixin(ips)::
-        svc.metadata.withAnnotationsMixin({
-          'lbipam.cilium.io/ips': std.join(',', if std.isArray(ips) then ips else [ips]),
-        }) +
-        svc.metadata.withLabelsMixin($.cilium.bgp.labels) +
-        svc.spec.withType('LoadBalancer') +
-        svc.spec.withLoadBalancerClass('io.cilium/bgp-control-plane') +
-        svc.spec.withExternalTrafficPolicy('Local') +
-        svc.spec.withInternalTrafficPolicy('Local'),
-
-      serviceMixins:: {
-        caddy: $.cilium.bgp.loadBalancerMixin('10.200.200.10'),
-        alloy_syslog: $.cilium.bgp.loadBalancerMixin('10.200.200.11'),
-      },
-
       pool: {
         apiVersion: 'cilium.io/v2alpha1',
         kind: 'CiliumLoadBalancerIPPool',
@@ -45,7 +27,7 @@ local k = import 'k.libsonnet';
             { cidr: $._config.cilium.bgp.serviceCIDR },
           ],
           serviceSelector: {
-            matchLabels: $.cilium.bgp.labels,
+            matchLabels: $._config.cilium.bgp.labels,
           },
         },
       },
@@ -66,7 +48,7 @@ local k = import 'k.libsonnet';
               afi: 'ipv4',
               safi: 'unicast',
               advertisements: {
-                matchLabels: $.cilium.bgp.labels,
+                matchLabels: $._config.cilium.bgp.labels,
               },
             },
           ],
@@ -100,7 +82,7 @@ local k = import 'k.libsonnet';
         kind: 'CiliumBGPAdvertisement',
         metadata: {
           name: 'homelab',
-          labels: $.cilium.bgp.labels,
+          labels: $._config.cilium.bgp.labels,
         },
         spec: {
           advertisements: [{
@@ -109,7 +91,7 @@ local k = import 'k.libsonnet';
               addresses: ['LoadBalancerIP'],
             },
             selector: {
-              matchLabels: $.cilium.bgp.labels,
+              matchLabels: $._config.cilium.bgp.labels,
             },
           }],
         },

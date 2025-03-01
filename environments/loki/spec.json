@@ -6,6 +6,7 @@
   },
   "spec": {
     "apiServer": "https://k8s.home.nlowe.dev:6443",
+    "applyStrategy": "server",
     "namespace": "loki",
     "resourceDefaults": {},
     "expectVersions": {}

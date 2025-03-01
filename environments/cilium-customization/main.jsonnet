@@ -1,3 +1,4 @@
+(import 'homelab.libsonnet') +
 (import 'bgp.libsonnet') +
 {
   _config+:: {
