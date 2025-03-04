@@ -32,7 +32,7 @@ local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.1/main.libson
     local container = k.core.v1.container,
     local mount = k.core.v1.volumeMount,
     container::
-      container.new('zwave', 'zwavejs/zwave-js-ui:9.30.1') +
+      container.new('zwave', 'zwavejs/zwave-js-ui:9.31.0') +
       container.withPorts([
         { containerPort: 8091, name: 'http', protocol: 'TCP' },
         { containerPort: 3000, name: 'websocket', protocol: 'TCP' },
