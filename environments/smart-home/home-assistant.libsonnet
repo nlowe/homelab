@@ -6,25 +6,6 @@ local prom = import 'github.com/jsonnet-libs/prometheus-operator-libsonnet/0.77/
   _config+:: {
     homeAssistant: {
       version:: '2025.1.4',
-      // std.manifestYamlDoc escapes tags, so this string gets appended raw to the marshaled config
-      appendRawConfig:: |||
-        automation ui: !include automations.yaml
-        fan: !include_dir_merge_list automations/fan/
-        switch: !include_dir_merge_list automations/switch/
-      |||,
-
-      default_config: {},
-      http: {
-        use_x_forwarded_for: true,
-        trusted_proxies: [
-          '10.0.0.0/8',
-          '127.0.0.1',
-        ],
-      },
-
-      prometheus: {
-        namespace: 'hass',
-      },
     },
   },
 
@@ -77,11 +58,7 @@ local prom = import 'github.com/jsonnet-libs/prometheus-operator-libsonnet/0.77/
       secret.new('hass-config', null, 'Opaque') +
       secret.metadata.withNamespace($.namespace.metadata.name) +
       secret.withStringData({
-        'configuration.yaml':
-          std.join('\n', [
-            std.manifestYamlDoc($._config.homeAssistant),
-            $._config.homeAssistant.appendRawConfig,
-          ]),
+        'configuration.yaml': '!include hass-config/main.yaml',
       }),
 
     containers:: {
@@ -121,6 +98,10 @@ local prom = import 'github.com/jsonnet-libs/prometheus-operator-libsonnet/0.77/
 
           mount.withMountPath('/config/workspace') +
           mount.withName('data'),
+
+          mount.withMountPath('/root/.ssh') +
+          mount.withName('github-ssh-key') +
+          mount.withReadOnly(true),
         ]),
     },
 
@@ -159,6 +140,13 @@ local prom = import 'github.com/jsonnet-libs/prometheus-operator-libsonnet/0.77/
       sts.spec.template.spec.dnsConfig.withOptions([{ name: 'ndots', value: '1' }]) +
       sts.spec.template.spec.withVolumes([
         volume.fromSecret('config', $.homeAssistant.configSecret.metadata.name),
+
+        volume.fromSecret('github-ssh-key', 'github-ssh-key') +
+        volume.secret.withDefaultMode(std.parseOctal('0600')) +
+        volume.secret.withItems([
+          { key: 'id_ed25519', path: 'id_ed25519' },
+          { key: 'id_ed25519.pub', path: 'id_ed25519.pub' },
+        ]),
       ]),
 
     local pm = prom.monitoring.v1.podMonitor,
