@@ -5,7 +5,7 @@ local prom = import 'github.com/jsonnet-libs/prometheus-operator-libsonnet/0.77/
 {
   _config+:: {
     homeAssistant: {
-      version:: '2025.1.4',
+      version:: '2025.3.1',
     },
   },
 
@@ -83,7 +83,7 @@ local prom = import 'github.com/jsonnet-libs/prometheus-operator-libsonnet/0.77/
         ]),
 
       code:
-        container.new('code-server', 'linuxserver/code-server:4.97.2') +
+        container.new('code-server', 'linuxserver/code-server:4.98.0') +
         container.resources.withRequests({ memory: '4Gi' }) +
         container.resources.withLimits({ memory: '4Gi' }) +
         container.withPorts([{ name: 'http-code', containerPort: 8443 }]) +

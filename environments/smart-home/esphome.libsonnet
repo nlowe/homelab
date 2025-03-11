@@ -32,7 +32,7 @@ local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.1/main.libson
     local container = k.core.v1.container,
     local mount = k.core.v1.volumeMount,
     container::
-      container.new('esphome', 'ghcr.io/esphome/esphome:2024.12.4') +
+      container.new('esphome', 'ghcr.io/esphome/esphome:2025.2.2') +
       container.withCommand(['esphome']) +
       container.withArgs(['dashboard', '/data']) +
       container.withPorts([
