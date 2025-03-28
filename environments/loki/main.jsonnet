@@ -1,10 +1,12 @@
 local k = import 'k.libsonnet';
+local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.1/main.libsonnet').gateway;
 
-local loki = import 'github.com/grafana/loki/production/ksonnet/loki/loki.libsonnet';
 local mixin = import 'github.com/grafana/loki/production/loki-mixin/mixin.libsonnet';
 local prom = import 'github.com/jsonnet-libs/prometheus-operator-libsonnet/0.77/main.libsonnet';
 
-loki {
+(import 'homelab.libsonnet') +
+(import 'github.com/grafana/loki/production/ksonnet/loki/loki.libsonnet') +
+{
   _images+:: {
     loki: 'grafana/loki:3.4.2',
   },
@@ -176,5 +178,24 @@ loki {
         },
       },
     },
+  },
+
+  gateway: {
+    local route = g.v1.httpRoute,
+    local rule = route.spec.rules,
+
+    route:
+      route.new('loki') +
+      route.metadata.withNamespace($._config.namespace) +
+      $._config.caddy.gateway.route() +
+      route.spec.withHostnames(['loki.home.nlowe.dev']) +
+      route.spec.withRules([
+        // TODO: Expose query-frontend?
+        rule.withBackendRefs([
+          rule.backendRefs.withName($.distributor_service.metadata.name) +
+          rule.backendRefs.withNamespace($._config.namespace) +
+          rule.backendRefs.withPort(3100),
+        ]),
+      ]),
   },
 }

@@ -1,10 +1,12 @@
 local k = import 'k.libsonnet';
+local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.1/main.libsonnet').gateway;
 
 local mixin = import 'github.com/grafana/mimir/operations/mimir-mixin/mixin.libsonnet';
-local mimir = import 'github.com/grafana/mimir/operations/mimir/mimir.libsonnet';
 local prom = import 'github.com/jsonnet-libs/prometheus-operator-libsonnet/0.77/main.libsonnet';
 
-mimir {
+(import 'homelab.libsonnet') +
+(import 'github.com/grafana/mimir/operations/mimir/mimir.libsonnet') +
+{
   _config+:: {
     namespace: 'mimir',
     cluster: 'homelab',
@@ -72,6 +74,7 @@ mimir {
   mimir_write_container+:: $.mountMinioSecret,
   mimir_read_container+:: $.mountMinioSecret,
   mimir_backend_container+:: $.mountMinioSecret,
+
 
   monitoring: {
     local pr = prom.monitoring.v1.prometheusRule,
@@ -146,5 +149,34 @@ mimir {
         ]) +
         pm.spec.selector.withMatchLabels({ name: 'rollout-operator' }),
     },
+  },
+
+  gateway: {
+    local route = g.v1.httpRoute,
+    local rule = route.spec.rules,
+
+    // Make a copy of the mimir-write service that isn't headless, caddy can't seem to route to headless services
+    backend:
+      $.mimir_write_service +
+      k.core.v1.service.metadata.withName('mimir-write-gateway') +
+      {
+        spec+: {
+          clusterIP:: null,
+        },
+      },
+
+    route:
+      route.new('mimir') +
+      route.metadata.withNamespace($._config.namespace) +
+      $._config.caddy.gateway.route() +
+      route.spec.withHostnames(['mimir.home.nlowe.dev']) +
+      route.spec.withRules([
+        // TODO: Expose query-frontend?
+        rule.withBackendRefs([
+          rule.backendRefs.withName($.gateway.backend.metadata.name) +
+          rule.backendRefs.withNamespace($._config.namespace) +
+          rule.backendRefs.withPort(8080),
+        ]),
+      ]),
   },
 }
