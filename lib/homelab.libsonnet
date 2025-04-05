@@ -20,7 +20,6 @@ local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.1/main.libson
             route.spec.parentRefs.withName($._config.caddy.gateway.name) +
             route.spec.parentRefs.withNamespace($._config.caddy.namespace),
           ]),
-
       },
     },
 

@@ -1,6 +1,8 @@
 local k = import 'k.libsonnet';
 local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.1/main.libsonnet').gateway;
 
+local image = import 'images.libsonnet';
+
 {
   zjs: {
     local this = self,
@@ -32,7 +34,7 @@ local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.1/main.libson
     local container = k.core.v1.container,
     local mount = k.core.v1.volumeMount,
     container::
-      container.new('zwave', 'zwavejs/zwave-js-ui:9.32.0') +
+      image.forContainer('zwave-js-ui', container_name='zwave') +
       container.withPorts([
         { containerPort: 8091, name: 'http', protocol: 'TCP' },
         { containerPort: 3000, name: 'websocket', protocol: 'TCP' },

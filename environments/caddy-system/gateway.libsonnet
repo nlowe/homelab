@@ -3,6 +3,8 @@ local k = import 'k.libsonnet';
 local cm = import 'github.com/jsonnet-libs/cert-manager-libsonnet/1.15/main.libsonnet';
 local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.1/main.libsonnet').gateway;
 
+local image = import 'images.libsonnet';
+
 {
   gateway: {
     labels:: { app: 'caddy-gateway' },
@@ -162,7 +164,7 @@ local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.1/main.libson
     local env = k.core.v1.envVar,
     local mount = k.core.v1.volumeMount,
     container::
-      container.new('caddy-gateway', 'ghcr.io/caddyserver/gateway:latest') +
+      image.forContainer('caddy-gateway') +
       container.withArgs(['--leader-elect']) +
       container.withPorts([
         containerPort.withName('metrics') + containerPort.withContainerPort(8080) + containerPort.withProtocol('TCP'),

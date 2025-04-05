@@ -1,6 +1,8 @@
 local k = import 'k.libsonnet';
 local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.1/main.libsonnet').gateway;
 
+local image = import 'images.libsonnet';
+
 {
   grafana: {
     local this = self,
@@ -28,7 +30,7 @@ local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.1/main.libson
     local container = k.core.v1.container,
     local mount = k.core.v1.volumeMount,
     container::
-      container.new('grafana', 'grafana/grafana:11.5.0') +
+      image.forContainer('grafana') +
       // TODO: Tune resources
       container.resources.withRequests({ memory: '4Gi' }) +
       container.resources.withLimits({ memory: '4Gi' }) +

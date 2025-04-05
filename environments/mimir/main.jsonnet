@@ -4,9 +4,20 @@ local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.1/main.libson
 local mixin = import 'github.com/grafana/mimir/operations/mimir-mixin/mixin.libsonnet';
 local prom = import 'github.com/jsonnet-libs/prometheus-operator-libsonnet/0.77/main.libsonnet';
 
+local image = (import 'images.libsonnet').mimir;
+
 (import 'homelab.libsonnet') +
 (import 'github.com/grafana/mimir/operations/mimir/mimir.libsonnet') +
 {
+  _images+:: {
+    mimir: image.mimir.ref(),
+    memcached: image.memcached.ref(),
+    memcachedExporter: image.memcachedExporter.ref(),
+    query_tee: image.query_tee.ref(),
+    continuous_test: image.continuous_test.ref(),
+    rollout_operator: image.rollout_operator.ref(),
+  },
+
   _config+:: {
     namespace: 'mimir',
     cluster: 'homelab',

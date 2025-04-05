@@ -2,6 +2,8 @@ local k = import 'k.libsonnet';
 
 local cm = import 'github.com/jsonnet-libs/cert-manager-libsonnet/1.15/main.libsonnet';
 
+local image = import 'images.libsonnet';
+
 (import 'homelab.libsonnet') +
 (import 'gateway.libsonnet') +
 {
@@ -113,7 +115,7 @@ local cm = import 'github.com/jsonnet-libs/cert-manager-libsonnet/1.15/main.libs
     local mount = k.core.v1.volumeMount,
 
     kube_rbac_proxy:
-      container.new('kube-rbac-proxy', 'quay.io/brancz/kube-rbac-proxy:v0.17.1@sha256:89d0be6da831f45fb53e7e40d216555997ccf6e27d66f62e50eb9a69ff9c9801') +
+      image.forContainer('kube-rbac-proxy') +
       container.withArgs([
         '--secure-listen-address=:2021',
         '--upstream=http://[::1]:2019/',
@@ -144,7 +146,7 @@ local cm = import 'github.com/jsonnet-libs/cert-manager-libsonnet/1.15/main.libs
       container.securityContext.withAllowPrivilegeEscalation(false),
 
     caddy:
-      container.new('caddy', 'ghcr.io/caddyserver/gateway:caddy-2.8.4') +
+      image.forContainer('caddy') +
       container.withCommand(['caddy']) +
       container.withArgs(['run']) +
       container.withPorts([

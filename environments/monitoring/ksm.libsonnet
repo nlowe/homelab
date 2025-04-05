@@ -1,11 +1,13 @@
 local prom = import 'github.com/jsonnet-libs/prometheus-operator-libsonnet/0.77/main.libsonnet';
 
+local image = (import 'images.libsonnet')['kube-state-metrics'];
+
 {
   kubeStateMetrics: (import 'github.com/kubernetes/kube-state-metrics/jsonnet/kube-state-metrics/kube-state-metrics.libsonnet') {
     name:: 'kube-state-metrics',
     namespace:: $.namespace.metadata.name,
-    version:: '2.15.0',
-    image:: 'registry.k8s.io/kube-state-metrics/kube-state-metrics:v%s' % $.kubeStateMetrics.version,
+    version:: std.lstripChars(image.version, 'v'),
+    image:: image.ref(),
 
     local pm = prom.monitoring.v1.podMonitor,
     local relabel = prom.monitoring.v1.podMonitor.spec.podMetricsEndpoints.metricRelabelings,

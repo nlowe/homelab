@@ -1,5 +1,7 @@
 local k = import 'k.libsonnet';
 
+local image = import 'images.libsonnet';
+
 {
   tunnel: {
     labels:: { app: 'cloudflared' },
@@ -38,7 +40,7 @@ local k = import 'k.libsonnet';
     local container = k.core.v1.container,
     local mount = k.core.v1.volumeMount,
     container::
-      container.new('cloudflared', 'cloudflare/cloudflared:2025.1.0') +
+      image.forContainer('cloudflared') +
       container.withArgs([
         'tunnel',
         '--config',

@@ -1,6 +1,8 @@
 local k = import 'k.libsonnet';
 local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.1/main.libsonnet').gateway;
 
+local image = import 'images.libsonnet';
+
 {
   esphome: {
     local this = self,
@@ -32,7 +34,7 @@ local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.1/main.libson
     local container = k.core.v1.container,
     local mount = k.core.v1.volumeMount,
     container::
-      container.new('esphome', 'ghcr.io/esphome/esphome:2025.2.2') +
+      image.forContainer('esphome') +
       container.withCommand(['esphome']) +
       container.withArgs(['dashboard', '/data']) +
       container.withPorts([

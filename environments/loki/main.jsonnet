@@ -4,11 +4,16 @@ local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.1/main.libson
 local mixin = import 'github.com/grafana/loki/production/loki-mixin/mixin.libsonnet';
 local prom = import 'github.com/jsonnet-libs/prometheus-operator-libsonnet/0.77/main.libsonnet';
 
+local image = (import 'images.libsonnet').loki;
+
 (import 'homelab.libsonnet') +
 (import 'github.com/grafana/loki/production/ksonnet/loki/loki.libsonnet') +
 {
   _images+:: {
-    loki: 'grafana/loki:3.4.2',
+    loki: image.loki.ref(),
+    memcached: image.memcached.ref(),
+    memcachedExporter: image.memcachedExporter.ref(),
+    rollout_operator: image.rollout_operator.ref(),
   },
 
   _config+:: {

@@ -7,6 +7,8 @@ local cm = import 'github.com/jsonnet-libs/cert-manager-libsonnet/1.15/main.libs
 local issuer = cm.nogroup.v1.clusterIssuer;
 local cf = issuer.spec.acme.solvers.dns01.cloudflare;
 
+local image = import 'images.libsonnet';
+
 (import 'homelab.libsonnet') +
 {
   _config+:: {
@@ -23,6 +25,50 @@ local cf = issuer.spec.acme.solvers.dns01.cloudflare;
           enabled: true,
         },
       },
+
+      // Codify Images
+      image: {
+        image:: image['cert-manager-controller'],
+
+        repository: self.image.repo(),
+        tag: self.image.version,
+      },
+
+      webhook: {
+        image: {
+          image:: image['cert-manager-webhook'],
+
+          repository: self.image.repo(),
+          tag: self.image.version,
+        },
+      },
+
+      cainjector: {
+        image: {
+          image:: image['cert-manager-cainjector'],
+
+          repository: self.image.repo(),
+          tag: self.image.version,
+        },
+      },
+
+      acmesolver: {
+        image: {
+          image:: image['cert-manager-acmesolver'],
+
+          repository: self.image.repo(),
+          tag: self.image.version,
+        },
+      },
+
+      startupapicheck: {
+        image: {
+          image:: image['cert-manager-startupapicheck'],
+
+          repository: self.image.repo(),
+          tag: self.image.version,
+        },
+      },
     },
   },
 
@@ -35,6 +81,26 @@ local cf = issuer.spec.acme.solvers.dns01.cloudflare;
 
   csiDriver: helm.template('cert-manager-csi-driver', '../../charts/cert-manager-csi-driver', {
     namespace: $.namespace.metadata.name,
+    values: {
+      image: {
+        image:: image['cert-manager-csi-driver'],
+
+        repository: self.image.repo(),
+        tag: self.image.version,
+      },
+      nodeDriverRegistrarImage: {
+        image:: image['csi-node-driver-registrar'],
+
+        repository: self.image.repo(),
+        tag: self.image.version,
+      },
+      livenessProbeImage: {
+        image:: image['sig-storage-livenessprobe'],
+
+        repository: self.image.repo(),
+        tag: self.image.version,
+      },
+    },
   }),
 
   issuer:

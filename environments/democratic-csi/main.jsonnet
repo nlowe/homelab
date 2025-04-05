@@ -3,9 +3,48 @@ local k = import 'k.libsonnet';
 local tk = import 'github.com/grafana/jsonnet-libs/tanka-util/main.libsonnet';
 local helm = tk.helm.new(std.thisFile);
 
+local image = (import 'images.libsonnet').democratic_csi;
+
 {
   _config+:: {
     iscsi: {
+      controller: {
+        externalAttacher: {
+          image: image.externalAttacher.ref(),
+        },
+        externalProvisioner: {
+          image: image.externalProvisioner.ref(),
+        },
+        externalResizer: {
+          image: image.externalResizer.ref(),
+        },
+        externalSnapshotter: {
+          image: image.externalSnapshotter.ref(),
+        },
+        externalHealthMonitorController: {
+          image: image.externalHealthMonitorController.ref(),
+        },
+        driver: {
+          image: image.driver.ref(),
+        },
+      },
+
+      node: {
+        cleanup: {
+          image: image.busybox.ref(),
+        },
+        driver: {
+          image: image.driver.ref(),
+        },
+        driverRegistrar: {
+          image: image.driverRegistrar.ref(),
+        },
+      },
+
+      csiProxy: {
+        image: image.csiProxy.ref(),
+      },
+
       csiDriver: {
         name: 'org.democratic-csi.iscsi',
         fsGroupPolicy: 'File',

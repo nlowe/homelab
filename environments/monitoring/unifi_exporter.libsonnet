@@ -1,6 +1,8 @@
 local prom = import 'github.com/jsonnet-libs/prometheus-operator-libsonnet/0.77/main.libsonnet';
 local k = import 'k.libsonnet';
 
+local image = import 'images.libsonnet';
+
 {
   _config+:: {
     unifi_exporter: {
@@ -50,7 +52,7 @@ local k = import 'k.libsonnet';
     local envFrom = k.core.v1.envFromSource,
     local mount = k.core.v1.volumeMount,
     container::
-      container.new('unifi-exporter', 'ghcr.io/unpoller/unpoller:v2.14.1') +
+      image.forContainer('unifi-exporter') +
       container.withArgs([
         '--config=/etc/unifi-exporter/config.json',
       ]) +

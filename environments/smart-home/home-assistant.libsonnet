@@ -1,14 +1,11 @@
 local k = import 'k.libsonnet';
 local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.1/main.libsonnet').gateway;
+
 local prom = import 'github.com/jsonnet-libs/prometheus-operator-libsonnet/0.77/main.libsonnet';
 
-{
-  _config+:: {
-    homeAssistant: {
-      version:: '2025.3.1',
-    },
-  },
+local image = import 'images.libsonnet';
 
+{
   homeAssistant: {
     labels:: { app: 'hass' },
 
@@ -67,7 +64,7 @@ local prom = import 'github.com/jsonnet-libs/prometheus-operator-libsonnet/0.77/
       local mount = k.core.v1.volumeMount,
 
       hass:
-        container.new('home-assistant', 'ghcr.io/home-assistant/home-assistant:%s' % $._config.homeAssistant.version) +
+        image.forContainer('home-assistant') +
         container.resources.withRequests({ memory: '8Gi' }) +
         container.resources.withLimits({ memory: '8Gi' }) +
         container.withPorts([{ name: 'http', containerPort: 8123 }]) +
@@ -83,7 +80,7 @@ local prom = import 'github.com/jsonnet-libs/prometheus-operator-libsonnet/0.77/
         ]),
 
       code:
-        container.new('code-server', 'linuxserver/code-server:4.98.0') +
+        image.forContainer('code-server') +
         container.resources.withRequests({ memory: '4Gi' }) +
         container.resources.withLimits({ memory: '4Gi' }) +
         container.withPorts([{ name: 'http-code', containerPort: 8443 }]) +

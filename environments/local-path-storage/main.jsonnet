@@ -1,5 +1,7 @@
 local k = import 'k.libsonnet';
 
+local image = import 'images.libsonnet';
+
 {
   _config+:: {
     storageClassConfigs: {
@@ -25,6 +27,19 @@ local k = import 'k.libsonnet';
 } +
 {
   provisionerName:: 'rancher.io/local-path',
+
+  deployment_local_path_provisioner+: {
+    spec+: {
+      template+: {
+        spec+: {
+          containers: [
+            super.containers[0] +
+            image.forContainer('local-path-provisioner'),
+          ],
+        },
+      },
+    },
+  },
 
   configmap_local_path_config+: k.core.v1.configMap.withDataMixin({
     'config.json': std.manifestJson($._config),

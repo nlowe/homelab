@@ -3,6 +3,8 @@ local k = (import 'k.libsonnet');
 local tk = import 'github.com/grafana/jsonnet-libs/tanka-util/main.libsonnet';
 local helm = tk.helm.new(std.thisFile);
 
+local image = import 'images.libsonnet';
+
 {
   _config+:: {
     alloy: {
@@ -13,6 +15,20 @@ local helm = tk.helm.new(std.thisFile);
       ],
 
       helmValues:: {
+        image: {
+          image:: image.alloy,
+          registry: self.image.registry,
+          repository: self.image.name,
+          tag: self.image.version,
+        },
+
+        configReloader: {
+          image:: image['prometheus-config-reloader'],
+          registry: self.image.registry,
+          repository: self.image.name,
+          tag: self.image.version,
+        },
+
         alloy: {
           configMap: {
             // I'll make my own
