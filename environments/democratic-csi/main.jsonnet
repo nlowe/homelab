@@ -10,39 +10,79 @@ local image = (import 'images.libsonnet').democratic_csi;
     iscsi: {
       controller: {
         externalAttacher: {
-          image: image.externalAttacher.ref(),
+          image: {
+            image:: image.externalAttacher,
+            registry: self.image.repo(),
+            tag: self.image.version,
+          },
         },
         externalProvisioner: {
-          image: image.externalProvisioner.ref(),
+          image: {
+            image:: image.externalProvisioner,
+            registry: self.image.repo(),
+            tag: self.image.version,
+          },
         },
         externalResizer: {
-          image: image.externalResizer.ref(),
+          image: {
+            image:: image.externalResizer,
+            registry: self.image.repo(),
+            tag: self.image.version,
+          },
         },
         externalSnapshotter: {
-          image: image.externalSnapshotter.ref(),
+          image: {
+            image:: image.externalSnapshotter,
+            registry: self.image.repo(),
+            tag: self.image.version,
+          },
         },
         externalHealthMonitorController: {
-          image: image.externalHealthMonitorController.ref(),
+          image: {
+            image:: image.externalHealthMonitorController,
+            registry: self.image.repo(),
+            tag: self.image.version,
+          },
         },
         driver: {
-          image: image.driver.ref(),
+          image: {
+            image:: image.driver,
+            registry: self.image.repo(),
+            tag: self.image.version,
+          },
         },
       },
 
       node: {
         cleanup: {
-          image: image.busybox.ref(),
+          image: {
+            image:: image.busybox,
+            registry: self.image.repo(),
+            tag: self.image.version,
+          },
         },
         driver: {
-          image: image.driver.ref(),
+          image: {
+            image:: image.driver,
+            registry: self.image.repo(),
+            tag: self.image.version,
+          },
         },
         driverRegistrar: {
-          image: image.driverRegistrar.ref(),
+          image: {
+            image:: image.driverRegistrar,
+            registry: self.image.repo(),
+            tag: self.image.version,
+          },
         },
       },
 
       csiProxy: {
-        image: image.csiProxy.ref(),
+        image: {
+          image:: image.csiProxy,
+          registry: self.image.repo(),
+          tag: self.image.version,
+        },
       },
 
       csiDriver: {
