@@ -38,8 +38,8 @@ local k = import 'k.libsonnet';
   cloudflared: $.new(name='cloudflare/cloudflared', version='2025.4.0'),
 
   esphome: $.new(registry='ghcr.io', name='esphome/esphome', version='2025.3.3'),
-  'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2025.4.1'),
-  'zwave-js-ui': $.new(name='zwavejs/zwave-js-ui', version='10.1.4'),
+  'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2025.4.2'),
+  'zwave-js-ui': $.new(name='zwavejs/zwave-js-ui', version='10.1.5'),
 
   'kube-rbac-proxy': $.new(registry='quay.io', name='brancz/kube-rbac-proxy', version='v0.19.0'),
 
