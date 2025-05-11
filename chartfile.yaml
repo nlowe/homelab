@@ -12,9 +12,9 @@ requires:
 - chart: dcsi/democratic-csi
   version: 0.15.0
 - chart: jetstack/cert-manager
-  version: v1.17.1
+  version: v1.17.2
 - chart: jetstack/cert-manager-csi-driver
-  version: v0.10.2
+  version: v0.10.3
 - chart: grafana/alloy
-  version: 0.12.6
+  version: 1.0.3
 version: 1

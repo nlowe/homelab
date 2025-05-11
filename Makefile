@@ -10,3 +10,9 @@ restore:
 .PHONY: apply
 apply:
 	tk apply environments/default
+
+.PHONY: apply-all
+apply-all:
+	for env in $(shell tk env list --names); do \
+		tk apply $$env; \
+	done
