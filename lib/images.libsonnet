@@ -34,17 +34,17 @@ local k = import 'k.libsonnet';
   'caddy-gateway': $.new(registry='ghcr.io', name='caddyserver/gateway', version='v0.1.0'),
 
   // https://www.linuxserver.io/our-images
-  'code-server': $.new(registry='lscr.io', name='linuxserver/code-server', version='4.99.4-ls269'),
+  'code-server': $.new(registry='lscr.io', name='linuxserver/code-server', version='4.100.2-ls275'),
 
-  cloudflared: $.new(name='cloudflare/cloudflared', version='2025.4.2'),
+  cloudflared: $.new(name='cloudflare/cloudflared', version='2025.5.0'),
 
-  esphome: $.new(registry='ghcr.io', name='esphome/esphome', version='2025.4.1'),
-  'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2025.5.1'),
-  'zwave-js-ui': $.new(name='zwavejs/zwave-js-ui', version='10.4.2'),
+  esphome: $.new(registry='ghcr.io', name='esphome/esphome', version='2025.5.0'),
+  'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2025.5.3'),
+  'zwave-js-ui': $.new(name='zwavejs/zwave-js-ui', version='10.5.1'),
 
   'kube-rbac-proxy': $.new(registry='quay.io', name='brancz/kube-rbac-proxy', version='v0.19.1'),
 
-  grafana: $.new(name='grafana/grafana', version='12.0.0'),
+  grafana: $.new(name='grafana/grafana', version='12.0.1'),
   'kube-state-metrics': $.new(registry='registry.k8s.io', name='kube-state-metrics/kube-state-metrics', version='v2.15.0'),
   'unifi-exporter': $.new(registry='ghcr.io', name='unpoller/unpoller', version='v2.15.3'),
 } +
@@ -86,7 +86,7 @@ local k = import 'k.libsonnet';
   // See https://github.com/grafana/loki/blob/main/production/ksonnet/loki/images.libsonnet
   // See https://github.com/grafana/loki/blob/main/production/ksonnet/loki/rollout-operator.libsonnet
   loki:: {
-    loki: $.new(name='grafana/loki', version='3.5.0'),
+    loki: $.new(name='grafana/loki', version='3.5.1'),
     memcached: $.new(name='memcached', version='1.6.38-alpine'),
     memcachedExporter: $.new(name='prom/memcached-exporter', version='v0.15.2'),
     rollout_operator: $.new(name='grafana/rollout-operator', version='v0.25.0'),
