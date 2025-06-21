@@ -112,7 +112,6 @@ local image = (import 'images.libsonnet').democratic_csi;
             'controller-expand-secret': {},
           },
         },
-        // TODO: NFS?
       ],
 
       // TODO: Figure out snapshots

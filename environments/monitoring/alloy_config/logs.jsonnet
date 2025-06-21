@@ -109,8 +109,8 @@ local alloy = import 'github.com/grafana/alloy/operations/alloy-syntax-jsonnet/m
       address: '0.0.0.0:5514',
       protocol: 'udp',
       syslog_format: 'rfc3164',
-      // TODO: Alloy can't currently parse rfc3164 timestamps, see https://github.com/grafana/alloy/pull/2755
-      use_incoming_timestamp: false,
+      use_incoming_timestamp: true,
+      rfc3164_default_to_current_year: true,
       labels: {
         component: 'loki.source.syslog',
         protocol: 'udp',

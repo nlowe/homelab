@@ -79,7 +79,7 @@ local k = import 'k.libsonnet';
 {
   // From charts/alloy
   // See https://artifacthub.io/packages/helm/grafana/alloy?modal=values
-  alloy: $.new(registry='docker.io', name='grafana/alloy', version='v1.8.3'),
+  alloy: $.new(registry='docker.io', name='grafana/alloy', version='v1.9.0'),
   'prometheus-config-reloader': $.new(registry='quay.io', name='prometheus-operator/prometheus-config-reloader', version='v0.81.0'),
 } +
 {
