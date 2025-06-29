@@ -153,7 +153,6 @@ local image = import 'images.libsonnet';
       pm.spec.withPodMetricsEndpoints([
         pm.spec.podMetricsEndpoints.withPort('http') +
         pm.spec.podMetricsEndpoints.withPath('/api/prometheus') +
-        // TODO: Vault + AVP this
         pm.spec.podMetricsEndpoints.authorization.withType('Bearer') +
         pm.spec.podMetricsEndpoints.authorization.credentials.withName('hass-prometheus-token') +
         pm.spec.podMetricsEndpoints.authorization.credentials.withKey('token'),

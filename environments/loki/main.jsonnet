@@ -92,7 +92,6 @@ local image = (import 'images.libsonnet').loki;
     replication_factor: 3,
   },
 
-  // TODO: Get this from vault
   mountMinioSecret::
     k.core.v1.container.withEnvFromMixin([
       k.core.v1.envFromSource.secretRef.withName('storage-credentials'),

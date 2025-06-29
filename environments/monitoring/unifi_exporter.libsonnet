@@ -30,7 +30,6 @@ local image = import 'images.libsonnet';
             // save_alarms: true,
             // save_anomalies: true,
           },
-          // TODO: NVR?
         ],
       },
     },
@@ -60,7 +59,6 @@ local image = import 'images.libsonnet';
         port.newNamed(9130, 'http-metrics'),
       ]) +
       container.withEnvFrom([
-        // TODO: Vault + AVP this
         envFrom.secretRef.withName('unifi-exporter-credentials') +
         envFrom.withPrefix('UP_UNIFI_CONTROLLER_0_'),
       ]) +

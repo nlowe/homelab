@@ -75,7 +75,6 @@ local image = import 'images.libsonnet';
         tsc.withMatchLabelKeys(['pod-template-hash']),
       ]) +
       deploy.spec.template.spec.withVolumes([
-        // TODO: Vault?
         volume.fromSecret('creds', 'tunnel-credentials'),
         volume.fromConfigMap('config', $.tunnel.configMap.metadata.name, [
           { key: 'config.yaml', path: 'config.yaml' },

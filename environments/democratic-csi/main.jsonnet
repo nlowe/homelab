@@ -125,8 +125,7 @@ local image = (import 'images.libsonnet').democratic_csi;
             protocol: 'https',
             host: 'storage.home.nlowe.dev',
             port: 443,
-            // TODO: Secret?
-            apiKey: 'TODO: Get this from vault',
+            apiKey: '<placeholder>',
             apiVersion: '2',
           },
 

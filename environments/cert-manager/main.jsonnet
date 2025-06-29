@@ -105,7 +105,6 @@ local image = import 'images.libsonnet';
     issuer.spec.acme.privateKeySecretRef.withName('lets-encrypt') +
     issuer.spec.acme.withServer('https://acme-v02.api.letsencrypt.org/directory') +
     issuer.spec.acme.withSolvers([
-      // TODO: Get this from vault and codify
       cf.apiTokenSecretRef.withName('cloudflare-api-token') +
       cf.apiTokenSecretRef.withKey('api-token') +
       issuer.spec.acme.solvers.selector.withDnsZones('nlowe.dev'),

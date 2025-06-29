@@ -1,5 +1,6 @@
 local k = import 'k.libsonnet';
 local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.1/main.libsonnet').gateway;
+local prom = import 'github.com/jsonnet-libs/prometheus-operator-libsonnet/0.77/main.libsonnet';
 
 local image = import 'images.libsonnet';
 
@@ -75,6 +76,15 @@ local image = import 'images.libsonnet';
       sts.spec.template.spec.withHostNetwork(true) +
       sts.spec.template.spec.withDnsPolicy('ClusterFirstWithHostNet') +
       sts.spec.template.spec.dnsConfig.withOptions([{ name: 'ndots', value: '1' }]),
+
+    local pm = prom.monitoring.v1.podMonitor,
+    podMonitor:
+      pm.new('zwave-js-ui') +
+      pm.metadata.withNamespace($.namespace.metadata.name) +
+      pm.spec.withPodMetricsEndpoints([
+        pm.spec.podMetricsEndpoints.withPort('http'),
+      ]) +
+      pm.spec.selector.withMatchLabels($.zjs.statefulSet.spec.template.metadata.labels),
 
     local route = g.v1.httpRoute,
     local rule = route.spec.rules,

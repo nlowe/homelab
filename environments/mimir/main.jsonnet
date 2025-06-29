@@ -76,7 +76,6 @@ local image = (import 'images.libsonnet').mimir;
     'distributor.ha-tracker.enable': false,
   },
 
-  // TODO: Get this from vault
   mountMinioSecret::
     k.core.v1.container.withEnvFromMixin([
       k.core.v1.envFromSource.secretRef.withName('storage-credentials'),
