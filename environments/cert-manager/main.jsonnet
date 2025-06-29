@@ -62,12 +62,7 @@ local image = import 'images.libsonnet';
       },
 
       startupapicheck: {
-        image: {
-          image:: image['cert-manager-startupapicheck'],
-
-          repository: self.image.repo(),
-          tag: self.image.version,
-        },
+        enabled: false,
       },
     },
   },

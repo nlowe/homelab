@@ -14,5 +14,5 @@ apply:
 .PHONY: apply-all
 apply-all:
 	for env in $(shell tk env list --names); do \
-		tk apply $$env; \
+		tk diff $$env -s >/dev/null || tk apply $$env; \
 	done
