@@ -79,7 +79,7 @@ local k = import 'k.libsonnet';
     externalResizer: $.new(registry='registry.k8s.io', name='sig-storage/csi-resizer', version='v1.9.0'),
     externalSnapshotter: $.new(registry='registry.k8s.io', name='sig-storage/csi-snapshotter', version='v8.2.1'),
     externalHealthMonitorController: $.new(registry='registry.k8s.io', name='sig-storage/csi-external-health-monitor-controller', version='v0.14.0'),
-    driver: $.new(registry='docker.io', name='democraticcsi/democratic-csi', version='v1.9.4'),
+    driver: $.new(registry='docker.io', name='democraticcsi/democratic-csi', version='v1.9.3'),
     busybox: $.new(registry='docker.io', name='busybox', version='1.37.0'),
     driverRegistrar: $.new(registry='registry.k8s.io', name='sig-storage/csi-node-driver-registrar', version='v2.9.0'),
     csiProxy: $.new(registry='docker.io', name='democraticcsi/csi-grpc-proxy', version='v0.5.6'),
