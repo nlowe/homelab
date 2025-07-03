@@ -46,6 +46,8 @@ local k = import 'k.libsonnet';
   'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2025.6.3'),
   // https://github.com/zwave-js/zwave-js-ui/releases/latest
   'zwave-js-ui': $.new(name='zwavejs/zwave-js-ui', version='10.7.0'),
+  // https://hub.docker.com/r/vernemq/vernemq/tags
+  vernemq: $.new(name='vernemq/vernemq', version='2.0.1'),
 
   // https://github.com/brancz/kube-rbac-proxy/releases/latest
   'kube-rbac-proxy': $.new(registry='quay.io', name='brancz/kube-rbac-proxy', version='v0.19.1'),
