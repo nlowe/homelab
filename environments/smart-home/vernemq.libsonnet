@@ -88,8 +88,6 @@ local image = import 'images.libsonnet';
           // See: https://github.com/home-assistant/architecture/blob/master/adr/0010-integration-configuration.md
           cert.spec.withDuration('%dh' % (24 * 365 * 30)) +
           cert.spec.withRenewBefore('%dh' % ((24 * 365 * 30) - 30)),
-
-        z2m: self.new('zigbee2mqtt'),
       },
     },
 
@@ -216,7 +214,7 @@ local image = import 'images.libsonnet';
       container.livenessProbe.withTimeoutSeconds(5) +
       container.livenessProbe.withSuccessThreshold(1) +
       container.livenessProbe.withFailureThreshold(3) +
-      // TODO: Helm uses /health/ping here but this seems more correct, it will fail if any of the configured listeners is down or suspended
+      // TODO: Helm uses /health/ping here but this seems more correct, it will fail if any of the configured listeners are down or suspended
       container.readinessProbe.httpGet.withPath('/health/listeners') +
       container.readinessProbe.httpGet.withPort('api') +
       container.readinessProbe.withPeriodSeconds(10) +
@@ -284,7 +282,7 @@ local image = import 'images.libsonnet';
       pm.metadata.withNamespace($.namespace.metadata.name) +
       pm.metadata.withLabels(this.labels) +
       pm.spec.withPodMetricsEndpoints([
-        pm.spec.podMetricsEndpoints.withPort('metrics') +
+        pm.spec.podMetricsEndpoints.withPort('api') +
         pm.spec.podMetricsEndpoints.withMetricRelabelings([
           // This label conflicts with the kube node label, drop it, we don't need it
           relabel.withAction('labeldrop') +

@@ -48,6 +48,10 @@ local k = import 'k.libsonnet';
   'zwave-js-ui': $.new(name='zwavejs/zwave-js-ui', version='10.7.0'),
   // https://hub.docker.com/r/vernemq/vernemq/tags
   vernemq: $.new(name='vernemq/vernemq', version='2.0.1'),
+  // https://github.com/koenkk/zigbee2mqtt/pkgs/container/zigbee2mqtt
+  zigbee2mqtt: $.new(registry='ghcr.io', name='koenkk/zigbee2mqtt', version='2.5.1'),
+  // https://github.com/mikefarah/yq/pkgs/container/yq
+  yq: $.new(registry='ghcr.io', name='mikefarah/yq', version='4.45.4'),
 
   // https://github.com/brancz/kube-rbac-proxy/releases/latest
   'kube-rbac-proxy': $.new(registry='quay.io', name='brancz/kube-rbac-proxy', version='v0.19.1'),
