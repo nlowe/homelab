@@ -43,7 +43,7 @@ local image = import 'images.libsonnet';
           cert.spec.withSecretName('vernemq-selfsigned-ca') +
           cert.spec.subject.withOrganizations([$.namespace.metadata.name]) +
           cert.spec.withDuration('%dh' % (24 * 365 * 50)) +
-          cert.spec.withRenewBefore('%dh' % ((24 * 365 * 50) - 30)) +
+          cert.spec.withRenewBefore('%dh' % (24 * 30)) +
           cert.spec.privateKey.withAlgorithm('ECDSA') +
           cert.spec.privateKey.withSize(256) +
           cert.spec.secretTemplate.withLabels(this.labels) +
@@ -87,7 +87,7 @@ local image = import 'images.libsonnet';
           // See: https://www.home-assistant.io/blog/2020/04/14/the-future-of-yaml/
           // See: https://github.com/home-assistant/architecture/blob/master/adr/0010-integration-configuration.md
           cert.spec.withDuration('%dh' % (24 * 365 * 30)) +
-          cert.spec.withRenewBefore('%dh' % ((24 * 365 * 30) - 30)),
+          cert.spec.withRenewBefore('%dh' % (24 * 30)),
       },
     },
 

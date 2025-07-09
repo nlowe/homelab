@@ -37,9 +37,7 @@ local image = import 'images.libsonnet';
       serial: {
         // https://www.zigbee2mqtt.io/guide/adapters/emberznet.html#network-tcp
         adapter: 'ember',
-
-        // TODO: Enable this when we setup the adapter
-        // port: 'tcp://10.69.???.???:6638'
+        port: 'tcp://zigbee-controller.home.nlowe.dev:6638',
       },
 
       mqtt: {
@@ -155,8 +153,7 @@ local image = import 'images.libsonnet';
     local volume = k.core.v1.volume,
     local tsc = k.core.v1.topologySpreadConstraint,
     statefulSet:
-      // TODO: Scale up when we deploy the adapter
-      sts.new('zigbee2mqtt', 0, [self.container], [self.pvcTemplate], null) +
+      sts.new('zigbee2mqtt', 1, [self.container], [self.pvcTemplate], null) +
       sts.metadata.withNamespace($.namespace.metadata.name) +
       sts.metadata.withLabels(self.labels) +
       sts.spec.withServiceName(self.service.headless.metadata.name) +
@@ -175,6 +172,7 @@ local image = import 'images.libsonnet';
           // zigbee2mqtt doesn't seem to support certificate re-loading. Make it valid for a super long time, we'll get
           // a fresh cert any time the container restarts. 30 years of uptime is super optimistic, but one can dream.
           'csi.cert-manager.io/duration': '%dh' % (24 * 365 * 30),
+          'csi.cert-manager.io/renew-before': '%dh' % (24 * 30),
           'csi.cert-manager.io/common-name': '${POD_NAME}.zigbee2mqtt-headless.${POD_NAMESPACE}.svc.cluster.local',
           'csi.cert-manager.io/key-usages': 'client auth',
         }) +
