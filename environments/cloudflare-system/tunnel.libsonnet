@@ -1,5 +1,7 @@
 local k = import 'k.libsonnet';
 
+local es = (import 'github.com/nlowe/external-secrets-libsonnet/0.18/main.libsonnet').nogroup.v1.externalSecret;
+
 local image = import 'images.libsonnet';
 
 {
@@ -55,6 +57,13 @@ local image = import 'images.libsonnet';
       container.withVolumeMounts([
         mount.new('config', '/etc/cloudflared/config', readOnly=true),
         mount.new('creds', '/etc/cloudflared/creds', readOnly=true),
+      ]),
+
+    tunnelCreds:
+      $._config.externalSecret.new('tunnel-credentials', $.namespace.metadata.name) +
+      es.spec.withData([
+        es.spec.data.withSecretKey('credentials.json') +
+        es.spec.data.remoteRef.withKey('7bc66261-3d00-4e2d-91e2-b3180151b182'),
       ]),
 
     local deploy = k.apps.v1.deployment,

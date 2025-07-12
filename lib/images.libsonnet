@@ -132,4 +132,12 @@ local k = import 'k.libsonnet';
   // https://github.com/rancher/local-path-provisioner/releases/latest
   // See https://github.com/rancher/local-path-provisioner/blob/master/deploy/local-path-storage.yaml
   'local-path-provisioner': $.new(name='rancher/local-path-provisioner', version='v0.0.31'),
+} +
+{
+  // https://artifacthub.io/packages/helm/external-secrets-operator/external-secrets?modal=values
+
+  // https://github.com/external-secrets/external-secrets/releases/latest
+  'external-secrets': $.new(registry='oci.external-secrets.io', name='external-secrets/external-secrets', version='v0.18.2'),
+  // https://github.com/external-secrets/bitwarden-sdk-server/releases/latest
+  'bitwarden-sdk-server': $.new(registry='ghcr.io', name='external-secrets/bitwarden-sdk-server', version='v0.5.0'),
 }

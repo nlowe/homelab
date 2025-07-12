@@ -7,6 +7,8 @@ local cm = import 'github.com/jsonnet-libs/cert-manager-libsonnet/1.15/main.libs
 local issuer = cm.nogroup.v1.clusterIssuer;
 local cf = issuer.spec.acme.solvers.dns01.cloudflare;
 
+local es = (import 'github.com/nlowe/external-secrets-libsonnet/0.18/main.libsonnet').nogroup.v1.externalSecret;
+
 local image = import 'images.libsonnet';
 
 (import 'homelab.libsonnet') +
@@ -101,6 +103,13 @@ local image = import 'images.libsonnet';
     },
   }),
 
+  cloudflare_api_token:
+    $._config.externalSecret.new('cloudflare-api-token', $.namespace.metadata.name) +
+    es.spec.withData([
+      es.spec.data.withSecretKey('api-token') +
+      es.spec.data.remoteRef.withKey('4c70fbf0-b953-43d2-b526-b318014facee'),
+    ]),
+
   issuer:
     issuer.new($._config.letsEncrypt.issuer.name) +
     issuer.metadata.withNamespace($.namespace.metadata.name) +
@@ -108,7 +117,7 @@ local image = import 'images.libsonnet';
     issuer.spec.acme.privateKeySecretRef.withName('lets-encrypt') +
     issuer.spec.acme.withServer('https://acme-v02.api.letsencrypt.org/directory') +
     issuer.spec.acme.withSolvers([
-      cf.apiTokenSecretRef.withName('cloudflare-api-token') +
+      cf.apiTokenSecretRef.withName($.cloudflare_api_token.metadata.name) +
       cf.apiTokenSecretRef.withKey('api-token') +
       issuer.spec.acme.solvers.selector.withDnsZones('nlowe.dev'),
     ]),

@@ -4,6 +4,10 @@ local cm = import 'github.com/jsonnet-libs/cert-manager-libsonnet/1.15/main.libs
 local cert = cm.nogroup.v1.certificate;
 local issuer = cm.nogroup.v1.clusterIssuer;
 
+local es = import 'github.com/nlowe/external-secrets-libsonnet/0.18/main.libsonnet';
+local clusterSecretStore = es.nogroup.v1.clusterSecretStore;
+local externalSecret = es.nogroup.v1.externalSecret;
+
 local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.1/main.libsonnet').gateway;
 
 {
@@ -54,6 +58,18 @@ local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.1/main.libson
           cert.spec.issuerRef.withKind($._config.letsEncrypt.issuer.kind) +
           cert.spec.issuerRef.withName($._config.letsEncrypt.issuer.name),
       },
+    },
+
+    externalSecret: {
+      kind: clusterSecretStore.new('').kind,
+      storeName: 'bitwarden',
+
+      new(name, namespace, refreshPolicy='OnChange')::
+        externalSecret.new(name) +
+        externalSecret.metadata.withNamespace(namespace) +
+        externalSecret.spec.withRefreshPolicy(refreshPolicy) +
+        externalSecret.spec.secretStoreRef.withKind($._config.externalSecret.kind) +
+        externalSecret.spec.secretStoreRef.withName($._config.externalSecret.storeName),
     },
   },
 }

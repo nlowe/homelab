@@ -294,6 +294,16 @@
     {
       "source": {
         "git": {
+          "remote": "https://github.com/nlowe/external-secrets-libsonnet.git",
+          "subdir": "0.18"
+        }
+      },
+      "version": "e62a4987867e9a236645ef2e6553286d26999928",
+      "sum": "/22JQ3q0+JLYkHyxpnr+2bmzMyDiRdumxUSt5/Dwz1U="
+    },
+    {
+      "source": {
+        "git": {
           "remote": "https://github.com/prometheus-operator/kube-prometheus.git",
           "subdir": "jsonnet/kube-prometheus/lib"
         }

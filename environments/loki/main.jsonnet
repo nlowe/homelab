@@ -4,6 +4,8 @@ local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.1/main.libson
 local mixin = import 'github.com/grafana/loki/production/loki-mixin/mixin.libsonnet';
 local prom = import 'github.com/jsonnet-libs/prometheus-operator-libsonnet/0.77/main.libsonnet';
 
+local es = (import 'github.com/nlowe/external-secrets-libsonnet/0.18/main.libsonnet').nogroup.v1.externalSecret;
+
 local image = (import 'images.libsonnet').loki;
 
 (import 'homelab.libsonnet') +
@@ -92,9 +94,19 @@ local image = (import 'images.libsonnet').loki;
     replication_factor: 3,
   },
 
+  storageCredentialsSecret:
+    $._config.externalSecret.new('storage-credentials', $._config.namespace) +
+    es.spec.withData([
+      es.spec.data.withSecretKey('LOKI_S3_ACCESS_KEY_ID') +
+      es.spec.data.remoteRef.withKey('55ab2b33-2843-4026-a6d2-b3180157327b'),
+
+      es.spec.data.withSecretKey('LOKI_S3_SECRET_ACCESS_KEY') +
+      es.spec.data.remoteRef.withKey('10a25cb2-f3a5-4e00-b0d0-b3180157548e'),
+    ]),
+
   mountMinioSecret::
     k.core.v1.container.withEnvFromMixin([
-      k.core.v1.envFromSource.secretRef.withName('storage-credentials'),
+      k.core.v1.envFromSource.secretRef.withName($.storageCredentialsSecret.metadata.name),
     ]),
 
   ingester_container+:: $.mountMinioSecret,
@@ -137,49 +149,49 @@ local image = (import 'images.libsonnet').loki;
               endpoint.withPort('http-metrics'),
             ]) +
             pm.spec.selector.withMatchLabels({ name: 'memcached-index-queries' }),
-
-          distributor:
-            pm.new('distributor') +
-            pm.spec.withPodMetricsEndpoints([
-              endpoint.withPort('http-metrics'),
-            ]) +
-            pm.spec.selector.withMatchLabels({ name: 'distributor' }),
-
-          query_frontend:
-            pm.new('query-frontend') +
-            pm.spec.withPodMetricsEndpoints([
-              endpoint.withPort('http-metrics'),
-            ]) +
-            pm.spec.selector.withMatchLabels({ name: 'query-frontend' }),
-
-          querier:
-            pm.new('querier') +
-            pm.spec.withPodMetricsEndpoints([
-              endpoint.withPort('http-metrics'),
-            ]) +
-            pm.spec.selector.withMatchLabels({ name: 'querier' }),
-
-          ingester:
-            pm.new('ingester') +
-            pm.spec.withPodMetricsEndpoints([
-              endpoint.withPort('http-metrics'),
-            ]) +
-            pm.spec.selector.withMatchLabels({ 'rollout-group': 'ingester' }),
-
-          compactor:
-            pm.new('compactor') +
-            pm.spec.withPodMetricsEndpoints([
-              endpoint.withPort('http-metrics'),
-            ]) +
-            pm.spec.selector.withMatchLabels({ name: 'compactor' }),
-
-          rolloutOperator:
-            pm.new('rollout-operator') +
-            pm.spec.withPodMetricsEndpoints([
-              endpoint.withPort('http-metrics'),
-            ]) +
-            pm.spec.selector.withMatchLabels({ name: 'rollout-operator' }),
         },
+
+        distributor:
+          pm.new('distributor') +
+          pm.spec.withPodMetricsEndpoints([
+            endpoint.withPort('http-metrics'),
+          ]) +
+          pm.spec.selector.withMatchLabels({ name: 'distributor' }),
+
+        query_frontend:
+          pm.new('query-frontend') +
+          pm.spec.withPodMetricsEndpoints([
+            endpoint.withPort('http-metrics'),
+          ]) +
+          pm.spec.selector.withMatchLabels({ name: 'query-frontend' }),
+
+        querier:
+          pm.new('querier') +
+          pm.spec.withPodMetricsEndpoints([
+            endpoint.withPort('http-metrics'),
+          ]) +
+          pm.spec.selector.withMatchLabels({ name: 'querier' }),
+
+        ingester:
+          pm.new('ingester') +
+          pm.spec.withPodMetricsEndpoints([
+            endpoint.withPort('http-metrics'),
+          ]) +
+          pm.spec.selector.withMatchLabels({ 'rollout-group': 'ingester' }),
+
+        compactor:
+          pm.new('compactor') +
+          pm.spec.withPodMetricsEndpoints([
+            endpoint.withPort('http-metrics'),
+          ]) +
+          pm.spec.selector.withMatchLabels({ name: 'compactor' }),
+
+        rolloutOperator:
+          pm.new('rollout-operator') +
+          pm.spec.withPodMetricsEndpoints([
+            endpoint.withPort('http-metrics'),
+          ]) +
+          pm.spec.selector.withMatchLabels({ name: 'rollout-operator' }),
       },
     },
   },

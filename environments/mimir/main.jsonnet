@@ -4,6 +4,8 @@ local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.1/main.libson
 local mixin = import 'github.com/grafana/mimir/operations/mimir-mixin/mixin.libsonnet';
 local prom = import 'github.com/jsonnet-libs/prometheus-operator-libsonnet/0.77/main.libsonnet';
 
+local es = (import 'github.com/nlowe/external-secrets-libsonnet/0.18/main.libsonnet').nogroup.v1.externalSecret;
+
 local image = (import 'images.libsonnet').mimir;
 
 (import 'homelab.libsonnet') +
@@ -76,9 +78,19 @@ local image = (import 'images.libsonnet').mimir;
     'distributor.ha-tracker.enable': false,
   },
 
+  storageCredentialsSecret:
+    $._config.externalSecret.new('storage-credentials', $._config.namespace) +
+    es.spec.withData([
+      es.spec.data.withSecretKey('MIMIR_S3_ACCESS_KEY_ID') +
+      es.spec.data.remoteRef.withKey('f9509267-d0c2-4c0d-9bf4-b31801580da4'),
+
+      es.spec.data.withSecretKey('MIMIR_S3_SECRET_ACCESS_KEY') +
+      es.spec.data.remoteRef.withKey('3792ddc3-1fba-4c09-b91a-b31801582588'),
+    ]),
+
   mountMinioSecret::
     k.core.v1.container.withEnvFromMixin([
-      k.core.v1.envFromSource.secretRef.withName('storage-credentials'),
+      k.core.v1.envFromSource.secretRef.withName($.storageCredentialsSecret.metadata.name),
     ]),
 
   mimir_write_container+:: $.mountMinioSecret,

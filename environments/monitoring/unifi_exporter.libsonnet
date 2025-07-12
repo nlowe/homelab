@@ -1,6 +1,8 @@
 local prom = import 'github.com/jsonnet-libs/prometheus-operator-libsonnet/0.77/main.libsonnet';
 local k = import 'k.libsonnet';
 
+local es = (import 'github.com/nlowe/external-secrets-libsonnet/0.18/main.libsonnet').nogroup.v1.externalSecret;
+
 local image = import 'images.libsonnet';
 
 {
@@ -46,6 +48,16 @@ local image = import 'images.libsonnet';
       cm.metadata.withNamespace($.namespace.metadata.name) +
       cm.metadata.withLabels($.unifi_exporter.labels),
 
+    credentialsSecret:
+      $._config.externalSecret.new('unifi-exporter-credentials', $.namespace.metadata.name) +
+      es.spec.withData([
+        es.spec.data.withSecretKey('USER') +
+        es.spec.data.remoteRef.withKey('20f45bd9-9c9f-4073-b398-b3180158eb5d'),
+
+        es.spec.data.withSecretKey('PASS') +
+        es.spec.data.remoteRef.withKey('7c04d248-c14b-4477-8493-b318015902f4'),
+      ]),
+
     local container = k.core.v1.container,
     local port = k.core.v1.containerPort,
     local envFrom = k.core.v1.envFromSource,
@@ -59,7 +71,7 @@ local image = import 'images.libsonnet';
         port.newNamed(9130, 'http-metrics'),
       ]) +
       container.withEnvFrom([
-        envFrom.secretRef.withName('unifi-exporter-credentials') +
+        envFrom.secretRef.withName($.unifi_exporter.credentialsSecret.metadata.name) +
         envFrom.withPrefix('UP_UNIFI_CONTROLLER_0_'),
       ]) +
       container.withVolumeMounts([

@@ -3,8 +3,11 @@ local k = import 'k.libsonnet';
 local tk = import 'github.com/grafana/jsonnet-libs/tanka-util/main.libsonnet';
 local helm = tk.helm.new(std.thisFile);
 
+local es = (import 'github.com/nlowe/external-secrets-libsonnet/0.18/main.libsonnet').nogroup.v1.externalSecret;
+
 local image = (import 'images.libsonnet').democratic_csi;
 
+(import 'homelab.libsonnet') +
 {
   _config+:: {
     iscsi: {
@@ -125,7 +128,7 @@ local image = (import 'images.libsonnet').democratic_csi;
             protocol: 'https',
             host: 'storage.home.nlowe.dev',
             port: 443,
-            apiKey: '<placeholder>',
+            apiKey: '{{ .truenasAPIKey }}',
             apiVersion: '2',
           },
 
@@ -174,13 +177,19 @@ local image = (import 'images.libsonnet').democratic_csi;
     namespace: $.namespace.metadata.name,
     values: $._config.iscsi,
   }) + {
-    // TODO: Re-enable this when we can fetch the API Token from vault
-    secret_truenas_iscsi_democratic_csi_driver_config:: null,
-    daemon_set_truenas_iscsi_democratic_csi_node+: {
-      spec+: { template+: { metadata+: { annotations+: { 'checksum/secret':: null } } } },
-    },
-    deployment_truenas_iscsi_democratic_csi_controller+: {
-      spec+: { template+: { metadata+: { annotations+: { 'checksum/secret':: null } } } },
-    },
+    // We need to run this through external-secrets to pull in the apiKey, so force this version to be private
+    secret_truenas_iscsi_democratic_csi_driver_config+:: {},
   },
+
+  iscsiConfigSecret:
+    $._config.externalSecret.new(
+      name=$.iscsi.secret_truenas_iscsi_democratic_csi_driver_config.metadata.name,
+      namespace=$.iscsi.secret_truenas_iscsi_democratic_csi_driver_config.metadata.namespace,
+    ) +
+    es.spec.withData([
+      es.spec.data.withSecretKey('truenasAPIKey') +
+      es.spec.data.remoteRef.withKey('7c436c12-f3f2-442d-b13a-b318015438e0'),
+    ]) +
+    es.spec.target.template.withEngineVersion('v2') +
+    es.spec.target.template.withData($.iscsi.secret_truenas_iscsi_democratic_csi_driver_config.stringData),
 }

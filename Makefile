@@ -8,8 +8,7 @@ restore:
 	tk tool charts vendor
 
 .PHONY: apply
-apply:
-	tk apply environments/default
+apply: apply-all
 
 .PHONY: apply-all
 apply-all:

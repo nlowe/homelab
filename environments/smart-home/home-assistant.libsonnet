@@ -3,6 +3,8 @@ local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.1/main.libson
 
 local prom = import 'github.com/jsonnet-libs/prometheus-operator-libsonnet/0.77/main.libsonnet';
 
+local es = (import 'github.com/nlowe/external-secrets-libsonnet/0.18/main.libsonnet').nogroup.v1.externalSecret;
+
 local image = import 'images.libsonnet';
 
 {
@@ -102,6 +104,16 @@ local image = import 'images.libsonnet';
         ]),
     },
 
+    github_ssh_key_secret:
+      $._config.externalSecret.new('github-ssh-key', $.namespace.metadata.name) +
+      es.spec.withData([
+        es.spec.data.withSecretKey('id_ed25519') +
+        es.spec.data.remoteRef.withKey('de805969-0577-4c13-930d-b318015a29d0'),
+
+        es.spec.data.withSecretKey('id_ed25519.pub') +
+        es.spec.data.remoteRef.withKey('03aecc60-b715-4b52-83ea-b318015a39d8'),
+      ]),
+
     local sts = k.apps.v1.statefulSet,
     local volume = k.core.v1.volume,
     local pvc = k.core.v1.persistentVolumeClaim,
@@ -138,12 +150,19 @@ local image = import 'images.libsonnet';
       sts.spec.template.spec.withVolumes([
         volume.fromSecret('config', $.homeAssistant.configSecret.metadata.name),
 
-        volume.fromSecret('github-ssh-key', 'github-ssh-key') +
+        volume.fromSecret('github-ssh-key', $.homeAssistant.github_ssh_key_secret.metadata.name) +
         volume.secret.withDefaultMode(std.parseOctal('0600')) +
         volume.secret.withItems([
           { key: 'id_ed25519', path: 'id_ed25519' },
           { key: 'id_ed25519.pub', path: 'id_ed25519.pub' },
         ]),
+      ]),
+
+    podMonitorToken:
+      $._config.externalSecret.new('hass-prometheus-token', $.namespace.metadata.name) +
+      es.spec.withData([
+        es.spec.data.withSecretKey('token') +
+        es.spec.data.remoteRef.withKey('7fd81213-f7a0-4768-b751-b318015ab910'),
       ]),
 
     local pm = prom.monitoring.v1.podMonitor,
@@ -154,7 +173,7 @@ local image = import 'images.libsonnet';
         pm.spec.podMetricsEndpoints.withPort('http') +
         pm.spec.podMetricsEndpoints.withPath('/api/prometheus') +
         pm.spec.podMetricsEndpoints.authorization.withType('Bearer') +
-        pm.spec.podMetricsEndpoints.authorization.credentials.withName('hass-prometheus-token') +
+        pm.spec.podMetricsEndpoints.authorization.credentials.withName($.homeAssistant.podMonitorToken.metadata.name) +
         pm.spec.podMetricsEndpoints.authorization.credentials.withKey('token'),
       ]) +
       pm.spec.selector.withMatchLabels($.homeAssistant.statefulSet.spec.template.metadata.labels),

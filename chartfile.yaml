@@ -8,6 +8,10 @@ repositories:
   url: https://charts.jetstack.io
 - name: grafana
   url: https://grafana.github.io/helm-charts
+- name: externalSecrets
+  url: https://charts.external-secrets.io
+- name: externalSecretsGHCR
+  url: oci://ghcr.io/external-secrets/charts
 requires:
 - chart: dcsi/democratic-csi
   version: 0.15.0
@@ -17,4 +21,8 @@ requires:
   version: v0.10.4
 - chart: grafana/alloy
   version: 1.1.2
+- chart: externalSecrets/external-secrets
+  version: v0.18.2
+- chart: externalSecretsGHCR/bitwarden-sdk-server
+  version: v0.5.0
 version: 1

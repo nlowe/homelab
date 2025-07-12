@@ -1,0 +1,14 @@
+{
+  "apiVersion": "tanka.dev/v1alpha1",
+  "kind": "Environment",
+  "metadata": {
+    "name": "environments/external-secrets"
+  },
+  "spec": {
+    "apiServer": "https://k8s.home.nlowe.dev:6443",
+    "applyStrategy": "server",
+    "namespace": "external-secrets",
+    "resourceDefaults": {},
+    "expectVersions": {}
+  }
+}
