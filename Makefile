@@ -15,3 +15,14 @@ apply-all:
 	for env in $(shell tk env list --names); do \
 		tk diff $$env -s >/dev/null || tk apply $$env; \
 	done
+
+.PHONY: qolsysgw-build
+qolsysgw-build:
+	$(MAKE) -C images/qolsysgw build
+
+.PHONY: qolsysgw-push
+qolsysgw-push:
+	$(MAKE) -C images/qolsysgw push
+
+.PHONY: qolsysgw
+qolsysgw: qolsysgw-push

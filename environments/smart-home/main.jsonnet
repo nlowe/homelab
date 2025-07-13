@@ -3,6 +3,7 @@ local k = import 'k.libsonnet';
 (import 'homelab.libsonnet') +
 (import 'esphome.libsonnet') +
 (import 'home-assistant.libsonnet') +
+(import 'qolsysgw.libsonnet') +
 (import 'vernemq.libsonnet') +
 (import 'zigbee2mqtt.libsonnet') +
 (import 'zwave-js-ui.libsonnet') +

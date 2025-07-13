@@ -140,4 +140,10 @@ local k = import 'k.libsonnet';
   'external-secrets': $.new(registry='oci.external-secrets.io', name='external-secrets/external-secrets', version='v0.18.2'),
   // https://github.com/external-secrets/bitwarden-sdk-server/releases/latest
   'bitwarden-sdk-server': $.new(registry='ghcr.io', name='external-secrets/bitwarden-sdk-server', version='v0.5.0'),
+} +
+{
+  // images/qolsysgw/Dockerfile
+  // https://github.com/xaf/qolsysgw/releases/latest
+  // https://github.com/AppDaemon/appdaemon/releases/latest
+  qolsysgw: $.new(name='nlowe/qolsysgw', version='v1.6.2-appdaemon4.5.11'),
 }

@@ -300,6 +300,18 @@ local image = import 'images.libsonnet';
       $._config.caddy.gateway.route() +
       route.spec.withHostnames(['vernemq.home.nlowe.dev']) +
       route.spec.withRules([
+        // The status page is hosted at /status, and the root URL just 404s, so redirect to the status page to make it
+        // easier to get to in the first place.
+        rule.withMatches([
+          rule.matches.path.withType('Exact') +
+          rule.matches.path.withValue('/'),
+        ]) +
+        rule.withFilters([
+          rule.filters.withType('RequestRedirect') +
+          rule.filters.requestRedirect.path.withType('ReplaceFullPath') +
+          rule.filters.requestRedirect.path.withReplaceFullPath('/status'),
+        ]),
+
         rule.withBackendRefs([
           rule.backendRefs.withName(this.service.api.metadata.name) +
           rule.backendRefs.withNamespace(this.service.api.metadata.namespace) +
