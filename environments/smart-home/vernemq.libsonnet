@@ -88,6 +88,12 @@ local image = import 'images.libsonnet';
           // See: https://github.com/home-assistant/architecture/blob/master/adr/0010-integration-configuration.md
           cert.spec.withDuration('%dh' % (24 * 365 * 30)) +
           cert.spec.withRenewBefore('%dh' % (24 * 30)),
+
+        mqttx:
+          self.new('mqttx') +
+          // Long-lived cert for mqttx, runs outside the cluster
+          cert.spec.withDuration('%dh' % (24 * 365 * 30)) +
+          cert.spec.withRenewBefore('%dh' % (24 * 30)),
       },
     },
 
@@ -109,6 +115,14 @@ local image = import 'images.libsonnet';
           port.withName('mqtts') + port.withPort(8883) + port.withTargetPort('mqtts'),
           port.withName('wss') + port.withPort(8443) + port.withTargetPort('wss'),
         ]),
+
+      mqttsExternal:
+        svc.new('vernemq-mqtts', this.labels, [
+          port.withName('mqtts') + port.withPort(8883) + port.withTargetPort('mqtts'),
+        ]) +
+        svc.metadata.withNamespace($.namespace.metadata.name) +
+        svc.metadata.withLabels(this.labels) +
+        $._config.cilium.bgp.serviceMixins.vernemq_mqtts,
 
       headless:
         this.service.app +
@@ -263,6 +277,7 @@ local image = import 'images.libsonnet';
             'vernemq.${POD_NAMESPACE}',
             'vernemq.${POD_NAMESPACE}.svc',
             'vernemq.${POD_NAMESPACE}.svc.cluster.local',
+            'mqtt.home.nlowe.dev',
           ]),
           'csi.cert-manager.io/key-usages': 'server auth',
         }) +
