@@ -43,7 +43,8 @@ local k = import 'k.libsonnet';
   // https://github.com/esphome/esphome/pkgs/container/esphome
   esphome: $.new(registry='ghcr.io', name='esphome/esphome', version='2025.7.2'),
   // https://github.com/home-assistant/core/pkgs/container/home-assistant
-  'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2025.7.2'),
+  // We can't upgrade to 2025.7 until 2025.7.3 because of https://github.com/home-assistant/core/issues/148969
+  'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2025.6.3'),
   // https://github.com/zwave-js/zwave-js-ui/releases/latest
   'zwave-js-ui': $.new(name='zwavejs/zwave-js-ui', version='10.9.0'),
   // https://hub.docker.com/r/vernemq/vernemq/tags

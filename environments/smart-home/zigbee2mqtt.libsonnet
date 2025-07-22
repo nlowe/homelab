@@ -30,7 +30,7 @@ local image = import 'images.libsonnet';
       homeassistant: {
         enabled: true,
         discovery_topic: 'homeassistant',
-        status_topic: 'hass/status',
+        status_topic: 'homeassistant/status',
       },
 
       permit_join: false,
