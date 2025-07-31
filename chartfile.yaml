@@ -16,11 +16,11 @@ requires:
 - chart: dcsi/democratic-csi
   version: 0.15.0
 - chart: jetstack/cert-manager
-  version: v1.18.1
+  version: v1.18.2
 - chart: jetstack/cert-manager-csi-driver
   version: v0.10.4
 - chart: grafana/alloy
-  version: 1.1.2
+  version: 1.2.0
 - chart: externalSecrets/external-secrets
   version: v0.18.2
 - chart: externalSecretsGHCR/bitwarden-sdk-server

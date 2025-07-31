@@ -35,30 +35,30 @@ local k = import 'k.libsonnet';
   'caddy-gateway': $.new(registry='ghcr.io', name='caddyserver/gateway', version='v0.1.0'),
 
   // https://www.linuxserver.io/our-images
-  'code-server': $.new(registry='lscr.io', name='linuxserver/code-server', version='4.102.1-ls287'),
+  'code-server': $.new(registry='lscr.io', name='linuxserver/code-server', version='4.102.2-ls288'),
 
   // https://github.com/cloudflare/cloudflared/releases/latest
   cloudflared: $.new(name='cloudflare/cloudflared', version='2025.7.0'),
 
   // https://github.com/esphome/esphome/pkgs/container/esphome
-  esphome: $.new(registry='ghcr.io', name='esphome/esphome', version='2025.7.2'),
+  esphome: $.new(registry='ghcr.io', name='esphome/esphome', version='2025.7.4'),
   // https://github.com/home-assistant/core/pkgs/container/home-assistant
   // We can't upgrade to 2025.7 until 2025.7.3 because of https://github.com/home-assistant/core/issues/148969
-  'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2025.6.3'),
+  'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2025.7.4'),
   // https://github.com/zwave-js/zwave-js-ui/releases/latest
-  'zwave-js-ui': $.new(name='zwavejs/zwave-js-ui', version='10.9.0'),
+  'zwave-js-ui': $.new(name='zwavejs/zwave-js-ui', version='11.0.0'),
   // https://hub.docker.com/r/vernemq/vernemq/tags
   vernemq: $.new(name='vernemq/vernemq', version='2.1.1'),
   // https://github.com/koenkk/zigbee2mqtt/pkgs/container/zigbee2mqtt
   zigbee2mqtt: $.new(registry='ghcr.io', name='koenkk/zigbee2mqtt', version='2.5.1'),
   // https://github.com/mikefarah/yq/pkgs/container/yq
-  yq: $.new(registry='ghcr.io', name='mikefarah/yq', version='4.46.1'),
+  yq: $.new(registry='ghcr.io', name='mikefarah/yq', version='4.47.1'),
 
   // https://github.com/brancz/kube-rbac-proxy/releases/latest
   'kube-rbac-proxy': $.new(registry='quay.io', name='brancz/kube-rbac-proxy', version='v0.19.1'),
 
   // https://github.com/grafana/grafana/releases/latest
-  grafana: $.new(name='grafana/grafana', version='12.0.2'),
+  grafana: $.new(name='grafana/grafana', version='12.1.0'),
   // https://github.com/kubernetes/kube-state-metrics/releases/latest
   'kube-state-metrics': $.new(registry='registry.k8s.io', name='kube-state-metrics/kube-state-metrics', version='v2.16.0'),
   // https://github.com/unpoller/unpoller/pkgs/container/unpoller
@@ -68,7 +68,7 @@ local k = import 'k.libsonnet';
   // From charts/cert-manager
   // See https://github.com/cert-manager/cert-manager/releases/latest
   // See https://artifacthub.io/packages/helm/cert-manager/cert-manager?modal=values
-  ['cert-manager-%s' % name]: $.new(registry='quay.io', name='jetstack/cert-manager-%s' % name, version='v1.18.1')
+  ['cert-manager-%s' % name]: $.new(registry='quay.io', name='jetstack/cert-manager-%s' % name, version='v1.18.2')
   for name in ['controller', 'webhook', 'cainjector', 'acmesolver', 'startupapicheck']
 } +
 {
@@ -106,9 +106,9 @@ local k = import 'k.libsonnet';
   // https://github.com/grafana/rollout-operator/releases
   grafana_rollout_operator: $.new(name='grafana/rollout-operator', version='v0.28.0'),
   // https://github.com/memcached/memcached/tags
-  memcached: $.new(name='memcached', version='1.6.38-alpine'),
+  memcached: $.new(name='memcached', version='1.6.39-alpine'),
   // See https://github.com/prometheus/memcached_exporter/releases/latest
-  memcachedExporter: $.new(name='prom/memcached-exporter', version='v0.15.2'),
+  memcachedExporter: $.new(name='prom/memcached-exporter', version='v0.15.3'),
 
 }
 {
@@ -116,7 +116,7 @@ local k = import 'k.libsonnet';
   // See https://github.com/grafana/loki/blob/main/production/ksonnet/loki/images.libsonnet
   // See https://github.com/grafana/loki/blob/main/production/ksonnet/loki/rollout-operator.libsonnet
   loki:: {
-    loki: $.new(name='grafana/loki', version='3.5.2'),
+    loki: $.new(name='grafana/loki', version='3.5.3'),
     memcached: $.memcached,
     memcachedExporter: $.memcachedExporter,
     rollout_operator: $.grafana_rollout_operator,
@@ -137,7 +137,7 @@ local k = import 'k.libsonnet';
 {
   // https://github.com/rancher/local-path-provisioner/releases/latest
   // See https://github.com/rancher/local-path-provisioner/blob/master/deploy/local-path-storage.yaml
-  'local-path-provisioner': $.new(name='rancher/local-path-provisioner', version='v0.0.31'),
+  'local-path-provisioner': $.new(name='rancher/local-path-provisioner', version='v0.0.32'),
 } +
 {
   // https://artifacthub.io/packages/helm/external-secrets-operator/external-secrets?modal=values
