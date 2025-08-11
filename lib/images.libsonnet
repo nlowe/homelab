@@ -35,22 +35,21 @@ local k = import 'k.libsonnet';
   'caddy-gateway': $.new(registry='ghcr.io', name='caddyserver/gateway', version='v0.1.0'),
 
   // https://www.linuxserver.io/our-images
-  'code-server': $.new(registry='lscr.io', name='linuxserver/code-server', version='4.102.2-ls288'),
+  'code-server': $.new(registry='lscr.io', name='linuxserver/code-server', version='4.102.3-ls290'),
 
   // https://github.com/cloudflare/cloudflared/releases/latest
-  cloudflared: $.new(name='cloudflare/cloudflared', version='2025.7.0'),
+  cloudflared: $.new(name='cloudflare/cloudflared', version='2025.8.0'),
 
   // https://github.com/esphome/esphome/pkgs/container/esphome
-  esphome: $.new(registry='ghcr.io', name='esphome/esphome', version='2025.7.4'),
+  esphome: $.new(registry='ghcr.io', name='esphome/esphome', version='2025.7.5'),
   // https://github.com/home-assistant/core/pkgs/container/home-assistant
-  // We can't upgrade to 2025.7 until 2025.7.3 because of https://github.com/home-assistant/core/issues/148969
-  'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2025.7.4'),
+  'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2025.8.0'),
   // https://github.com/zwave-js/zwave-js-ui/releases/latest
-  'zwave-js-ui': $.new(name='zwavejs/zwave-js-ui', version='11.0.0'),
+  'zwave-js-ui': $.new(name='zwavejs/zwave-js-ui', version='11.1.0'),
   // https://hub.docker.com/r/vernemq/vernemq/tags
   vernemq: $.new(name='vernemq/vernemq', version='2.1.1'),
   // https://github.com/koenkk/zigbee2mqtt/pkgs/container/zigbee2mqtt
-  zigbee2mqtt: $.new(registry='ghcr.io', name='koenkk/zigbee2mqtt', version='2.5.1'),
+  zigbee2mqtt: $.new(registry='ghcr.io', name='koenkk/zigbee2mqtt', version='2.6.0'),
   // https://github.com/mikefarah/yq/pkgs/container/yq
   yq: $.new(registry='ghcr.io', name='mikefarah/yq', version='4.47.1'),
 
@@ -98,9 +97,9 @@ local k = import 'k.libsonnet';
   // From charts/alloy
   // See https://artifacthub.io/packages/helm/grafana/alloy?modal=values
   // https://github.com/grafana/alloy/releases/latest
-  alloy: $.new(registry='docker.io', name='grafana/alloy', version='v1.10.0'),
+  alloy: $.new(registry='docker.io', name='grafana/alloy', version='v1.10.1'),
   // https://github.com/prometheus-operator/prometheus-operator/pkgs/container/prometheus-config-reloader
-  'prometheus-config-reloader': $.new(registry='ghcr.io', name='prometheus-operator/prometheus-config-reloader', version='v0.84.0'),
+  'prometheus-config-reloader': $.new(registry='ghcr.io', name='prometheus-operator/prometheus-config-reloader', version='v0.84.1'),
 } +
 {
   // https://github.com/grafana/rollout-operator/releases
@@ -143,7 +142,7 @@ local k = import 'k.libsonnet';
   // https://artifacthub.io/packages/helm/external-secrets-operator/external-secrets?modal=values
 
   // https://github.com/external-secrets/external-secrets/releases/latest
-  'external-secrets': $.new(registry='oci.external-secrets.io', name='external-secrets/external-secrets', version='v0.18.2'),
+  'external-secrets': $.new(registry='oci.external-secrets.io', name='external-secrets/external-secrets', version='v0.19.1'),
   // https://github.com/external-secrets/bitwarden-sdk-server/releases/latest
   'bitwarden-sdk-server': $.new(registry='ghcr.io', name='external-secrets/bitwarden-sdk-server', version='v0.5.0'),
 } +
