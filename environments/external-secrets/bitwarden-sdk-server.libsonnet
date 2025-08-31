@@ -3,8 +3,6 @@ local k = import 'k.libsonnet';
 local tk = import 'github.com/grafana/jsonnet-libs/tanka-util/main.libsonnet';
 local helm = tk.helm.new(std.thisFile);
 
-local prom = import 'github.com/jsonnet-libs/prometheus-operator-libsonnet/0.77/main.libsonnet';
-
 local image = import 'images.libsonnet';
 
 {

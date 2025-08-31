@@ -1,7 +1,6 @@
 local k = import 'k.libsonnet';
 
 local cm = import 'github.com/jsonnet-libs/cert-manager-libsonnet/1.15/main.libsonnet';
-local issuer = cm.nogroup.v1.clusterIssuer;
 
 local es = import 'github.com/nlowe/external-secrets-libsonnet/0.18/main.libsonnet';
 local clusterSecretStore = es.nogroup.v1.clusterSecretStore;

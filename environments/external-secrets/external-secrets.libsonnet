@@ -1,11 +1,5 @@
-local k = import 'k.libsonnet';
-
 local tk = import 'github.com/grafana/jsonnet-libs/tanka-util/main.libsonnet';
 local helm = tk.helm.new(std.thisFile);
-
-local cm = import 'github.com/jsonnet-libs/cert-manager-libsonnet/1.15/main.libsonnet';
-local issuer = cm.nogroup.v1.clusterIssuer;
-local cf = issuer.spec.acme.solvers.dns01.cloudflare;
 
 local prom = import 'github.com/jsonnet-libs/prometheus-operator-libsonnet/0.77/main.libsonnet';
 

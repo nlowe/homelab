@@ -53,7 +53,6 @@ local image = import 'images.libsonnet';
       pvc.spec.resources.withRequests({ storage: '25Gi' }),
 
     local sts = k.apps.v1.statefulSet,
-    local volume = k.core.v1.volume,
     statefulSet:
       sts.new('esphome', 1, [self.container], [self.pvcTemplate], null) +
       sts.metadata.withNamespace($.namespace.metadata.name) +

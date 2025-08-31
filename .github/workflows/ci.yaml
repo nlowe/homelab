@@ -1,0 +1,25 @@
+name: CI
+on: [push, pull_request]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Sources
+        uses: actions/checkout@master
+
+      - uses: ./.github/actions/setup
+
+      - name: Lint all environments
+        run: make lint
+
+  render-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Sources
+        uses: actions/checkout@master
+
+      - uses: ./.github/actions/setup
+
+      - name: Make sure all environments can render
+        run: make render-test

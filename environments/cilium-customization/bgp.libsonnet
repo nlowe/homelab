@@ -1,5 +1,3 @@
-local k = import 'k.libsonnet';
-
 {
   _config+:: {
     cilium+: {

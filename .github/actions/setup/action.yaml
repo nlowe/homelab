@@ -1,0 +1,28 @@
+name: 'Shared CI Setup'
+description: 'Setup the CI Worker'
+runs:
+  using: "composite"
+  steps:
+    - name: Setup jsonnet & jb
+      uses: kobtea/setup-jsonnet-action@v2
+
+    - name: Setup Grafana Tanka
+      uses: unfunco/setup-tanka@1.0.0-alpha.1
+      with:
+        tanka-version: v0.31.3
+
+    - name: Setup Helm
+      uses: yokawasa/action-setup-kube-tools@v0.11.2
+      with:
+        setup-tools: helm
+        helm: '3.17.2'
+
+    - name: Cache jsonnet libraries and helm charts
+      uses: actions/cache@v4
+      with:
+        path: |
+          charts
+          vendor
+        key: cache-${{ hashFiles('jsonnetfile.lock.json', 'chartfile.yaml') }}
+        restore-keys: |
+          cache-

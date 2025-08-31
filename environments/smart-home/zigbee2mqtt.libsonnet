@@ -1,8 +1,6 @@
 local k = import 'k.libsonnet';
 
-local cm = import 'github.com/jsonnet-libs/cert-manager-libsonnet/1.15/main.libsonnet';
 local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.1/main.libsonnet').gateway;
-local prom = import 'github.com/jsonnet-libs/prometheus-operator-libsonnet/0.77/main.libsonnet';
 
 local image = import 'images.libsonnet';
 
@@ -151,7 +149,6 @@ local image = import 'images.libsonnet';
 
     local sts = k.apps.v1.statefulSet,
     local volume = k.core.v1.volume,
-    local tsc = k.core.v1.topologySpreadConstraint,
     statefulSet:
       sts.new('zigbee2mqtt', 1, [self.container], [self.pvcTemplate], null) +
       sts.metadata.withNamespace($.namespace.metadata.name) +
