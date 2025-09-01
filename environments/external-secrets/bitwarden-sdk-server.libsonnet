@@ -46,10 +46,6 @@ local image = import 'images.libsonnet';
         },
       },
 
-      podDnsConfig: {
-        options: [{ name: 'ndots', value: '2' }],
-      },
-
       podSecurityContext: {
         fsGroup: 2000,
       },

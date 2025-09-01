@@ -61,8 +61,7 @@ local image = import 'images.libsonnet';
       sts.spec.selector.withMatchLabels(self.labels) +
       sts.spec.template.metadata.withLabels(self.labels) +
       sts.spec.template.spec.withHostNetwork(true) +
-      sts.spec.template.spec.withDnsPolicy('ClusterFirstWithHostNet') +
-      sts.spec.template.spec.dnsConfig.withOptions([{ name: 'ndots', value: '1' }]),
+      sts.spec.template.spec.withDnsPolicy('ClusterFirstWithHostNet'),
 
     local route = g.v1.httpRoute,
     local rule = route.spec.rules,

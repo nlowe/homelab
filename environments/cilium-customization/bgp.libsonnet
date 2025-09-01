@@ -31,7 +31,7 @@
       },
 
       peerConfig: {
-        apiVersion: 'cilium.io/v2alpha1',
+        apiVersion: 'cilium.io/v2',
         kind: 'CiliumBGPPeerConfig',
         metadata: {
           name: 'udm-pro-max',
@@ -54,7 +54,7 @@
       },
 
       clusterConfig: {
-        apiVersion: 'cilium.io/v2alpha1',
+        apiVersion: 'cilium.io/v2',
         kind: 'CiliumBGPClusterConfig',
         metadata: {
           name: 'homelab',
@@ -76,7 +76,7 @@
       },
 
       advertisement: {
-        apiVersion: 'cilium.io/v2alpha1',
+        apiVersion: 'cilium.io/v2',
         kind: 'CiliumBGPAdvertisement',
         metadata: {
           name: 'homelab',

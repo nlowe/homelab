@@ -146,7 +146,6 @@ local image = import 'images.libsonnet';
       sts.spec.template.metadata.withLabels($.homeAssistant.labels) +
       sts.spec.template.spec.withHostNetwork(true) +
       sts.spec.template.spec.withDnsPolicy('ClusterFirstWithHostNet') +
-      sts.spec.template.spec.dnsConfig.withOptions([{ name: 'ndots', value: '1' }]) +
       sts.spec.template.spec.withVolumes([
         volume.fromSecret('config', $.homeAssistant.configSecret.metadata.name),
 
