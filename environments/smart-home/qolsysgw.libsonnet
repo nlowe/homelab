@@ -157,6 +157,7 @@ local image = import 'images.libsonnet';
       sts.spec.selector.withMatchLabels(self.labels) +
       sts.spec.template.metadata.withAnnotations({ 'config-hash': std.md5(std.toString(this.appdaemon_config_secret)) }) +
       sts.spec.template.metadata.withLabels(self.labels) +
+      sts.spec.template.spec.dnsConfig.withOptions([{ name: 'ndots', value: '1' }]) +
       sts.spec.template.spec.withVolumes([
         volume.fromSecret('config', this.appdaemon_config_secret.metadata.name) +
         volume.secret.withItems([

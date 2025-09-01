@@ -158,6 +158,7 @@ local image = import 'images.libsonnet';
       sts.spec.template.metadata.withAnnotations({ 'config-hash': std.md5(std.toString(this.configMap)) }) +
       sts.spec.template.metadata.withLabels(self.labels) +
       sts.spec.template.spec.withInitContainers([this.initContainer]) +
+      sts.spec.template.spec.dnsConfig.withOptions([{ name: 'ndots', value: '1' }]) +
       sts.spec.template.spec.withVolumes([
         volume.fromConfigMap('config', this.configMap.metadata.name, [
           { key: 'configuration.yaml', path: 'configmap-configuration.yaml' },
