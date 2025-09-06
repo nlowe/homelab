@@ -81,6 +81,11 @@ local image = import 'images.libsonnet';
         },
 
         controller: {
+          // Use Host Network to pick up network device stats from the host
+          hostNetwork: true,
+          dnsPolicy: 'ClusterFirstWithHostNet',
+
+          // Extra volumes for exporters
           volumes: {
             extra: [
               {

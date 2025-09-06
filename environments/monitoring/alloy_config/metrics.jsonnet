@@ -28,6 +28,32 @@ local alloy = import 'github.com/grafana/alloy/operations/alloy-syntax-jsonnet/m
   // Node Exporter
   [alloy.block('prometheus.exporter.unix', 'node_exporter')]: {
     rootfs_path: '/host',
+
+    // Additional collectors
+    enable_collectors: [
+      'ethtool',
+      'systemd',
+    ],
+
+    local network_device_exclude = 'lo|(cilium_|lxc).*',
+
+    // Configure Collectors:
+    [alloy.block('cpu', index=0)]: {
+      info: true,
+    },
+    [alloy.block('ethtool', index=0)]: {
+      device_exclude: network_device_exclude,
+    },
+    [alloy.block('netdev', index=0)]: {
+      address_info: true,
+      device_exclude: network_device_exclude,
+    },
+    [alloy.block('netstat', index=0)]: {
+      fields: '.',
+    },
+    [alloy.block('systemd', index=0)]: {
+      enable_restarts: true,
+    },
   },
   [alloy.block('prometheus.scrape', 'node_exporter')]: {
     targets: alloy.expr('prometheus.exporter.unix.node_exporter.targets'),
