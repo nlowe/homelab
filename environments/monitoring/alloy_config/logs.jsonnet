@@ -8,15 +8,46 @@ local alloy = import 'github.com/grafana/alloy/operations/alloy-syntax-jsonnet/m
   // Node Logs
   [alloy.block('loki.source.journal', 'systemd')]: {
     forward_to: [this.loki],
-    relabel_rules: alloy.expr('loki.relabel.systemd_add_unit.rules'),
+    relabel_rules: alloy.expr('loki.relabel.systemd_labels.rules'),
+
     path: '/var/log/journal',
+    // Loki only allows logs from up to 1h in the past by default
+    max_age: '1h',
   },
-  [alloy.block('loki.relabel', 'systemd_add_unit')]: {
+  [alloy.block('loki.relabel', 'systemd_labels')]: {
     forward_to: [],
 
     [alloy.block('rule', index=0)]: {
       source_labels: ['__journal__systemd_unit'],
       target_label: 'systemd_unit',
+    },
+    [alloy.block('rule', index=1)]: {
+      source_labels: ['__journal__priority_keyword'],
+      target_label: 'level',
+    },
+    [alloy.block('rule', index=2)]: {
+      source_labels: ['__journal__priority'],
+      target_label: 'level_raw',
+    },
+    [alloy.block('rule', index=3)]: {
+      source_labels: ['__journal__pid'],
+      target_label: 'pid',
+    },
+    [alloy.block('rule', index=4)]: {
+      source_labels: ['__journal__uid'],
+      target_label: 'uid',
+    },
+    [alloy.block('rule', index=5)]: {
+      source_labels: ['__journal__transport'],
+      target_label: 'transport',
+    },
+    [alloy.block('rule', index=6)]: {
+      source_labels: ['__journal__hostname'],
+      target_label: 'node',
+    },
+    [alloy.block('rule', index=7)]: {
+      source_labels: ['__journal__kernel_subsystem'],
+      target_label: 'kernel_subsystem',
     },
   },
 

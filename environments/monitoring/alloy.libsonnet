@@ -46,10 +46,17 @@ local image = import 'images.libsonnet';
 
           extraPorts: $._config.alloy.syslogPorts,
 
+          extraArgs: [
+            '--cluster.advertise-address=$(POD_IP)',
+          ],
+
           local env = k.core.v1.envVar,
           extraEnv: [
             env.withName('K8S_NODE_NAME') +
             env.valueFrom.fieldRef.withFieldPath('spec.nodeName'),
+
+            env.withName('POD_IP') +
+            env.valueFrom.fieldRef.withFieldPath('status.podIP'),
           ],
 
           mounts: {
@@ -69,6 +76,11 @@ local image = import 'images.libsonnet';
               {
                 name: 'udev',
                 mountPath: '/host/run/udev/data',
+                readOnly: true,
+              },
+              {
+                name: 'systemd',
+                mountPath: '/run/systemd/private',
                 readOnly: true,
               },
               {
@@ -106,6 +118,13 @@ local image = import 'images.libsonnet';
                 name: 'udev',
                 hostPath: {
                   path: '/run/udev/data',
+                  type: '',
+                },
+              },
+              {
+                name: 'systemd',
+                hostPath: {
+                  path: '/run/systemd/private',
                   type: '',
                 },
               },

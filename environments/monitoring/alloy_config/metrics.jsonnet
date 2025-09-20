@@ -28,6 +28,7 @@ local alloy = import 'github.com/grafana/alloy/operations/alloy-syntax-jsonnet/m
   // Node Exporter
   [alloy.block('prometheus.exporter.unix', 'node_exporter')]: {
     rootfs_path: '/host',
+    udev_data_path: '/host/run/udev/data',
 
     // Additional collectors
     enable_collectors: [
