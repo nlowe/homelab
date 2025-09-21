@@ -57,7 +57,7 @@ local image = import 'images.libsonnet';
       secret.new('hass-config', null, 'Opaque') +
       secret.metadata.withNamespace($.namespace.metadata.name) +
       secret.withStringData({
-        'configuration.yaml': '!include hass-config/main.yaml',
+        'configuration.yaml': '!include hass-config-nfs/main.yaml',
       }),
 
     containers:: {
@@ -74,6 +74,11 @@ local image = import 'images.libsonnet';
         container.withVolumeMounts([
           mount.withMountPath('/config') +
           mount.withName('data'),
+
+          mount.withMountPath('/config/hass-config-nfs') +
+          mount.withName('k8s-generic-nfs') +
+          mount.withSubPath('hass-config') +
+          mount.withReadOnly(true),
 
           mount.withMountPath('/config/configuration.yaml') +
           mount.withSubPath('configuration.yaml') +
@@ -94,6 +99,11 @@ local image = import 'images.libsonnet';
         container.withVolumeMounts([
           mount.withMountPath('/config') +
           mount.withName('code-server'),
+
+          mount.withMountPath('/config/workspace/hass-config-nfs') +
+          mount.withName('k8s-generic-nfs') +
+          mount.withSubPath('hass-config') +
+          mount.withReadOnly(true),
 
           mount.withMountPath('/config/workspace') +
           mount.withName('data'),
@@ -148,6 +158,8 @@ local image = import 'images.libsonnet';
       sts.spec.template.spec.withDnsPolicy('ClusterFirstWithHostNet') +
       sts.spec.template.spec.withVolumes([
         volume.fromSecret('config', $.homeAssistant.configSecret.metadata.name),
+
+        $._config.media.mount.forKind('k8s-generic-nfs'),
 
         volume.fromSecret('github-ssh-key', $.homeAssistant.github_ssh_key_secret.metadata.name) +
         volume.secret.withDefaultMode(std.parseOctal('0600')) +

@@ -61,6 +61,20 @@ local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.1/main.libson
       },
     },
 
+    media: {
+      server: 'storage.home.nlowe.dev',
+
+      mount: {
+        local volume = k.core.v1.volume,
+        forKind(kind)::
+          volume.withName(kind) +
+          volume.nfs.withServer($._config.media.server) +
+          volume.nfs.withPath($._config.media.mount[kind]),
+
+        'k8s-generic-nfs': '/mnt/data/k8s/nfs',
+      },
+    },
+
     externalSecret: {
       kind: clusterSecretStore.new('').kind,
       storeName: 'bitwarden',
