@@ -139,9 +139,9 @@ local image = (import 'images.libsonnet').democratic_csi;
           },
 
           iscsi: {
-            targetPortal: 'iscsi-1.storage.home.nlowe.dev',
+            targetPortal: 'iscsi.storage.home.nlowe.dev',
             // for multipath
-            targetPortals: ['iscsi-1.storage.home.nlowe.dev', 'iscsi-2.storage.home.nlowe.dev'],
+            targetPortals: ['iscsi.storage.home.nlowe.dev' /*, 'iscsi-2.storage.home.nlowe.dev'*/],
 
             namePrefix: 'csi-',
             nameSuffix: '-k8s',
