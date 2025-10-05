@@ -116,27 +116,6 @@ local alloy = import 'github.com/grafana/alloy/operations/alloy-syntax-jsonnet/m
     },
   },
 
-  // TrueNAS
-  [alloy.block('prometheus.scrape', 'truenas')]: {
-    forward_to: [this.mimir],
-
-    [alloy.block('clustering')]: {
-      enabled: true,
-    },
-
-    targets: [
-      { __address__: 'storage.home.nlowe.dev:9100', __metrics_path__: '/metrics', job: 'node-exporter', node: 'storage.home.nlowe.dev' },
-      { __address__: 'minio.home.nlowe.dev:9000', __scheme__: 'https', __metrics_path__: '/minio/v2/metrics/node', job: 'minio/node', node: 'minio.home.nlowe.dev' },
-      { __address__: 'minio.home.nlowe.dev:9000', __scheme__: 'https', __metrics_path__: '/minio/v2/metrics/bucket', job: 'minio/buckets', node: 'minio.home.nlowe.dev' },
-    ],
-
-    // Support native histograms by indicating support for PrometheusProto
-    scrape_protocols: ['PrometheusProto', 'OpenMetricsText1.0.0', 'OpenMetricsText0.0.1', 'PrometheusText0.0.4'],
-
-    scrape_interval: default_interval,
-    scrape_timeout: default_interval,
-  },
-
   // Pod Monitors
   // TODO: Is there a way to make this use native protos for native histograms?
   [alloy.block('prometheus.operator.podmonitors', 'all')]: {
