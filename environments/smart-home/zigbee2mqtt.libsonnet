@@ -37,6 +37,11 @@ local image = import 'images.libsonnet';
         adapter: 'ember',
         port: 'tcp://zigbee-controller.home.nlowe.dev:6638',
       },
+      // Optional: Availability feature
+      availability: {
+        // Enable the feature (default: false)
+        enabled: true,
+      },
 
       mqtt: {
         server: 'mqtts://vernemq.smart-home.svc.cluster.local:8883',
