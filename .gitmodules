@@ -1,0 +1,3 @@
+[submodule "images/sensy-one-zone-editor/addon"]
+	path = images/sensy-one-zone-editor/addon
+	url = https://github.com/sensy-one/home-assistant-addons.git

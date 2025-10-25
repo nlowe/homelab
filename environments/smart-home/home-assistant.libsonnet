@@ -27,6 +27,12 @@ local image = import 'images.libsonnet';
           port.withProtocol('TCP') +
           port.withPort(8443) +
           port.withTargetPort(8443),
+
+        zone_editor:
+          port.withName('http-z-editor') +
+          port.withProtocol('TCP') +
+          port.withPort(5000) +
+          port.withTargetPort(5000),
       },
 
       headless:
@@ -47,6 +53,7 @@ local image = import 'images.libsonnet';
           [
             $.homeAssistant.service.ports.hass,
             $.homeAssistant.service.ports.code,
+            $.homeAssistant.service.ports.zone_editor,
           ]
         ) +
         svc.metadata.withNamespace($.namespace.metadata.name),
@@ -112,6 +119,18 @@ local image = import 'images.libsonnet';
           mount.withName('github-ssh-key') +
           mount.withReadOnly(true),
         ]),
+
+      zone_editor:
+        image.forContainer('sensy-one-zone-editor') +
+        container.resources.withRequests({ memory: '128Mi' }) +
+        container.resources.withLimits({ memory: '128Mi' }) +
+        container.withPorts([{ name: 'http-z-editor', containerPort: 5000 }]) +
+        container.withEnv([
+          env.new('HA_URL', 'http://127.0.0.1:8123'),
+
+          // Technically I suppose we should make a new token just for this, but I'm lazy
+          env.fromSecretRef('HA_TOKEN', $.homeAssistant.podMonitorToken.metadata.name, 'token'),
+        ]),
     },
 
     github_ssh_key_secret:
@@ -134,6 +153,7 @@ local image = import 'images.libsonnet';
         [
           $.homeAssistant.containers.hass,
           $.homeAssistant.containers.code,
+          $.homeAssistant.containers.zone_editor,
         ],
         [
           pvc.new('data') +
@@ -222,6 +242,34 @@ local image = import 'images.libsonnet';
           rule.backendRefs.withName($.homeAssistant.service.app.metadata.name) +
           rule.backendRefs.withNamespace($.homeAssistant.service.app.metadata.namespace) +
           rule.backendRefs.withPort(8443),
+        ]),
+
+        // TODO: Accurate?
+        // This is required because zone-editor requires a trailing / in the URL to work on a sub-path
+        rule.withMatches([
+          rule.matches.path.withType('Exact') +
+          rule.matches.path.withValue('/_zone_editor'),
+        ]) +
+        rule.withFilters([
+          rule.filters.withType('RequestRedirect') +
+          rule.filters.requestRedirect.path.withType('ReplaceFullPath') +
+          rule.filters.requestRedirect.path.withReplaceFullPath('/_zone_editor/'),
+        ]),
+
+        rule.withMatches([
+          rule.matches.path.withType('PathPrefix') +
+          // We need to omit the trailing / here so caddy-gateway doesn't strip off the leading "/", otherwise static assets won't load
+          rule.matches.path.withValue('/_zone_editor'),
+        ]) +
+        rule.withFilters([
+          rule.filters.withType('URLRewrite') +
+          rule.filters.urlRewrite.path.withType('ReplacePrefixMatch') +
+          rule.filters.urlRewrite.path.withReplacePrefixMatch('/'),
+        ]) +
+        rule.withBackendRefs([
+          rule.backendRefs.withName($.homeAssistant.service.app.metadata.name) +
+          rule.backendRefs.withNamespace($.homeAssistant.service.app.metadata.namespace) +
+          rule.backendRefs.withPort(5000),
         ]),
 
         rule.withBackendRefs([

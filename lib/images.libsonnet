@@ -44,6 +44,8 @@ local k = import 'k.libsonnet';
   esphome: $.new(registry='ghcr.io', name='esphome/esphome', version='2025.10.3'),
   // https://github.com/home-assistant/core/pkgs/container/home-assistant
   'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2025.10.4'),
+  // See images/sensy-one-zone-editor
+  'sensy-one-zone-editor': $.new(registry='docker.io', name='nlowe/sensy-one-zone-editor', version='main-05e259aa029ee8fe836f1cfaaf49c1ed8707cff1'),
   // https://github.com/zwave-js/zwave-js-ui/releases/latest
   'zwave-js-ui': $.new(name='zwavejs/zwave-js-ui', version='11.5.2'),
   // https://hub.docker.com/r/vernemq/vernemq/tags
