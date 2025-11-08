@@ -38,14 +38,14 @@ local k = import 'k.libsonnet';
   'code-server': $.new(registry='lscr.io', name='linuxserver/code-server', version='4.105.1-ls303'),
 
   // https://github.com/cloudflare/cloudflared/releases/latest
-  cloudflared: $.new(name='cloudflare/cloudflared', version='2025.10.1'),
+  cloudflared: $.new(name='cloudflare/cloudflared', version='2025.11.1'),
 
   // https://github.com/esphome/esphome/releases/latest
   // https://github.com/esphome/esphome/pkgs/container/esphome
-  esphome: $.new(registry='ghcr.io', name='esphome/esphome', version='2025.10.3'),
+  esphome: $.new(registry='ghcr.io', name='esphome/esphome', version='2025.10.4'),
   // https://github.com/home-assistant/core/releases/latest
   // https://github.com/home-assistant/core/pkgs/container/home-assistant
-  'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2025.10.4'),
+  'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2025.11.1'),
   // See images/sensy-one-zone-editor
   // https://github.com/sensy-one/home-assistant-addons
   'sensy-one-zone-editor': $.new(registry='docker.io', name='nlowe/sensy-one-zone-editor', version='main-05e259aa029ee8fe836f1cfaaf49c1ed8707cff1'),
@@ -55,7 +55,7 @@ local k = import 'k.libsonnet';
   vernemq: $.new(name='vernemq/vernemq', version='2.1.1'),
   // https://github.com/Koenkk/zigbee2mqtt/releases/latest
   // https://github.com/koenkk/zigbee2mqtt/pkgs/container/zigbee2mqtt
-  zigbee2mqtt: $.new(registry='ghcr.io', name='koenkk/zigbee2mqtt', version='2.6.2'),
+  zigbee2mqtt: $.new(registry='ghcr.io', name='koenkk/zigbee2mqtt', version='2.6.3'),
   // https://github.com/mikefarah/yq/releases/latest
   // https://github.com/mikefarah/yq/pkgs/container/yq
   yq: $.new(registry='ghcr.io', name='mikefarah/yq', version='4.48.1'),
@@ -103,6 +103,7 @@ local k = import 'k.libsonnet';
     externalSnapshotter: $.new(registry='registry.k8s.io', name='sig-storage/csi-snapshotter', version='v8.4.0'),
     // https://github.com/kubernetes-csi/external-health-monitor/releases/latest
     externalHealthMonitorController: $.new(registry='registry.k8s.io', name='sig-storage/csi-external-health-monitor-controller', version='v0.16.0'),
+    // https://github.com/democratic-csi/democratic-csi/tags
     // https://github.com/democratic-csi/democratic-csi/issues/479
     // https://github.com/democratic-csi/democratic-csi/issues/479#issuecomment-3476531774: 1.9.5 will include this fix
     driver: $.new(registry='docker.io', name='democraticcsi/democratic-csi', version='next@sha256:6b758d6faf96f0e96d4b8ac0e240fc290c7bace23c20d78a3eb93781652cb1f1'),
@@ -120,7 +121,7 @@ local k = import 'k.libsonnet';
   alloy: $.new(registry='docker.io', name='grafana/alloy', version='v1.11.3'),
   // https://github.com/prometheus-operator/prometheus-operator/releases/latest
   // https://github.com/prometheus-operator/prometheus-operator/pkgs/container/prometheus-config-reloader
-  'prometheus-config-reloader': $.new(registry='ghcr.io', name='prometheus-operator/prometheus-config-reloader', version='v0.86.1'),
+  'prometheus-config-reloader': $.new(registry='ghcr.io', name='prometheus-operator/prometheus-config-reloader', version='v0.86.2'),
 } +
 {
   // https://github.com/grafana/rollout-operator/releases/latest
@@ -136,7 +137,7 @@ local k = import 'k.libsonnet';
   // See https://github.com/grafana/loki/blob/main/production/ksonnet/loki/images.libsonnet
   // See https://github.com/grafana/loki/blob/main/production/ksonnet/loki/rollout-operator.libsonnet
   loki:: {
-    loki: $.new(name='grafana/loki', version='3.5.7'),
+    loki: $.new(name='grafana/loki', version='3.5.8'),
     memcached: $.memcached,
     memcachedExporter: $.memcachedExporter,
     rollout_operator: $.grafana_rollout_operator,
@@ -145,6 +146,7 @@ local k = import 'k.libsonnet';
 {
   // https://github.com/grafana/mimir/releases/latest
   // See https://github.com/grafana/mimir/blob/main/operations/mimir/images.libsonnet
+  // TODO: Upgrade to 3.0: https://github.com/grafana/mimir/releases/tag/mimir-3.0.0
   mimir:: {
     mimir: $.new(name='grafana/mimir', version='2.17.2'),
     query_tee: $.new(name='grafana/query-tee', version=self.mimir.version),
@@ -163,7 +165,7 @@ local k = import 'k.libsonnet';
   // https://artifacthub.io/packages/helm/external-secrets-operator/external-secrets?modal=values
 
   // https://github.com/external-secrets/external-secrets/releases/latest
-  'external-secrets': $.new(registry='oci.external-secrets.io', name='external-secrets/external-secrets', version='v0.20.4'),
+  'external-secrets': $.new(registry='oci.external-secrets.io', name='external-secrets/external-secrets', version='v1.0.0'),
   // https://github.com/external-secrets/bitwarden-sdk-server/releases/latest
   'bitwarden-sdk-server': $.new(registry='ghcr.io', name='external-secrets/bitwarden-sdk-server', version='v0.5.0'),
 } +
