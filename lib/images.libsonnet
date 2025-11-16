@@ -31,34 +31,37 @@ local k = import 'k.libsonnet';
 } +
 {
   // https://github.com/caddyserver/gateway/pkgs/container/gateway
+  // TODO: This doesn't seem to be super well maintained. Switch to something more active like envoy gateway, traefik
+  // gateway, or just try cillium again.
   caddy: $.new(registry='ghcr.io', name='caddyserver/gateway', version='caddy-2.10.2'),
   'caddy-gateway': $.new(registry='ghcr.io', name='caddyserver/gateway', version='v0.1.0'),
 
   // https://www.linuxserver.io/our-images
-  'code-server': $.new(registry='lscr.io', name='linuxserver/code-server', version='4.105.1-ls303'),
+  'code-server': $.new(registry='lscr.io', name='linuxserver/code-server', version='4.105.1-ls304'),
 
   // https://github.com/cloudflare/cloudflared/releases/latest
   cloudflared: $.new(name='cloudflare/cloudflared', version='2025.11.1'),
 
   // https://github.com/esphome/esphome/releases/latest
   // https://github.com/esphome/esphome/pkgs/container/esphome
-  esphome: $.new(registry='ghcr.io', name='esphome/esphome', version='2025.10.4'),
+  esphome: $.new(registry='ghcr.io', name='esphome/esphome', version='2025.10.5'),
   // https://github.com/home-assistant/core/releases/latest
   // https://github.com/home-assistant/core/pkgs/container/home-assistant
-  'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2025.11.1'),
+  'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2025.11.2'),
   // See images/sensy-one-zone-editor
   // https://github.com/sensy-one/home-assistant-addons
-  'sensy-one-zone-editor': $.new(registry='docker.io', name='nlowe/sensy-one-zone-editor', version='main-05e259aa029ee8fe836f1cfaaf49c1ed8707cff1'),
+  'sensy-one-zone-editor': $.new(registry='docker.io', name='nlowe/sensy-one-zone-editor', version='main-f2e45a3ef57c589a922981af9ff39d46b7971044'),
   // https://github.com/zwave-js/zwave-js-ui/releases/latest
-  'zwave-js-ui': $.new(name='zwavejs/zwave-js-ui', version='11.6.1'),
+  'zwave-js-ui': $.new(name='zwavejs/zwave-js-ui', version='11.7.0'),
   // https://hub.docker.com/r/vernemq/vernemq/tags
-  vernemq: $.new(name='vernemq/vernemq', version='2.1.1'),
+  // https://github.com/vernemq/vernemq/releases/latest
+  vernemq: $.new(name='vernemq/vernemq', version='2.1.2'),
   // https://github.com/Koenkk/zigbee2mqtt/releases/latest
   // https://github.com/koenkk/zigbee2mqtt/pkgs/container/zigbee2mqtt
   zigbee2mqtt: $.new(registry='ghcr.io', name='koenkk/zigbee2mqtt', version='2.6.3'),
   // https://github.com/mikefarah/yq/releases/latest
   // https://github.com/mikefarah/yq/pkgs/container/yq
-  yq: $.new(registry='ghcr.io', name='mikefarah/yq', version='4.48.1'),
+  yq: $.new(registry='ghcr.io', name='mikefarah/yq', version='4.48.2'),
 
   // https://github.com/brancz/kube-rbac-proxy/releases/latest
   'kube-rbac-proxy': $.new(registry='quay.io', name='brancz/kube-rbac-proxy', version='v0.20.0'),
@@ -129,7 +132,7 @@ local k = import 'k.libsonnet';
   // https://github.com/memcached/memcached/tags
   memcached: $.new(name='memcached', version='1.6.39-alpine'),
   // See https://github.com/prometheus/memcached_exporter/releases/latest
-  memcachedExporter: $.new(name='prom/memcached-exporter', version='v0.15.3'),
+  memcachedExporter: $.new(name='prom/memcached-exporter', version='v0.15.4'),
 
 }
 {
