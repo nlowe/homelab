@@ -1,6 +1,6 @@
 local k = import 'k.libsonnet';
 
-local es = (import 'github.com/nlowe/external-secrets-libsonnet/0.18/main.libsonnet').nogroup.v1.externalSecret;
+local es = (import 'github.com/jsonnet-libs/external-secrets-libsonnet/0.19/main.libsonnet').nogroup.v1.externalSecret;
 
 local image = import 'images.libsonnet';
 

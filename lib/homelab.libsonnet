@@ -4,7 +4,7 @@ local cm = import 'github.com/jsonnet-libs/cert-manager-libsonnet/1.15/main.libs
 local cert = cm.nogroup.v1.certificate;
 local issuer = cm.nogroup.v1.clusterIssuer;
 
-local es = import 'github.com/nlowe/external-secrets-libsonnet/0.18/main.libsonnet';
+local es = import 'github.com/jsonnet-libs/external-secrets-libsonnet/0.19/main.libsonnet';
 local clusterSecretStore = es.nogroup.v1.clusterSecretStore;
 local externalSecret = es.nogroup.v1.externalSecret;
 

@@ -8,7 +8,7 @@
           "subdir": "operations/alloy-mixin"
         }
       },
-      "version": "v1.6.1"
+      "version": "v1.12.0"
     },
     {
       "source": {
@@ -17,7 +17,7 @@
           "subdir": "operations/alloy-syntax-jsonnet"
         }
       },
-      "version": "v1.6.1"
+      "version": "v1.12.0"
     },
     {
       "source": {
@@ -103,11 +103,11 @@
     {
       "source": {
         "git": {
-          "remote": "https://github.com/nlowe/external-secrets-libsonnet.git",
-          "subdir": "0.18"
+          "remote": "https://github.com/jsonnet-libs/external-secrets-libsonnet.git",
+          "subdir": "0.19"
         }
       },
-      "version": "feat/bump-to-v0.18.2"
+      "version": "main"
     },
     {
       "source": {
@@ -131,7 +131,7 @@
       "source": {
         "git": {
           "remote": "https://github.com/jsonnet-libs/prometheus-operator-libsonnet.git",
-          "subdir": "0.77"
+          "subdir": "0.83"
         }
       },
       "version": "main"
@@ -152,7 +152,7 @@
           "subdir": "jsonnet/kube-state-metrics"
         }
       },
-      "version": "v2.15.0"
+      "version": "v2.17.0"
     },
     {
       "source": {
@@ -161,7 +161,7 @@
           "subdir": "jsonnet/kube-state-metrics-mixin"
         }
       },
-      "version": "v2.15.0"
+      "version": "v2.17.0"
     },
     {
       "source": {
@@ -170,7 +170,7 @@
           "subdir": "jsonnet/prometheus-operator"
         }
       },
-      "version": "v0.79.2"
+      "version": "v0.87.0"
     },
     {
       "source": {
@@ -179,7 +179,7 @@
           "subdir": "deploy"
         }
       },
-      "version": "v0.0.31"
+      "version": "v0.0.32"
     }
   ],
   "legacyImports": true

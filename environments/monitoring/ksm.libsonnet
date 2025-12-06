@@ -1,4 +1,4 @@
-local prom = import 'github.com/jsonnet-libs/prometheus-operator-libsonnet/0.77/main.libsonnet';
+local prom = import 'github.com/jsonnet-libs/prometheus-operator-libsonnet/0.83/main.libsonnet';
 
 local image = (import 'images.libsonnet')['kube-state-metrics'];
 
