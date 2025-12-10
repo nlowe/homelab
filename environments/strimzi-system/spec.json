@@ -1,0 +1,14 @@
+{
+  "apiVersion": "tanka.dev/v1alpha1",
+  "kind": "Environment",
+  "metadata": {
+    "name": "environments/strimzi-system"
+  },
+  "spec": {
+    "apiServer": "https://k8s.home.nlowe.dev:6443",
+    "applyStrategy": "server",
+    "namespace": "strimzi-system",
+    "resourceDefaults": {},
+    "expectVersions": {}
+  }
+}

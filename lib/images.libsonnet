@@ -147,6 +147,13 @@ local k = import 'k.libsonnet';
   },
 } +
 {
+  // Required for Mimir
+  // https://github.com/strimzi/strimzi-kafka-operator/releases/latest
+  strimzi:: {
+    operator: $.new(registry='quay.io', name='strimzi/operator', version='0.49.1'),
+  },
+} +
+{
   // https://github.com/grafana/mimir/releases/latest
   // See https://github.com/grafana/mimir/blob/main/operations/mimir/images.libsonnet
   // TODO: Upgrade to 3.0: https://github.com/grafana/mimir/releases/tag/mimir-3.0.0
@@ -171,6 +178,11 @@ local k = import 'k.libsonnet';
   'external-secrets': $.new(registry='oci.external-secrets.io', name='external-secrets/external-secrets', version='v1.1.1'),
   // https://github.com/external-secrets/bitwarden-sdk-server/releases/latest
   'bitwarden-sdk-server': $.new(registry='ghcr.io', name='external-secrets/bitwarden-sdk-server', version='v0.5.0'),
+} +
+{
+  // https://github.com/emberstack/kubernetes-reflector/releases/latest
+  // https://artifacthub.io/packages/helm/emberstack/reflector?modal=values
+  reflector: $.new(registry='ghcr.io', name='emberstack/kubernetes-reflector', version='9.1.45'),
 } +
 {
   // images/qolsysgw/Dockerfile

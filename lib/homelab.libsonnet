@@ -86,5 +86,29 @@ local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.1/main.libson
         externalSecret.spec.secretStoreRef.withKind($._config.externalSecret.kind) +
         externalSecret.spec.secretStoreRef.withName($._config.externalSecret.storeName),
     },
+
+    reflector: {
+      toNamespaces(namespaces):: {
+        metadata+: {
+          annotations+: {
+            'reflector.v1.k8s.emberstack.com/reflection-allowed': 'true',
+            'reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces':
+              std.join(',', if std.isArray(namespaces) then namespaces else [namespaces]),
+          },
+        },
+      },
+
+      from(namespace, name):: {
+        metadata+: {
+          annotations+: {
+            'reflector.v1.k8s.emberstack.com/reflects': '%s/%s' % [namespace, name],
+          },
+        },
+      },
+    },
+
+    strimzi: {
+      clusterLabel: { 'strimzi.io/cluster': 'homelab' },
+    },
   },
 }

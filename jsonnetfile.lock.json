@@ -58,18 +58,8 @@
           "subdir": "consul"
         }
       },
-      "version": "297984b67b112953177b3fcdef4afe5902dcf039",
+      "version": "581d242fd7d37387f7dbe1ac59380a0536f5261b",
       "sum": "Po3c1Ic96ngrJCtOazic/7OsLkoILOKZWXWyZWl+od8="
-    },
-    {
-      "source": {
-        "git": {
-          "remote": "https://github.com/grafana/jsonnet-libs.git",
-          "subdir": "etcd-operator"
-        }
-      },
-      "version": "297984b67b112953177b3fcdef4afe5902dcf039",
-      "sum": "duHm6wmUju5KHQurOe6dnXoKgl5gTUsfGplgbmAOsHw="
     },
     {
       "source": {
@@ -78,7 +68,7 @@
           "subdir": "grafana-builder"
         }
       },
-      "version": "297984b67b112953177b3fcdef4afe5902dcf039",
+      "version": "581d242fd7d37387f7dbe1ac59380a0536f5261b",
       "sum": "YPaA+KJ6JBW9QpxNvl0iAxnC7gL4jRRvulNl6QRkPU0="
     },
     {
@@ -88,7 +78,7 @@
           "subdir": "jaeger-agent-mixin"
         }
       },
-      "version": "297984b67b112953177b3fcdef4afe5902dcf039",
+      "version": "581d242fd7d37387f7dbe1ac59380a0536f5261b",
       "sum": "h/nMdmRK8Ep4bnRXKOuVL+RlUm85hhtD0LGIsf2THAY="
     },
     {
@@ -98,7 +88,7 @@
           "subdir": "ksonnet-util"
         }
       },
-      "version": "297984b67b112953177b3fcdef4afe5902dcf039",
+      "version": "581d242fd7d37387f7dbe1ac59380a0536f5261b",
       "sum": "0y3AFX9LQSpfWTxWKSwoLgbt0Wc9nnCwhMH2szKzHv0="
     },
     {
@@ -108,7 +98,7 @@
           "subdir": "logs-lib/"
         }
       },
-      "version": "297984b67b112953177b3fcdef4afe5902dcf039",
+      "version": "581d242fd7d37387f7dbe1ac59380a0536f5261b",
       "sum": "0xwYsW92n4rE9PfO3drN4Ko9VeQBoV/IZ7nvgrnYaWk="
     },
     {
@@ -118,7 +108,7 @@
           "subdir": "logs-lib/logs"
         }
       },
-      "version": "297984b67b112953177b3fcdef4afe5902dcf039",
+      "version": "581d242fd7d37387f7dbe1ac59380a0536f5261b",
       "sum": "PX1ePJnTxPi4x2bmrbrbC6IPxjOX4p0Fv+H8JOiod5g="
     },
     {
@@ -128,7 +118,7 @@
           "subdir": "memcached"
         }
       },
-      "version": "297984b67b112953177b3fcdef4afe5902dcf039",
+      "version": "581d242fd7d37387f7dbe1ac59380a0536f5261b",
       "sum": "zNTCDRaCqJUHjQSQRsxGR3jLrMP9tU7YNQb13dbm1bU="
     },
     {
@@ -138,7 +128,7 @@
           "subdir": "mixin-utils"
         }
       },
-      "version": "297984b67b112953177b3fcdef4afe5902dcf039",
+      "version": "581d242fd7d37387f7dbe1ac59380a0536f5261b",
       "sum": "Cn9Qr4AN6jn6zzKwOxTdsygK46VsSMQSoMnCx0aZAQo="
     },
     {
@@ -148,7 +138,7 @@
           "subdir": "tanka-util"
         }
       },
-      "version": "297984b67b112953177b3fcdef4afe5902dcf039",
+      "version": "581d242fd7d37387f7dbe1ac59380a0536f5261b",
       "sum": "ShSIissXdvCy1izTCDZX6tY7qxCoepE5L+WJ52Hw7ZQ="
     },
     {
@@ -178,8 +168,8 @@
           "subdir": "operations/mimir"
         }
       },
-      "version": "dbda652b102979f5402b4d4095a64c40a00fd4ca",
-      "sum": "5Ejg9ZSv+BVv+Up2QAfYmKSEmMuoeA2KT3fXuPxp134="
+      "version": "f9bff6a19117816e466fe321c75fbfd1b6b65b4c",
+      "sum": "Wyq/pOvjhujxFoh4q0AIlulxl4hUPj0jd8wjHWXFJ8w="
     },
     {
       "source": {
@@ -188,8 +178,28 @@
           "subdir": "operations/mimir-mixin"
         }
       },
-      "version": "dbda652b102979f5402b4d4095a64c40a00fd4ca",
-      "sum": "avTe9ZZWDnyFlQnImuVaJkaaBjuJcue4glmb9RoXkBY="
+      "version": "f9bff6a19117816e466fe321c75fbfd1b6b65b4c",
+      "sum": "7jTWnR7Id0vAT70i15fRUqIU6iDViMHHKdOBrDA29mM="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/grafana/rollout-operator.git",
+          "subdir": "operations/rollout-operator"
+        }
+      },
+      "version": "8dd8a7c16948a49107fa4e8e7b4074c4c9785c87",
+      "sum": "ilVqM45ExJKO2BKACM8WtcccjZHfz799ugG/8TEnE18="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/grafana/rollout-operator.git",
+          "subdir": "operations/rollout-operator-mixin"
+        }
+      },
+      "version": "ca5df98ba4f7c00da8950e504e2f5a58d4cd95ac",
+      "sum": "rF1QW7jSTWxc+obK8sE49Wh4KYCCaraFbNUURV9F+Yg="
     },
     {
       "source": {
@@ -264,6 +274,16 @@
     {
       "source": {
         "git": {
+          "remote": "https://github.com/jsonnet-libs/strimzi-libsonnet.git",
+          "subdir": "0.48"
+        }
+      },
+      "version": "96f288c68eec71ff1bf208d3d764e317ff2cb120",
+      "sum": "ek5VDDd26ENSYXmMskXd96sJLnOGgdFvENb7eCNkjkk="
+    },
+    {
+      "source": {
+        "git": {
           "remote": "https://github.com/jsonnet-libs/xtd.git",
           "subdir": ""
         }
@@ -308,7 +328,7 @@
           "subdir": "jsonnet/kube-prometheus/lib"
         }
       },
-      "version": "7c81f7ede12db220eabae114074e9d01e4285194",
+      "version": "cfaed7a65fd164ae2255d453fde2ce22534e1227",
       "sum": "QKRgrgEZ3k9nLmLCrDBaeIGVqQZf+AvZTcnhdLk3TrA="
     },
     {

@@ -62,7 +62,7 @@
           "subdir": "operations/mimir"
         }
       },
-      "version": "mimir-2.15.0"
+      "version": "mimir-3.0.1"
     },
     {
       "source": {
@@ -71,7 +71,7 @@
           "subdir": "operations/mimir-mixin"
         }
       },
-      "version": "mimir-2.15.0"
+      "version": "mimir-3.0.1"
     },
     {
       "source": {
@@ -132,6 +132,15 @@
         "git": {
           "remote": "https://github.com/jsonnet-libs/prometheus-operator-libsonnet.git",
           "subdir": "0.83"
+        }
+      },
+      "version": "main"
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/jsonnet-libs/strimzi-libsonnet.git",
+          "subdir": "0.48"
         }
       },
       "version": "main"
