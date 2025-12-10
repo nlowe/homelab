@@ -47,7 +47,7 @@ local k = import 'k.libsonnet';
   esphome: $.new(registry='ghcr.io', name='esphome/esphome', version='2025.11.4'),
   // https://github.com/home-assistant/core/releases/latest
   // https://github.com/home-assistant/core/pkgs/container/home-assistant
-  'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2025.12.1'),
+  'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2025.12.2'),
   // https://github.com/sensy-one/home-assistant-addons
   // https://github.com/sensy-one/home-assistant-addons/pkgs/container/zone-editor
   'sensy-one-zone-editor': $.new(registry='ghcr.io', name='sensy-one/zone-editor', version='latest@sha256:27286d47dfd0862922f847237a82a49f3ba9803d381d5a1f3646883d49f2df3a'),
