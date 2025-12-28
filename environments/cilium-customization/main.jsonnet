@@ -1,6 +1,7 @@
 (import 'homelab.libsonnet') +
 (import 'bgp.libsonnet') +
 (import 'gateway.libsonnet') +
+(import 'monitoring.libsonnet') +
 {
   _config+:: {
     cilium+: {
@@ -44,6 +45,27 @@
           ui: {
             enabled: true,
           },
+          metrics: {
+            enabled: [
+              'dns',
+              'drop',
+              'tcp',
+              'flow',
+              'port-distribution',
+              'icmp',
+              'httpV2;labelsContext=source_ip,source_namespace,source_workload,destination_ip,destination_namespace,destination_workload,traffic_direction',
+            ],
+          },
+        },
+
+        operator: {
+          prometheus: {
+            enabled: true,
+          },
+        },
+
+        prometheus: {
+          enabled: true,
         },
       },
     },
