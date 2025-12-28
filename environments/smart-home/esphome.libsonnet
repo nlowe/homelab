@@ -1,5 +1,5 @@
 local k = import 'k.libsonnet';
-local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.1/main.libsonnet').gateway;
+local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.2/main.libsonnet').gateway;
 
 local image = import 'images.libsonnet';
 
@@ -68,7 +68,7 @@ local image = import 'images.libsonnet';
     route:
       route.new('esphome') +
       route.metadata.withNamespace($.namespace.metadata.name) +
-      $._config.caddy.gateway.route() +
+      $._config.cilium.gateway.route() +
       route.spec.withHostnames(['esp.home.nlowe.dev']) +
       route.spec.withRules([
         rule.withBackendRefs([

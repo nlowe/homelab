@@ -12,87 +12,85 @@
     },
   },
 
-  cilium+: {
-    bgp+: {
-      pool: {
-        apiVersion: 'cilium.io/v2alpha1',
-        kind: 'CiliumLoadBalancerIPPool',
-        metadata: {
-          name: 'homelab',
-        },
-        spec: {
-          blocks: [
-            { cidr: $._config.cilium.bgp.serviceCIDR },
-          ],
-          serviceSelector: {
-            matchLabels: $._config.cilium.bgp.labels,
-          },
+  bgp+: {
+    pool: {
+      apiVersion: 'cilium.io/v2alpha1',
+      kind: 'CiliumLoadBalancerIPPool',
+      metadata: {
+        name: 'homelab',
+      },
+      spec: {
+        blocks: [
+          { cidr: $._config.cilium.bgp.serviceCIDR },
+        ],
+        serviceSelector: {
+          matchLabels: $._config.cilium.bgp.labels,
         },
       },
+    },
 
-      peerConfig: {
-        apiVersion: 'cilium.io/v2',
-        kind: 'CiliumBGPPeerConfig',
-        metadata: {
-          name: 'udm-pro-max',
-        },
-        spec: {
-          gracefulRestart: {
-            enabled: true,
-            restartTimeSeconds: 15,
-          },
-          families: [
-            {
-              afi: 'ipv4',
-              safi: 'unicast',
-              advertisements: {
-                matchLabels: $._config.cilium.bgp.labels,
-              },
-            },
-          ],
-        },
+    peerConfig: {
+      apiVersion: 'cilium.io/v2',
+      kind: 'CiliumBGPPeerConfig',
+      metadata: {
+        name: 'udm-pro-max',
       },
-
-      clusterConfig: {
-        apiVersion: 'cilium.io/v2',
-        kind: 'CiliumBGPClusterConfig',
-        metadata: {
-          name: 'homelab',
+      spec: {
+        gracefulRestart: {
+          enabled: true,
+          restartTimeSeconds: 15,
         },
-        spec: {
-          bgpInstances: [{
-            name: std.toString($._config.cilium.bgp.asn),
-            localASN: $._config.cilium.bgp.asn,
-            peers: [{
-              name: 'udm-pro-max',
-              peerASN: $._config.cilium.bgp.peer.asn,
-              peerAddress: $._config.cilium.bgp.peer.addr,
-              peerConfigRef: {
-                name: $.cilium.bgp.peerConfig.metadata.name,
-              },
-            }],
-          }],
-        },
-      },
-
-      advertisement: {
-        apiVersion: 'cilium.io/v2',
-        kind: 'CiliumBGPAdvertisement',
-        metadata: {
-          name: 'homelab',
-          labels: $._config.cilium.bgp.labels,
-        },
-        spec: {
-          advertisements: [{
-            advertisementType: 'Service',
-            service: {
-              addresses: ['LoadBalancerIP'],
-            },
-            selector: {
+        families: [
+          {
+            afi: 'ipv4',
+            safi: 'unicast',
+            advertisements: {
               matchLabels: $._config.cilium.bgp.labels,
             },
+          },
+        ],
+      },
+    },
+
+    clusterConfig: {
+      apiVersion: 'cilium.io/v2',
+      kind: 'CiliumBGPClusterConfig',
+      metadata: {
+        name: 'homelab',
+      },
+      spec: {
+        bgpInstances: [{
+          name: std.toString($._config.cilium.bgp.asn),
+          localASN: $._config.cilium.bgp.asn,
+          peers: [{
+            name: 'udm-pro-max',
+            peerASN: $._config.cilium.bgp.peer.asn,
+            peerAddress: $._config.cilium.bgp.peer.addr,
+            peerConfigRef: {
+              name: $.bgp.peerConfig.metadata.name,
+            },
           }],
-        },
+        }],
+      },
+    },
+
+    advertisement: {
+      apiVersion: 'cilium.io/v2',
+      kind: 'CiliumBGPAdvertisement',
+      metadata: {
+        name: 'homelab',
+        labels: $._config.cilium.bgp.labels,
+      },
+      spec: {
+        advertisements: [{
+          advertisementType: 'Service',
+          service: {
+            addresses: ['LoadBalancerIP'],
+          },
+          selector: {
+            matchLabels: $._config.cilium.bgp.labels,
+          },
+        }],
       },
     },
   },

@@ -1,7 +1,7 @@
 local k = import 'k.libsonnet';
 
 local cm = import 'github.com/jsonnet-libs/cert-manager-libsonnet/1.15/main.libsonnet';
-local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.1/main.libsonnet').gateway;
+local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.2/main.libsonnet').gateway;
 local prom = import 'github.com/jsonnet-libs/prometheus-operator-libsonnet/0.83/main.libsonnet';
 
 local image = import 'images.libsonnet';
@@ -312,7 +312,7 @@ local image = import 'images.libsonnet';
       route.new('vernemq') +
       route.metadata.withNamespace($.namespace.metadata.name) +
       route.metadata.withLabels(this.labels) +
-      $._config.caddy.gateway.route() +
+      $._config.cilium.gateway.route() +
       route.spec.withHostnames(['vernemq.home.nlowe.dev']) +
       route.spec.withRules([
         // The status page is hosted at /status, and the root URL just 404s, so redirect to the status page to make it

@@ -1,5 +1,5 @@
 local k = import 'k.libsonnet';
-local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.1/main.libsonnet').gateway;
+local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.2/main.libsonnet').gateway;
 
 local mixin = import 'github.com/grafana/mimir/operations/mimir-mixin/mixin.libsonnet';
 local prom = import 'github.com/jsonnet-libs/prometheus-operator-libsonnet/0.83/main.libsonnet';
@@ -177,7 +177,7 @@ local image = (import 'images.libsonnet').mimir;
     local route = g.v1.httpRoute,
     local rule = route.spec.rules,
 
-    // Make a copy of the mimir-write service that isn't headless, caddy can't seem to route to headless services
+    // Make a copy of the mimir-write service that isn't headless for gateway routes
     backend:
       $.mimir_write_service +
       k.core.v1.service.metadata.withName('mimir-write-gateway') +
@@ -190,7 +190,7 @@ local image = (import 'images.libsonnet').mimir;
     route:
       route.new('mimir') +
       route.metadata.withNamespace($._config.namespace) +
-      $._config.caddy.gateway.route() +
+      $._config.cilium.gateway.route() +
       route.spec.withHostnames(['mimir.home.nlowe.dev']) +
       route.spec.withRules([
         // TODO: Expose query-frontend?

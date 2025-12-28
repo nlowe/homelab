@@ -113,7 +113,7 @@
       "source": {
         "git": {
           "remote": "https://github.com/jsonnet-libs/gateway-api-libsonnet.git",
-          "subdir": "1.1"
+          "subdir": "1.2"
         }
       },
       "version": "main"
@@ -143,7 +143,16 @@
           "subdir": "config/crd/experimental"
         }
       },
-      "version": "v1.1.0"
+      "version": "v1.2.0"
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/kubernetes-sigs/gateway-api.git",
+          "subdir": "config/crd/standard"
+        }
+      },
+      "version": "v1.2.0"
     },
     {
       "source": {

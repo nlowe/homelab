@@ -235,11 +235,11 @@
       "source": {
         "git": {
           "remote": "https://github.com/jsonnet-libs/gateway-api-libsonnet.git",
-          "subdir": "1.1"
+          "subdir": "1.2"
         }
       },
       "version": "3aba85d3a616e1ef95f5d1e3a783f9c9083846a5",
-      "sum": "ScZlZDR5Z9BS81qZFNhbCQLI8zMwFKisrxaiBG9KXp4="
+      "sum": "oh7NG+vnwhqKsz6Pw89e6Fv5nWkxjY7EuRpK81dsgwo="
     },
     {
       "source": {
@@ -280,6 +280,16 @@
       },
       "version": "690f754646e8326128fd686e3e46117ac479cfdf",
       "sum": "z8tgUmM/OCzTrLf2mEneAXYngyNjmwUgkrASu0cz6SQ="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/kubernetes-sigs/gateway-api.git",
+          "subdir": "config/crd/standard"
+        }
+      },
+      "version": "f73504594cf85d36681e064d2932d66608d135e2",
+      "sum": "uzpUilfEltqSjIBItktjyFHZiZng9BDTYslkBVX7r8E="
     },
     {
       "source": {

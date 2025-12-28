@@ -1,6 +1,6 @@
 local k = import 'k.libsonnet';
 
-local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.1/main.libsonnet').gateway;
+local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.2/main.libsonnet').gateway;
 
 local image = import 'images.libsonnet';
 
@@ -187,7 +187,7 @@ local image = import 'images.libsonnet';
       route.new('zigbee2mqtt') +
       route.metadata.withNamespace($.namespace.metadata.name) +
       route.metadata.withLabels(this.labels) +
-      $._config.caddy.gateway.route() +
+      $._config.cilium.gateway.route() +
       route.spec.withHostnames(['zigbee2mqtt.home.nlowe.dev']) +
       route.spec.withRules([
         rule.withBackendRefs([

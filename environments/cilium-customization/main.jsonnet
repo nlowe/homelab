@@ -1,5 +1,6 @@
 (import 'homelab.libsonnet') +
 (import 'bgp.libsonnet') +
+(import 'gateway.libsonnet') +
 {
   _config+:: {
     cilium+: {
@@ -17,6 +18,23 @@
         kubeProxyReplacement: true,
         k8sServiceHost: '127.0.0.1',
         k8sServicePort: '6443',
+
+        gatewayAPI: {
+          enabled: true,
+        },
+        envoy: {
+          enabled: true,
+          securityContext: {
+            capabilities: {
+              keepCapNetBindService: true,
+              envoy: [
+                'NET_ADMIN',
+                'BPF',
+                'NET_BIND_SERVICE',
+              ],
+            },
+          },
+        },
 
         hubble: {
           enabled: true,

@@ -8,26 +8,13 @@ local es = import 'github.com/jsonnet-libs/external-secrets-libsonnet/0.19/main.
 local clusterSecretStore = es.nogroup.v1.clusterSecretStore;
 local externalSecret = es.nogroup.v1.externalSecret;
 
-local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.1/main.libsonnet').gateway;
+local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.2/main.libsonnet').gateway;
 
 {
   _config+:: {
-    caddy: {
-      namespace: 'caddy-system',
-
-      gateway: {
-        name: 'caddy',
-
-        local route = g.v1.httpRoute,
-        route():
-          route.spec.withParentRefs([
-            route.spec.parentRefs.withName($._config.caddy.gateway.name) +
-            route.spec.parentRefs.withNamespace($._config.caddy.namespace),
-          ]),
-      },
-    },
-
     cilium+: {
+      namespace: 'kube-system',
+
       bgp+: {
         labels:: { advertise: 'bgp' },
 
@@ -43,10 +30,22 @@ local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.1/main.libson
           svc.spec.withInternalTrafficPolicy('Local'),
 
         serviceMixins:: {
-          caddy: $._config.cilium.bgp.loadBalancerMixin('10.200.200.10'),
+          cilium_gateway: $._config.cilium.bgp.loadBalancerMixin('10.200.200.10'),
           alloy_syslog: $._config.cilium.bgp.loadBalancerMixin('10.200.200.11'),
           vernemq_mqtts: $._config.cilium.bgp.loadBalancerMixin('10.200.200.12'),
         },
+      },
+
+      gateway: {
+        name: 'cilium',
+        class: 'cilium',
+
+        local route = g.v1.httpRoute,
+        route():
+          route.spec.withParentRefs([
+            route.spec.parentRefs.withName($._config.cilium.gateway.name) +
+            route.spec.parentRefs.withNamespace($._config.cilium.namespace),
+          ]),
       },
     },
 

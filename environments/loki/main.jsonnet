@@ -1,5 +1,5 @@
 local k = import 'k.libsonnet';
-local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.1/main.libsonnet').gateway;
+local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.2/main.libsonnet').gateway;
 
 local mixin = import 'github.com/grafana/loki/production/loki-mixin/mixin.libsonnet';
 local prom = import 'github.com/jsonnet-libs/prometheus-operator-libsonnet/0.83/main.libsonnet';
@@ -203,7 +203,7 @@ local image = (import 'images.libsonnet').loki;
     route:
       route.new('loki') +
       route.metadata.withNamespace($._config.namespace) +
-      $._config.caddy.gateway.route() +
+      $._config.cilium.gateway.route() +
       route.spec.withHostnames(['loki.home.nlowe.dev']) +
       route.spec.withRules([
         // TODO: Expose query-frontend?

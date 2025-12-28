@@ -1,5 +1,5 @@
 local k = import 'k.libsonnet';
-local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.1/main.libsonnet').gateway;
+local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.2/main.libsonnet').gateway;
 
 local prom = import 'github.com/jsonnet-libs/prometheus-operator-libsonnet/0.83/main.libsonnet';
 
@@ -214,7 +214,7 @@ local image = import 'images.libsonnet';
     route:
       route.new('home-assistant') +
       route.metadata.withNamespace('smart-home') +
-      $._config.caddy.gateway.route() +
+      $._config.cilium.gateway.route() +
       route.spec.withHostnames(['hass.home.nlowe.dev']) +
       route.spec.withRules([
         // This is required because code-server requires a trailing / in the URL to work on a sub-path
@@ -230,7 +230,7 @@ local image = import 'images.libsonnet';
 
         rule.withMatches([
           rule.matches.path.withType('PathPrefix') +
-          // We need to omit the trailing / here so caddy-gateway doesn't strip off the leading "/", otherwise static assets won't load
+          // We need to omit the trailing / here so the gateway doesn't strip off the leading "/", otherwise static assets won't load
           rule.matches.path.withValue('/_code_server'),
         ]) +
         rule.withFilters([
@@ -258,7 +258,7 @@ local image = import 'images.libsonnet';
 
         rule.withMatches([
           rule.matches.path.withType('PathPrefix') +
-          // We need to omit the trailing / here so caddy-gateway doesn't strip off the leading "/", otherwise static assets won't load
+          // We need to omit the trailing / here so the gateway doesn't strip off the leading "/", otherwise static assets won't load
           rule.matches.path.withValue('/_zone_editor'),
         ]) +
         rule.withFilters([

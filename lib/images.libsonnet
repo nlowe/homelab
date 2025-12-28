@@ -30,12 +30,6 @@ local k = import 'k.libsonnet';
     k.core.v1.container.new(if container_name != null then container_name else name, $[name].ref()),
 } +
 {
-  // https://github.com/caddyserver/gateway/pkgs/container/gateway
-  // TODO: This doesn't seem to be super well maintained. Switch to something more active like envoy gateway, traefik
-  // gateway, or just try cillium again.
-  caddy: $.new(registry='ghcr.io', name='caddyserver/gateway', version='caddy-2.10.2'),
-  'caddy-gateway': $.new(registry='ghcr.io', name='caddyserver/gateway', version='v0.1.0'),
-
   // https://www.linuxserver.io/our-images
   'code-server': $.new(registry='lscr.io', name='linuxserver/code-server', version='4.107.0-ls309'),
 
