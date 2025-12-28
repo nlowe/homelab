@@ -13,6 +13,20 @@
         bgpControlPlane: {
           enabled: true,
         },
+
+        kubeProxyReplacement: true,
+        k8sServiceHost: '127.0.0.1',
+        k8sServicePort: '6443',
+
+        hubble: {
+          enabled: true,
+          relay: {
+            enabled: true,
+          },
+          ui: {
+            enabled: true,
+          },
+        },
       },
     },
   },
