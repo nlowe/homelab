@@ -11,6 +11,19 @@ local image = (import 'images.libsonnet').mimir;
 (import 'homelab.libsonnet') +
 (import 'github.com/grafana/mimir/operations/mimir/mimir.libsonnet') +
 {
+  // Mimir 3.x switches to using the vendored rollot-operator jsonnet manifests. Until then, we need to patch in ZPDB
+  // support: https://github.com/grafana/mimir/commit/14dda677f887caaeca8ed0da33552c1ac444dab5#diff-f77fac158e6f3ed5f935f0cf380c4776f25efcb478f26beab62e203cc1d5fefd.
+  local role = k.rbac.v1.role,
+  local policyRule = k.rbac.v1.policyRule,
+  rollout_operator_role+:
+    role.withRulesMixin([
+      // https://github.com/grafana/rollout-operator/blob/6401f0ade9131590ca6352cacce5ac0fc59228e5/operations/rollout-operator/rollout-operator.libsonnet#L144-L148
+      policyRule.withApiGroups('rollout-operator.grafana.com') +
+      policyRule.withResources(['zoneawarepoddisruptionbudgets']) +
+      policyRule.withVerbs(['get', 'list', 'watch']),
+    ]),
+} +
+{
   _images+:: {
     mimir: image.mimir.ref(),
     memcached: image.memcached.ref(),

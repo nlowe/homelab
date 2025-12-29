@@ -7,6 +7,11 @@ local excludeKubeSystemSelector =
   matchLabel.withValues(['kube-system']);
 
 {
+  crds: [
+    // CRD for ZPDBs used by loki and mimir rollout operator
+    std.parseYaml((importstr 'github.com/grafana/rollout-operator/operations/rollout-operator/crds/zone-aware-pod-disruption-budget.yaml')),
+  ],
+
   local map = k.admissionregistration.v1alpha1.mutatingAdmissionPolicy,
   local constraint = k.admissionregistration.v1alpha1.namedRuleWithOperations,
   local condition = k.admissionregistration.v1.matchCondition,

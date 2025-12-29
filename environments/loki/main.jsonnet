@@ -11,6 +11,19 @@ local image = (import 'images.libsonnet').loki;
 (import 'homelab.libsonnet') +
 (import 'github.com/grafana/loki/production/ksonnet/loki/loki.libsonnet') +
 {
+  // Loki uses a lobotomized rollout operator manifest set that breaks on newer versions because it does not include
+  // RBAC permissions for ZPDBs. See https://github.com/grafana/loki/issues/20281.
+  local role = k.rbac.v1.role,
+  local policyRule = k.rbac.v1.policyRule,
+  rollout_operator_role+:
+    role.withRulesMixin([
+      // https://github.com/grafana/rollout-operator/blob/6401f0ade9131590ca6352cacce5ac0fc59228e5/operations/rollout-operator/rollout-operator.libsonnet#L144-L148
+      policyRule.withApiGroups('rollout-operator.grafana.com') +
+      policyRule.withResources(['zoneawarepoddisruptionbudgets']) +
+      policyRule.withVerbs(['get', 'list', 'watch']),
+    ]),
+} +
+{
   _images+:: {
     loki: image.loki.ref(),
     memcached: image.memcached.ref(),

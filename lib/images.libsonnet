@@ -121,13 +121,11 @@ local k = import 'k.libsonnet';
 } +
 {
   // https://github.com/grafana/rollout-operator/releases/latest
-  // TODO: Fix ZoneAwarePodDisruptionBudget CRD / Permissions and upgrade
-  grafana_rollout_operator: $.new(name='grafana/rollout-operator', version='v0.28.1'),
+  grafana_rollout_operator: $.new(name='grafana/rollout-operator', version='v0.33.0'),
   // https://github.com/memcached/memcached/tags
   memcached: $.new(name='memcached', version='1.6.40-alpine'),
   // See https://github.com/prometheus/memcached_exporter/releases/latest
   memcachedExporter: $.new(name='prom/memcached-exporter', version='v0.15.4'),
-
 }
 {
   // https://github.com/grafana/loki/releases/latest
