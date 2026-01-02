@@ -52,7 +52,7 @@ local image = import 'images.libsonnet';
       sc.withProvisioner($.provisionerName) +
       sc.withParameters({
         nodePath: '/mnt/k8s',
-        pathPattern: '{{ .PVC.Namespace }}/{{ .PVC.Name }}',
+        pathPattern: '{{ .PVC.Namespace }}/{{ .PVC.Name }}/',
       }) +
       sc.withVolumeBindingMode('WaitForFirstConsumer') +
       sc.withReclaimPolicy('Delete'),
