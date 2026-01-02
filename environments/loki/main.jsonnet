@@ -140,72 +140,28 @@ local image = (import 'images.libsonnet').loki;
       local pm = prom.monitoring.v1.podMonitor,
       local endpoint = pm.spec.podMetricsEndpoints,
 
+      local newPodMonitor(name, matchLabels=null) =
+        pm.new(name) +
+        pm.spec.withPodMetricsEndpoints([
+          endpoint.withPort('http-metrics'),
+        ]) +
+        pm.spec.selector.withMatchLabels(if matchLabels != null then matchLabels else { name: name }),
+
       dependencies: {
         memcached: {
-          main:
-            pm.new('memcached') +
-            pm.spec.withPodMetricsEndpoints([
-              endpoint.withPort('http-metrics'),
-            ]) +
-            pm.spec.selector.withMatchLabels({ name: 'memcached' }),
-
-          frontend:
-            pm.new('memcached-frontend') +
-            pm.spec.withPodMetricsEndpoints([
-              endpoint.withPort('http-metrics'),
-            ]) +
-            pm.spec.selector.withMatchLabels({ name: 'memcached-frontend' }),
-
-          indexQueries:
-            pm.new('memcached-index-queries') +
-            pm.spec.withPodMetricsEndpoints([
-              endpoint.withPort('http-metrics'),
-            ]) +
-            pm.spec.selector.withMatchLabels({ name: 'memcached-index-queries' }),
+          main: newPodMonitor('memcached'),
+          frontend: newPodMonitor('memcached-frontend'),
+          indexQueries: newPodMonitor('memcached-index-queries'),
         },
 
-        distributor:
-          pm.new('distributor') +
-          pm.spec.withPodMetricsEndpoints([
-            endpoint.withPort('http-metrics'),
-          ]) +
-          pm.spec.selector.withMatchLabels({ name: 'distributor' }),
-
-        query_frontend:
-          pm.new('query-frontend') +
-          pm.spec.withPodMetricsEndpoints([
-            endpoint.withPort('http-metrics'),
-          ]) +
-          pm.spec.selector.withMatchLabels({ name: 'query-frontend' }),
-
-        querier:
-          pm.new('querier') +
-          pm.spec.withPodMetricsEndpoints([
-            endpoint.withPort('http-metrics'),
-          ]) +
-          pm.spec.selector.withMatchLabels({ name: 'querier' }),
-
-        ingester:
-          pm.new('ingester') +
-          pm.spec.withPodMetricsEndpoints([
-            endpoint.withPort('http-metrics'),
-          ]) +
-          pm.spec.selector.withMatchLabels({ 'rollout-group': 'ingester' }),
-
-        compactor:
-          pm.new('compactor') +
-          pm.spec.withPodMetricsEndpoints([
-            endpoint.withPort('http-metrics'),
-          ]) +
-          pm.spec.selector.withMatchLabels({ name: 'compactor' }),
-
-        rolloutOperator:
-          pm.new('rollout-operator') +
-          pm.spec.withPodMetricsEndpoints([
-            endpoint.withPort('http-metrics'),
-          ]) +
-          pm.spec.selector.withMatchLabels({ name: 'rollout-operator' }),
+        rolloutOperator: newPodMonitor('rollout-operator'),
       },
+
+      compactor: newPodMonitor('compactor'),
+      distributor: newPodMonitor('distributor'),
+      ingester: newPodMonitor('ingester', { 'rollout-group': 'ingester' }),
+      querier: newPodMonitor('querier'),
+      query_frontend: newPodMonitor('query-frontend'),
     },
   },
 
