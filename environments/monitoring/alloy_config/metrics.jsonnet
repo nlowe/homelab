@@ -167,7 +167,7 @@ local alloy = import 'github.com/grafana/alloy/operations/alloy-syntax-jsonnet/m
     },
 
     [alloy.block('endpoint')]: {
-      url: 'http://mimir-write.mimir.svc.cluster.local.:8080/api/v1/push',
+      url: 'http://distributor.mimir.svc.cluster.local.:8080/api/v1/push',
       send_native_histograms: true,
 
       headers: {

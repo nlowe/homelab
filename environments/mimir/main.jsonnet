@@ -38,17 +38,24 @@ local image = (import 'images.libsonnet').mimir;
     cluster: 'homelab',
     external_url: 'https://mimir.home.nlowe.dev',
 
-    deployment_mode: 'read-write',
-    mimir_write_data_disk_class: 'local-ssd',
-    mimir_write_allow_multiple_replicas_on_same_node: true,
-    mimir_backend_data_disk_class: 'local-ssd',
-    mimir_backend_allow_multiple_replicas_on_same_node: true,
+    alertmanager_enabled: true,
+    ruler_enabled: true,
 
-    mimir_read_replicas: 3,
-    mimir_backend_replicas: 3,
+    storage_class:: 'local-ssd',
+    alertmanager_data_disk_class: $._config.storage_class,
+    ingester_data_disk_class: $._config.storage_class,
+    ingester_allow_multiple_replicas_on_same_node: true,
+    store_gateway_data_disk_class: $._config.storage_class,
+    store_gateway_allow_multiple_replicas_on_same_node: true,
+    compactor_data_disk_class: $._config.storage_class,
 
+
+    multi_zone_availability_zones: ['a', 'b', 'c'],
+    multi_zone_distributor_enabled: true,
     multi_zone_ingester_enabled: true,
+    multi_zone_ingester_replicas: 3,
     multi_zone_store_gateway_enabled: true,
+    multi_zone_store_gateway_replicas: 3,
     ruler_remote_evaluation_enabled: false,
 
     // Disable microservices autoscaling.
@@ -106,10 +113,35 @@ local image = (import 'images.libsonnet').mimir;
       k.core.v1.envFromSource.secretRef.withName($.storageCredentialsSecret.metadata.name),
     ]),
 
-  mimir_write_container+:: $.mountMinioSecret,
-  mimir_read_container+:: $.mountMinioSecret,
-  mimir_backend_container+:: $.mountMinioSecret,
+  ingester_container+:: $.mountMinioSecret,
+  querier_container+:: $.mountMinioSecret,
+  alertmanager_container+:: $.mountMinioSecret,
+  ruler_container+:: $.mountMinioSecret,
+  compactor_container+:: $.mountMinioSecret,
+  store_gateway_container+:: $.mountMinioSecret,
 
+  // Make a generic distributor service for in-cluster alloy
+  distributor_zone_labels:: {
+    'part-of': 'distributor',
+  },
+
+  distributor_label_mixin::
+    k.apps.v1.deployment.spec.template.metadata.withLabelsMixin(
+      $.distributor_zone_labels
+    ),
+
+  distributor_zone_a_deployment+: $.distributor_label_mixin,
+  distributor_zone_b_deployment+: $.distributor_label_mixin,
+  distributor_zone_c_deployment+: $.distributor_label_mixin,
+
+  local svc = k.core.v1.service,
+  distributor_zone_all_service:
+    svc.new('distributor', $.distributor_zone_labels, $.distributor_zone_a_service.spec.ports),
+
+  ruler_args+:: {
+    // Mimir configures the wrong port by default
+    'ruler.alertmanager-url': 'http://alertmanager.%(namespace)s.svc.%(cluster_domain)s:8080/alertmanager' % $._config,
+  },
 
   monitoring: {
     local pr = prom.monitoring.v1.prometheusRule,
@@ -124,82 +156,39 @@ local image = (import 'images.libsonnet').mimir;
       local pm = prom.monitoring.v1.podMonitor,
       local endpoint = pm.spec.podMetricsEndpoints,
 
+      local newPodMonitor(name, matchLabels=null) =
+        pm.new(name) +
+        pm.spec.withPodMetricsEndpoints([
+          endpoint.withPort('http-metrics'),
+        ]) +
+        pm.spec.selector.withMatchLabels(if matchLabels != null then matchLabels else { name: name }),
+
       dependencies: {
         memcached: {
-          main:
-            pm.new('memcached') +
-            pm.spec.withPodMetricsEndpoints([
-              endpoint.withPort('http-metrics'),
-            ]) +
-            pm.spec.selector.withMatchLabels({ name: 'memcached' }),
-
-          frontend:
-            pm.new('memcached-frontend') +
-            pm.spec.withPodMetricsEndpoints([
-              endpoint.withPort('http-metrics'),
-            ]) +
-            pm.spec.selector.withMatchLabels({ name: 'memcached-frontend' }),
-
-          indexQueries:
-            pm.new('memcached-index-queries') +
-            pm.spec.withPodMetricsEndpoints([
-              endpoint.withPort('http-metrics'),
-            ]) +
-            pm.spec.selector.withMatchLabels({ name: 'memcached-index-queries' }),
-
-          metadata:
-            pm.new('memcached-metadata') +
-            pm.spec.withPodMetricsEndpoints([
-              endpoint.withPort('http-metrics'),
-            ]) +
-            pm.spec.selector.withMatchLabels({ name: 'memcached-metadata' }),
+          main: newPodMonitor('memcached'),
+          frontend: newPodMonitor('memcached-frontend'),
+          indexQueries: newPodMonitor('memcached-index-queries'),
+          metadata: newPodMonitor('memcached-metadata'),
         },
+
+        rolloutOperator: newPodMonitor('rollout-operator'),
       },
 
-      read:
-        pm.new('mimir-read') +
-        pm.spec.withPodMetricsEndpoints([
-          endpoint.withPort('http-metrics'),
-        ]) +
-        pm.spec.selector.withMatchLabels({ name: 'mimir-read' }),
-
-      write:
-        pm.new('mimir-write') +
-        pm.spec.withPodMetricsEndpoints([
-          endpoint.withPort('http-metrics'),
-        ]) +
-        pm.spec.selector.withMatchLabels({ 'rollout-group': 'mimir-write' }),
-
-      backend:
-        pm.new('mimir-backend') +
-        pm.spec.withPodMetricsEndpoints([
-          endpoint.withPort('http-metrics'),
-        ]) +
-        pm.spec.selector.withMatchLabels({ 'rollout-group': 'mimir-backend' }),
-
-      rolloutOperator:
-        pm.new('rollout-operator') +
-        pm.spec.withPodMetricsEndpoints([
-          endpoint.withPort('http-metrics'),
-        ]) +
-        pm.spec.selector.withMatchLabels({ name: 'rollout-operator' }),
+      alertmanager: newPodMonitor('alertmanager'),
+      compactor: newPodMonitor('compactor'),
+      distributor: newPodMonitor('distributor', $.distributor_zone_labels),
+      ingester: newPodMonitor('ingester', { 'rollout-group': 'ingester' }),
+      querier: newPodMonitor('querier'),
+      query_frontend: newPodMonitor('query-frontend'),
+      query_scheduler: newPodMonitor('query-scheduler'),
+      ruler: newPodMonitor('ruler'),
+      store_gateway: newPodMonitor('store-gateway', { 'rollout-group': 'store-gateway' }),
     },
   },
 
   gateway: {
     local route = g.v1.httpRoute,
     local rule = route.spec.rules,
-
-    // Make a copy of the mimir-write service that isn't headless for gateway routes
-    backend:
-      $.mimir_write_service +
-      k.core.v1.service.metadata.withName('mimir-write-gateway') +
-      {
-        spec+: {
-          clusterIP:: null,
-        },
-      },
-
     route:
       route.new('mimir') +
       route.metadata.withNamespace($._config.namespace) +
@@ -208,7 +197,7 @@ local image = (import 'images.libsonnet').mimir;
       route.spec.withRules([
         // TODO: Expose query-frontend?
         rule.withBackendRefs([
-          rule.backendRefs.withName($.gateway.backend.metadata.name) +
+          rule.backendRefs.withName($.distributor_zone_all_service.metadata.name) +
           rule.backendRefs.withNamespace($._config.namespace) +
           rule.backendRefs.withPort(8080),
         ]),
