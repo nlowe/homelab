@@ -141,9 +141,8 @@ local k = import 'k.libsonnet';
 {
   // https://github.com/grafana/mimir/releases/latest
   // See https://github.com/grafana/mimir/blob/main/operations/mimir/images.libsonnet
-  // TODO: Upgrade to 3.0: https://github.com/grafana/mimir/releases/tag/mimir-3.0.0
   mimir:: {
-    mimir: $.new(name='grafana/mimir', version='2.17.3'),
+    mimir: $.new(name='grafana/mimir', version='3.0.2'),
     query_tee: $.new(name='grafana/query-tee', version=self.mimir.version),
     continuous_test: $.new(name='grafana/mimir-continuous-test', version=self.mimir.version),
     memcached: $.memcached,

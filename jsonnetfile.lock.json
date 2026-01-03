@@ -38,7 +38,7 @@
           "subdir": "gen/grafonnet-v10.0.0"
         }
       },
-      "version": "8a27651b56fbdba45a389ccb11440200091c73a1",
+      "version": "7380c9c64fb973f34c3ec46265621a2b0dee0058",
       "sum": "xdcrJPJlpkq4+5LpGwN4tPAuheNNLXZjE6tDcyvFjr0="
     },
     {
@@ -48,7 +48,7 @@
           "subdir": "gen/grafonnet-v11.0.0"
         }
       },
-      "version": "8a27651b56fbdba45a389ccb11440200091c73a1",
+      "version": "7380c9c64fb973f34c3ec46265621a2b0dee0058",
       "sum": "0BvzR0i4bS4hc2O3xDv6i9m52z7mPrjvqxtcPrGhynA="
     },
     {
@@ -58,18 +58,8 @@
           "subdir": "consul"
         }
       },
-      "version": "297984b67b112953177b3fcdef4afe5902dcf039",
+      "version": "5299b4cd62c6c039ae426a1e5225d0d3666f46c9",
       "sum": "Po3c1Ic96ngrJCtOazic/7OsLkoILOKZWXWyZWl+od8="
-    },
-    {
-      "source": {
-        "git": {
-          "remote": "https://github.com/grafana/jsonnet-libs.git",
-          "subdir": "etcd-operator"
-        }
-      },
-      "version": "297984b67b112953177b3fcdef4afe5902dcf039",
-      "sum": "duHm6wmUju5KHQurOe6dnXoKgl5gTUsfGplgbmAOsHw="
     },
     {
       "source": {
@@ -78,7 +68,7 @@
           "subdir": "grafana-builder"
         }
       },
-      "version": "297984b67b112953177b3fcdef4afe5902dcf039",
+      "version": "5299b4cd62c6c039ae426a1e5225d0d3666f46c9",
       "sum": "YPaA+KJ6JBW9QpxNvl0iAxnC7gL4jRRvulNl6QRkPU0="
     },
     {
@@ -88,7 +78,7 @@
           "subdir": "jaeger-agent-mixin"
         }
       },
-      "version": "297984b67b112953177b3fcdef4afe5902dcf039",
+      "version": "5299b4cd62c6c039ae426a1e5225d0d3666f46c9",
       "sum": "h/nMdmRK8Ep4bnRXKOuVL+RlUm85hhtD0LGIsf2THAY="
     },
     {
@@ -98,7 +88,7 @@
           "subdir": "ksonnet-util"
         }
       },
-      "version": "297984b67b112953177b3fcdef4afe5902dcf039",
+      "version": "5299b4cd62c6c039ae426a1e5225d0d3666f46c9",
       "sum": "0y3AFX9LQSpfWTxWKSwoLgbt0Wc9nnCwhMH2szKzHv0="
     },
     {
@@ -108,8 +98,8 @@
           "subdir": "logs-lib/"
         }
       },
-      "version": "297984b67b112953177b3fcdef4afe5902dcf039",
-      "sum": "0xwYsW92n4rE9PfO3drN4Ko9VeQBoV/IZ7nvgrnYaWk="
+      "version": "5299b4cd62c6c039ae426a1e5225d0d3666f46c9",
+      "sum": "rgzaIMC4Gujx86mPdsVfQnzSfxzfuCg/sZPrDJBV3bU="
     },
     {
       "source": {
@@ -118,8 +108,8 @@
           "subdir": "logs-lib/logs"
         }
       },
-      "version": "297984b67b112953177b3fcdef4afe5902dcf039",
-      "sum": "PX1ePJnTxPi4x2bmrbrbC6IPxjOX4p0Fv+H8JOiod5g="
+      "version": "5299b4cd62c6c039ae426a1e5225d0d3666f46c9",
+      "sum": "GkY3L75913fiYk9+Rq/R1JEaHEwkFrtvufIWhJZ6MP8="
     },
     {
       "source": {
@@ -128,7 +118,7 @@
           "subdir": "memcached"
         }
       },
-      "version": "297984b67b112953177b3fcdef4afe5902dcf039",
+      "version": "5299b4cd62c6c039ae426a1e5225d0d3666f46c9",
       "sum": "zNTCDRaCqJUHjQSQRsxGR3jLrMP9tU7YNQb13dbm1bU="
     },
     {
@@ -138,8 +128,8 @@
           "subdir": "mixin-utils"
         }
       },
-      "version": "297984b67b112953177b3fcdef4afe5902dcf039",
-      "sum": "Cn9Qr4AN6jn6zzKwOxTdsygK46VsSMQSoMnCx0aZAQo="
+      "version": "5299b4cd62c6c039ae426a1e5225d0d3666f46c9",
+      "sum": "kgoIxOkFlpadoT9+HnMZ4LMdaS1HJsAAUQEe1eUg22E="
     },
     {
       "source": {
@@ -148,7 +138,7 @@
           "subdir": "tanka-util"
         }
       },
-      "version": "297984b67b112953177b3fcdef4afe5902dcf039",
+      "version": "5299b4cd62c6c039ae426a1e5225d0d3666f46c9",
       "sum": "ShSIissXdvCy1izTCDZX6tY7qxCoepE5L+WJ52Hw7ZQ="
     },
     {
@@ -178,8 +168,8 @@
           "subdir": "operations/mimir"
         }
       },
-      "version": "dbda652b102979f5402b4d4095a64c40a00fd4ca",
-      "sum": "5Ejg9ZSv+BVv+Up2QAfYmKSEmMuoeA2KT3fXuPxp134="
+      "version": "22c2109f214518b41c9d7a5276b43f5b9e051c98",
+      "sum": "aguXu+h2mYvvhSFAzLbF+LM6+EPPoUTGvHFB+Yyo21c="
     },
     {
       "source": {
@@ -188,8 +178,8 @@
           "subdir": "operations/mimir-mixin"
         }
       },
-      "version": "dbda652b102979f5402b4d4095a64c40a00fd4ca",
-      "sum": "avTe9ZZWDnyFlQnImuVaJkaaBjuJcue4glmb9RoXkBY="
+      "version": "22c2109f214518b41c9d7a5276b43f5b9e051c98",
+      "sum": "7jTWnR7Id0vAT70i15fRUqIU6iDViMHHKdOBrDA29mM="
     },
     {
       "source": {
@@ -200,6 +190,16 @@
       },
       "version": "ee4822b061cb7497b7e8a716161dfa0e3230c0ca",
       "sum": "rBfx/ffgMo6MBNt8+CqJToKEUCdANJU9xMb2KGXEjW4="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/grafana/rollout-operator.git",
+          "subdir": "operations/rollout-operator-mixin"
+        }
+      },
+      "version": "6401f0ade9131590ca6352cacce5ac0fc59228e5",
+      "sum": "zz2Sep/VbyrGcKKa3wy0oGIwMq2qEqBiLTVEVmqDMDE="
     },
     {
       "source": {
@@ -288,8 +288,8 @@
           "subdir": "config/crd/experimental"
         }
       },
-      "version": "690f754646e8326128fd686e3e46117ac479cfdf",
-      "sum": "z8tgUmM/OCzTrLf2mEneAXYngyNjmwUgkrASu0cz6SQ="
+      "version": "f73504594cf85d36681e064d2932d66608d135e2",
+      "sum": "wQmpjuRrfZQ8uxJmlubEITZdet/VfS5V7+yM8xkptrw="
     },
     {
       "source": {
@@ -328,7 +328,7 @@
           "subdir": "jsonnet/kube-prometheus/lib"
         }
       },
-      "version": "7c81f7ede12db220eabae114074e9d01e4285194",
+      "version": "55fcdae9667b220964a56c0aa5b363a43cb79037",
       "sum": "QKRgrgEZ3k9nLmLCrDBaeIGVqQZf+AvZTcnhdLk3TrA="
     },
     {

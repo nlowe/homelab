@@ -11,19 +11,6 @@ local image = (import 'images.libsonnet').mimir;
 (import 'homelab.libsonnet') +
 (import 'github.com/grafana/mimir/operations/mimir/mimir.libsonnet') +
 {
-  // Mimir 3.x switches to using the vendored rollot-operator jsonnet manifests. Until then, we need to patch in ZPDB
-  // support: https://github.com/grafana/mimir/commit/14dda677f887caaeca8ed0da33552c1ac444dab5#diff-f77fac158e6f3ed5f935f0cf380c4776f25efcb478f26beab62e203cc1d5fefd.
-  local role = k.rbac.v1.role,
-  local policyRule = k.rbac.v1.policyRule,
-  rollout_operator_role+:
-    role.withRulesMixin([
-      // https://github.com/grafana/rollout-operator/blob/6401f0ade9131590ca6352cacce5ac0fc59228e5/operations/rollout-operator/rollout-operator.libsonnet#L144-L148
-      policyRule.withApiGroups('rollout-operator.grafana.com') +
-      policyRule.withResources(['zoneawarepoddisruptionbudgets']) +
-      policyRule.withVerbs(['get', 'list', 'watch']),
-    ]),
-} +
-{
   _images+:: {
     mimir: image.mimir.ref(),
     memcached: image.memcached.ref(),
@@ -34,6 +21,8 @@ local image = (import 'images.libsonnet').mimir;
   },
 
   _config+:: {
+    // TODO: Kafka after https://github.com/grafana/mimir/issues/13366 is fixed
+
     namespace: 'mimir',
     cluster: 'homelab',
     external_url: 'https://mimir.home.nlowe.dev',
@@ -48,7 +37,6 @@ local image = (import 'images.libsonnet').mimir;
     store_gateway_data_disk_class: $._config.storage_class,
     store_gateway_allow_multiple_replicas_on_same_node: true,
     compactor_data_disk_class: $._config.storage_class,
-
 
     multi_zone_availability_zones: ['a', 'b', 'c'],
     multi_zone_distributor_enabled: true,
@@ -91,6 +79,14 @@ local image = (import 'images.libsonnet').mimir;
       compactor_blocks_retention_period: '9500h',  // ~13 months
     },
   },
+
+  // Annoyingly, the mimir manifests configure these for us for distributors but not for anything else
+  ingester_zone_a_node_affinity_matchers+:: [$.newMimirNodeAffinityMatcherAZ($._config.multi_zone_availability_zones[0])],
+  ingester_zone_b_node_affinity_matchers+:: [$.newMimirNodeAffinityMatcherAZ($._config.multi_zone_availability_zones[1])],
+  ingester_zone_c_node_affinity_matchers+:: [$.newMimirNodeAffinityMatcherAZ($._config.multi_zone_availability_zones[2])],
+  store_gateway_zone_a_node_affinity_matchers+:: [$.newMimirNodeAffinityMatcherAZ($._config.multi_zone_availability_zones[0])],
+  store_gateway_zone_b_node_affinity_matchers+:: [$.newMimirNodeAffinityMatcherAZ($._config.multi_zone_availability_zones[1])],
+  store_gateway_zone_c_node_affinity_matchers+:: [$.newMimirNodeAffinityMatcherAZ($._config.multi_zone_availability_zones[2])],
 
   // No HA Write
   etcd:: null,
@@ -203,4 +199,23 @@ local image = (import 'images.libsonnet').mimir;
         ]),
       ]),
   },
+}
+// Remove CPU Requests, most of these are stuck on specific nodes due to local SSD usage
+{
+  local removeCPURequests = { resources+: { requests+: { cpu:: null } } },
+
+  memcached+:: {
+    memcached_container+: removeCPURequests,
+    memcached_exporter+: removeCPURequests,
+  },
+
+  alertmanager_container+: removeCPURequests,
+  compactor_container+: removeCPURequests,
+  distributor_container+: removeCPURequests,
+  ingester_container+: removeCPURequests,
+  querier_container+: removeCPURequests,
+  query_frontend_container+: removeCPURequests,
+  query_scheduler_container+: removeCPURequests,
+  ruler_container+: removeCPURequests,
+  store_gateway_container+: removeCPURequests,
 }
