@@ -148,8 +148,8 @@
           "subdir": "production/ksonnet/loki"
         }
       },
-      "version": "4fa045d3807f4de0543b06e6ce79b89afb741adc",
-      "sum": "5cMeqFOaQPM6BmJQqku67/R/zUO7t7Sw+ANlsjXKzCE="
+      "version": "9385bc6320733e8c19283f058c685e9eaa14c4ac",
+      "sum": "Qbrb3W5h9sHAaoj03r2tCrJLu+kRj2tyxRUomBbBNEI="
     },
     {
       "source": {
@@ -158,8 +158,8 @@
           "subdir": "production/loki-mixin"
         }
       },
-      "version": "4fa045d3807f4de0543b06e6ce79b89afb741adc",
-      "sum": "1xgQXCEG2QGAxytLY78R77g8k9rigrD7kSpfK6M3osM="
+      "version": "9385bc6320733e8c19283f058c685e9eaa14c4ac",
+      "sum": "eWbTcw/pDtp0PmKktHzTxMH4uS+7UwDmbKOypRyxlCM="
     },
     {
       "source": {

@@ -57,15 +57,17 @@ local image = (import 'images.libsonnet').loki;
 
     // S3 variables -- Remove if not using s3
     storage_backend: 's3',
-    // The loki jsonnet manifests make this annoying to point at minio
-    client_configs+: {
-      s3: {
-        endpoint: 'minio.home.nlowe.dev.:9000',
-        access_key_id: '${LOKI_S3_ACCESS_KEY_ID}',
-        secret_access_key: '${LOKI_S3_SECRET_ACCESS_KEY}',
-        s3forcepathstyle: true,
-        bucketnames: 'loki',
-        region: 'us-east-1',
+    s3_access_key: '${LOKI_S3_ACCESS_KEY_ID}',
+    s3_secret_access_key: '${LOKI_S3_SECRET_ACCESS_KEY}',
+    s3_address: 'minio.home.nlowe.dev.:9000',
+    s3_bucket_name: 'loki',
+    s3_bucket_region: 'us-east-1',
+    s3_path_style: true,
+    object_store_config+: {
+      aws+: {
+        // This is stupid, why is this a default in the loki jsonnet manifests??? Using s3:// forces http://:
+        // https://github.com/grafana/loki/blob/9385bc6320733e8c19283f058c685e9eaa14c4ac/pkg/storage/chunk/client/aws/s3_storage_client.go#L308-L312
+        s3: std.strReplace(super.s3, 's3://', 'https://'),
       },
     },
 
