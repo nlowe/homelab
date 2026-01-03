@@ -44,6 +44,11 @@ local image = import 'images.libsonnet';
       container.withVolumeMounts([
         mount.withMountPath('/data') +
         mount.withName('data'),
+
+        mount.withMountPath('/data/local_components') +
+        mount.withName('k8s-generic-nfs') +
+        mount.withSubPath('esphome-local-components') +
+        mount.withReadOnly(true),
       ]),
 
     local pvc = k.core.v1.persistentVolumeClaim,
@@ -61,7 +66,10 @@ local image = import 'images.libsonnet';
       sts.spec.selector.withMatchLabels(self.labels) +
       sts.spec.template.metadata.withLabels(self.labels) +
       sts.spec.template.spec.withHostNetwork(true) +
-      sts.spec.template.spec.withDnsPolicy('ClusterFirstWithHostNet'),
+      sts.spec.template.spec.withDnsPolicy('ClusterFirstWithHostNet') +
+      sts.spec.template.spec.withVolumes([
+        $._config.media.mount.forKind('k8s-generic-nfs'),
+      ]),
 
     local route = g.v1.httpRoute,
     local rule = route.spec.rules,
