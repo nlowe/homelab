@@ -183,4 +183,19 @@ local image = (import 'images.libsonnet').loki;
         ]),
       ]),
   },
+} +
+// Remove CPU Requests, most of these are stuck on specific nodes due to local SSD usage
+{
+  local removeCPURequests = { resources+: { requests+: { cpu:: null } } },
+
+  memcached+:: {
+    memcached_container+: removeCPURequests,
+    memcached_exporter+: removeCPURequests,
+  },
+
+  compactor_container+: removeCPURequests,
+  distributor_container+: removeCPURequests,
+  ingester_container+: removeCPURequests,
+  querier_container+: removeCPURequests,
+  query_frontend_container+: removeCPURequests,
 }
