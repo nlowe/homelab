@@ -31,14 +31,14 @@ local k = import 'k.libsonnet';
 } +
 {
   // https://www.linuxserver.io/our-images
-  'code-server': $.new(registry='lscr.io', name='linuxserver/code-server', version='4.107.0-ls310'),
+  'code-server': $.new(registry='lscr.io', name='linuxserver/code-server', version='4.107.1-ls311'),
 
   // https://github.com/cloudflare/cloudflared/releases/latest
   cloudflared: $.new(name='cloudflare/cloudflared', version='2025.11.1'),
 
   // https://github.com/esphome/esphome/releases/latest
   // https://github.com/esphome/esphome/pkgs/container/esphome
-  esphome: $.new(registry='ghcr.io', name='esphome/esphome', version='2025.12.4'),
+  esphome: $.new(registry='ghcr.io', name='esphome/esphome', version='2025.12.5'),
   // https://github.com/home-assistant/core/releases/latest
   // https://github.com/home-assistant/core/pkgs/container/home-assistant
   'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2025.12.5'),
@@ -100,9 +100,8 @@ local k = import 'k.libsonnet';
     // https://github.com/kubernetes-csi/external-health-monitor/releases/latest
     externalHealthMonitorController: $.new(registry='registry.k8s.io', name='sig-storage/csi-external-health-monitor-controller', version='v0.16.0'),
     // https://github.com/democratic-csi/democratic-csi/tags
-    // https://github.com/democratic-csi/democratic-csi/issues/479
-    // https://github.com/democratic-csi/democratic-csi/issues/479#issuecomment-3476531774: 1.9.5 will include this fix
-    driver: $.new(registry='docker.io', name='democraticcsi/democratic-csi', version='next@sha256:6b758d6faf96f0e96d4b8ac0e240fc290c7bace23c20d78a3eb93781652cb1f1'),
+    // https://github.com/democratic-csi/democratic-csi/pkgs/container/democratic-csi
+    driver: $.new(registry='ghcr.io', name='democratic-csi/democratic-csi', version='v1.9.5'),
     // https://hub.docker.com/_/busybox#supported-tags-and-respective-dockerfile-links
     busybox: $.new(registry='docker.io', name='busybox', version='1.37.0'),
     driverRegistrar: $['csi-node-driver-registrar'],
@@ -114,10 +113,10 @@ local k = import 'k.libsonnet';
   // From charts/alloy
   // See https://artifacthub.io/packages/helm/grafana/alloy?modal=values
   // https://github.com/grafana/alloy/releases/latest
-  alloy: $.new(registry='docker.io', name='grafana/alloy', version='v1.12.1'),
+  alloy: $.new(registry='docker.io', name='grafana/alloy', version='v1.12.2'),
   // https://github.com/prometheus-operator/prometheus-operator/releases/latest
   // https://github.com/prometheus-operator/prometheus-operator/pkgs/container/prometheus-config-reloader
-  'prometheus-config-reloader': $.new(registry='ghcr.io', name='prometheus-operator/prometheus-config-reloader', version='v0.87.1'),
+  'prometheus-config-reloader': $.new(registry='ghcr.io', name='prometheus-operator/prometheus-config-reloader', version='v0.88.0'),
 } +
 {
   // https://github.com/grafana/rollout-operator/releases/latest
@@ -153,7 +152,7 @@ local k = import 'k.libsonnet';
 {
   // https://github.com/rancher/local-path-provisioner/releases/latest
   // See https://github.com/rancher/local-path-provisioner/blob/master/deploy/local-path-storage.yaml
-  'local-path-provisioner': $.new(name='rancher/local-path-provisioner', version='v0.0.33'),
+  'local-path-provisioner': $.new(name='rancher/local-path-provisioner', version='v0.0.34'),
 } +
 {
   // https://artifacthub.io/packages/helm/external-secrets-operator/external-secrets?modal=values
