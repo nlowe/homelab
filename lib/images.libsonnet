@@ -31,22 +31,22 @@ local k = import 'k.libsonnet';
 } +
 {
   // https://www.linuxserver.io/our-images
-  'code-server': $.new(registry='lscr.io', name='linuxserver/code-server', version='4.107.1-ls311'),
+  'code-server': $.new(registry='lscr.io', name='linuxserver/code-server', version='4.108.1-ls313'),
 
   // https://github.com/cloudflare/cloudflared/releases/latest
   cloudflared: $.new(name='cloudflare/cloudflared', version='2025.11.1'),
 
   // https://github.com/esphome/esphome/releases/latest
   // https://github.com/esphome/esphome/pkgs/container/esphome
-  esphome: $.new(registry='ghcr.io', name='esphome/esphome', version='2025.12.5'),
+  esphome: $.new(registry='ghcr.io', name='esphome/esphome', version='2025.12.7'),
   // https://github.com/home-assistant/core/releases/latest
   // https://github.com/home-assistant/core/pkgs/container/home-assistant
-  'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2025.12.5'),
+  'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2026.1.2'),
   // https://github.com/sensy-one/home-assistant-addons
   // https://github.com/sensy-one/home-assistant-addons/pkgs/container/zone-editor
   'sensy-one-zone-editor': $.new(registry='ghcr.io', name='sensy-one/zone-editor', version='latest@sha256:538ec62499dbec454a62a0dfd0602f4b3234b3bbfabd5d1ac83311cc60637465'),
   // https://github.com/zwave-js/zwave-js-ui/releases/latest
-  'zwave-js-ui': $.new(name='zwavejs/zwave-js-ui', version='11.9.1'),
+  'zwave-js-ui': $.new(name='zwavejs/zwave-js-ui', version='11.10.1'),
   // https://hub.docker.com/r/vernemq/vernemq/tags
   // https://github.com/vernemq/vernemq/releases/latest
   vernemq: $.new(name='vernemq/vernemq', version='2.1.2'),
@@ -58,7 +58,7 @@ local k = import 'k.libsonnet';
   yq: $.new(registry='ghcr.io', name='mikefarah/yq', version='4.50.1'),
 
   // https://github.com/brancz/kube-rbac-proxy/releases/latest
-  'kube-rbac-proxy': $.new(registry='quay.io', name='brancz/kube-rbac-proxy', version='v0.20.1'),
+  'kube-rbac-proxy': $.new(registry='quay.io', name='brancz/kube-rbac-proxy', version='v0.20.2'),
 
   // https://github.com/grafana/grafana/releases/latest
   grafana: $.new(name='grafana/grafana', version='12.3.1'),
@@ -124,7 +124,7 @@ local k = import 'k.libsonnet';
   // https://github.com/memcached/memcached/tags
   memcached: $.new(name='memcached', version='1.6.40-alpine'),
   // See https://github.com/prometheus/memcached_exporter/releases/latest
-  memcachedExporter: $.new(name='prom/memcached-exporter', version='v0.15.4'),
+  memcachedExporter: $.new(name='prom/memcached-exporter', version='v0.15.5'),
 }
 {
   // https://github.com/grafana/loki/releases/latest
