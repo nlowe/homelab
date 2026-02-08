@@ -1,6 +1,6 @@
 BUILD_CONTEXT_DIR := $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 
-APPDAEMON_VERSION = 4.5.12
+APPDAEMON_VERSION = 4.5.13
 QOLSYSGW_VERSION = 1.6.2
 
 REPO := docker.io/nlowe/qolsysgw

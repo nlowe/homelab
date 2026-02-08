@@ -8,6 +8,7 @@
   "spec": {
     "apiServer": "https://k8s.home.nlowe.dev:6443",
     "applyStrategy": "server",
+    "injectLabels": true,
     "namespace": "kube-system",
     "resourceDefaults": {},
     "expectVersions": {}

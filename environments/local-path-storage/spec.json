@@ -7,6 +7,7 @@
   "spec": {
     "apiServer": "https://k8s.home.nlowe.dev:6443",
     "applyStrategy": "server",
+    "injectLabels": true,
     "namespace": "local-path-storage",
     "resourceDefaults": {},
     "expectVersions": {}
