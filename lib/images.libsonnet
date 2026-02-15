@@ -31,17 +31,17 @@ local k = import 'k.libsonnet';
 } +
 {
   // https://www.linuxserver.io/our-images
-  'code-server': $.new(registry='lscr.io', name='linuxserver/code-server', version='4.108.2-ls315'),
+  'code-server': $.new(registry='lscr.io', name='linuxserver/code-server', version='4.109.2-ls316'),
 
   // https://github.com/cloudflare/cloudflared/releases/latest
   cloudflared: $.new(name='cloudflare/cloudflared', version='2026.2.0'),
 
   // https://github.com/esphome/esphome/releases/latest
   // https://github.com/esphome/esphome/pkgs/container/esphome
-  esphome: $.new(registry='ghcr.io', name='esphome/esphome', version='2026.1.4'),
+  esphome: $.new(registry='ghcr.io', name='esphome/esphome', version='2026.1.5'),
   // https://github.com/home-assistant/core/releases/latest
   // https://github.com/home-assistant/core/pkgs/container/home-assistant
-  'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2026.2.1'),
+  'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2026.2.2'),
   // https://github.com/sensy-one/home-assistant-addons
   // https://github.com/sensy-one/home-assistant-addons/pkgs/container/zone-editor
   'sensy-one-zone-editor': $.new(registry='ghcr.io', name='sensy-one/zone-editor', version='v1.4.9'),
@@ -55,13 +55,13 @@ local k = import 'k.libsonnet';
   zigbee2mqtt: $.new(registry='ghcr.io', name='koenkk/zigbee2mqtt', version='2.8.0'),
   // https://github.com/mikefarah/yq/releases/latest
   // https://github.com/mikefarah/yq/pkgs/container/yq
-  yq: $.new(registry='ghcr.io', name='mikefarah/yq', version='4.52.2'),
+  yq: $.new(registry='ghcr.io', name='mikefarah/yq', version='4.52.4'),
 
   // https://github.com/brancz/kube-rbac-proxy/releases/latest
   'kube-rbac-proxy': $.new(registry='quay.io', name='brancz/kube-rbac-proxy', version='v0.20.2'),
 
   // https://github.com/grafana/grafana/releases/latest
-  grafana: $.new(name='grafana/grafana', version='12.3.2'),
+  grafana: $.new(name='grafana/grafana', version='12.3.3'),
   // https://github.com/kubernetes/kube-state-metrics/releases/latest
   'kube-state-metrics': $.new(registry='registry.k8s.io', name='kube-state-metrics/kube-state-metrics', version='v2.18.0'),
   // https://github.com/unpoller/unpoller/releases/latest
@@ -81,8 +81,10 @@ local k = import 'k.libsonnet';
   // See https://artifacthub.io/packages/helm/cert-manager/cert-manager-csi-driver?modal=values
   'cert-manager-csi-driver': $.new(registry='quay.io', name='jetstack/cert-manager-csi-driver', version='v0.12.0'),
   // See https://github.com/kubernetes-csi/node-driver-registrar/releases/latest
+  // v2.16.0 hasn't been pushed yet: https://github.com/kubernetes-csi/node-driver-registrar/issues/553
   'csi-node-driver-registrar': $.new(registry='registry.k8s.io', name='sig-storage/csi-node-driver-registrar', version='v2.15.0'),
   // See https://github.com/kubernetes-csi/livenessprobe/releases/latest
+  // v2.18.0 hasn't been pushed yet: https://github.com/kubernetes-csi/livenessprobe/issues/402
   'sig-storage-livenessprobe': $.new(registry='registry.k8s.io', name='sig-storage/livenessprobe', version='v2.17.0'),
 } +
 {
@@ -90,13 +92,14 @@ local k = import 'k.libsonnet';
   // See https://artifacthub.io/packages/helm/democratic-csi/democratic-csi?modal=values
   democratic_csi:: {
     // https://github.com/kubernetes-csi/external-attacher/releases/latest
+    // v4.11.0 hasn't been pushed yet: https://github.com/kubernetes-csi/external-attacher/issues/704
     externalAttacher: $.new(registry='registry.k8s.io', name='sig-storage/csi-attacher', version='v4.10.0'),
     // https://github.com/kubernetes-csi/external-provisioner/releases/latest
-    externalProvisioner: $.new(registry='registry.k8s.io', name='sig-storage/csi-provisioner', version='v6.1.0'),
+    externalProvisioner: $.new(registry='registry.k8s.io', name='sig-storage/csi-provisioner', version='v6.1.1'),
     // https://github.com/kubernetes-csi/external-resizer/releases/latest
-    externalResizer: $.new(registry='registry.k8s.io', name='sig-storage/csi-resizer', version='v2.0.0'),
+    externalResizer: $.new(registry='registry.k8s.io', name='sig-storage/csi-resizer', version='v2.1.0'),
     // https://github.com/kubernetes-csi/external-snapshotter/releases/latest
-    externalSnapshotter: $.new(registry='registry.k8s.io', name='sig-storage/csi-snapshotter', version='v8.4.0'),
+    externalSnapshotter: $.new(registry='registry.k8s.io', name='sig-storage/csi-snapshotter', version='v8.5.0'),
     // https://github.com/kubernetes-csi/external-health-monitor/releases/latest
     externalHealthMonitorController: $.new(registry='registry.k8s.io', name='sig-storage/csi-external-health-monitor-controller', version='v0.16.0'),
     // https://github.com/democratic-csi/democratic-csi/tags
@@ -113,7 +116,7 @@ local k = import 'k.libsonnet';
   // From charts/alloy
   // See https://artifacthub.io/packages/helm/grafana/alloy?modal=values
   // https://github.com/grafana/alloy/releases/latest
-  alloy: $.new(registry='docker.io', name='grafana/alloy', version='v1.13.0'),
+  alloy: $.new(registry='docker.io', name='grafana/alloy', version='v1.13.1'),
   // https://github.com/prometheus-operator/prometheus-operator/releases/latest
   // https://github.com/prometheus-operator/prometheus-operator/pkgs/container/prometheus-config-reloader
   'prometheus-config-reloader': $.new(registry='ghcr.io', name='prometheus-operator/prometheus-config-reloader', version='v0.89.0'),
@@ -141,7 +144,7 @@ local k = import 'k.libsonnet';
   // https://github.com/grafana/mimir/releases/latest
   // See https://github.com/grafana/mimir/blob/main/operations/mimir/images.libsonnet
   mimir:: {
-    mimir: $.new(name='grafana/mimir', version='3.0.2'),
+    mimir: $.new(name='grafana/mimir', version='3.0.3'),
     query_tee: $.new(name='grafana/query-tee', version=self.mimir.version),
     continuous_test: $.new(name='grafana/mimir-continuous-test', version=self.mimir.version),
     memcached: $.memcached,
