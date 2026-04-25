@@ -31,37 +31,37 @@ local k = import 'k.libsonnet';
 } +
 {
   // https://www.linuxserver.io/our-images
-  'code-server': $.new(registry='lscr.io', name='linuxserver/code-server', version='4.112.0-ls325'),
+  'code-server': $.new(registry='lscr.io', name='linuxserver/code-server', version='4.117.0-ls334'),
 
   // https://github.com/cloudflare/cloudflared/releases/latest
   cloudflared: $.new(name='cloudflare/cloudflared', version='2026.3.0'),
 
   // https://github.com/esphome/esphome/releases/latest
   // https://github.com/esphome/esphome/pkgs/container/esphome
-  esphome: $.new(registry='ghcr.io', name='esphome/esphome', version='2026.3.1'),
+  esphome: $.new(registry='ghcr.io', name='esphome/esphome', version='2026.4.2'),
   // https://github.com/home-assistant/core/releases/latest
   // https://github.com/home-assistant/core/pkgs/container/home-assistant
-  'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2026.3.4'),
+  'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2026.4.4'),
   // https://github.com/sensy-one/home-assistant-addons
   // https://github.com/sensy-one/home-assistant-addons/pkgs/container/zone-editor
   'sensy-one-zone-editor': $.new(registry='ghcr.io', name='sensy-one/zone-editor', version='v1.4.9'),
   // https://github.com/zwave-js/zwave-js-ui/releases/latest
-  'zwave-js-ui': $.new(name='zwavejs/zwave-js-ui', version='11.15.1'),
+  'zwave-js-ui': $.new(name='zwavejs/zwave-js-ui', version='11.16.1'),
   // https://hub.docker.com/r/vernemq/vernemq/tags
   // https://github.com/vernemq/vernemq/releases/latest
   vernemq: $.new(name='vernemq/vernemq', version='2.1.2'),
   // https://github.com/Koenkk/zigbee2mqtt/releases/latest
   // https://github.com/koenkk/zigbee2mqtt/pkgs/container/zigbee2mqtt
-  zigbee2mqtt: $.new(registry='ghcr.io', name='koenkk/zigbee2mqtt', version='2.9.1'),
+  zigbee2mqtt: $.new(registry='ghcr.io', name='koenkk/zigbee2mqtt', version='2.9.2'),
   // https://github.com/mikefarah/yq/releases/latest
   // https://github.com/mikefarah/yq/pkgs/container/yq
-  yq: $.new(registry='ghcr.io', name='mikefarah/yq', version='4.52.5'),
+  yq: $.new(registry='ghcr.io', name='mikefarah/yq', version='4.53.2'),
 
   // https://github.com/brancz/kube-rbac-proxy/releases/latest
   'kube-rbac-proxy': $.new(registry='quay.io', name='brancz/kube-rbac-proxy', version='v0.21.2'),
 
   // https://github.com/grafana/grafana/releases/latest
-  grafana: $.new(name='grafana/grafana', version='12.4.2'),
+  grafana: $.new(name='grafana/grafana', version='13.0.1'),
   // https://github.com/kubernetes/kube-state-metrics/releases/latest
   'kube-state-metrics': $.new(registry='registry.k8s.io', name='kube-state-metrics/kube-state-metrics', version='v2.18.0'),
   // https://github.com/unpoller/unpoller/releases/latest
@@ -72,14 +72,14 @@ local k = import 'k.libsonnet';
   // From charts/cert-manager
   // See https://github.com/cert-manager/cert-manager/releases/latest
   // See https://artifacthub.io/packages/helm/cert-manager/cert-manager?modal=values
-  ['cert-manager-%s' % name]: $.new(registry='quay.io', name='jetstack/cert-manager-%s' % name, version='v1.20.1')
+  ['cert-manager-%s' % name]: $.new(registry='quay.io', name='jetstack/cert-manager-%s' % name, version='v1.20.2')
   for name in ['controller', 'webhook', 'cainjector', 'acmesolver', 'startupapicheck']
 } +
 {
   // From charts/cert-manager-csi-driver
   // https://github.com/cert-manager/csi-driver/releases/latest
   // See https://artifacthub.io/packages/helm/cert-manager/cert-manager-csi-driver?modal=values
-  'cert-manager-csi-driver': $.new(registry='quay.io', name='jetstack/cert-manager-csi-driver', version='v0.13.0'),
+  'cert-manager-csi-driver': $.new(registry='quay.io', name='jetstack/cert-manager-csi-driver', version='v0.14.0'),
   // See https://quay.io/repository/jetstack/csi-node-driver-registrar?tab=tags
   'csi-node-driver-registrar': $.new(registry='quay.io', name='jetstack/csi-node-driver-registrar', version='v2.16.0'),
   // See https://quay.io/repository/jetstack/livenessprobe?tab=tags&tag=latest
@@ -114,18 +114,18 @@ local k = import 'k.libsonnet';
   // From charts/alloy
   // See https://artifacthub.io/packages/helm/grafana/alloy?modal=values
   // https://github.com/grafana/alloy/releases/latest
-  alloy: $.new(registry='docker.io', name='grafana/alloy', version='v1.14.2'),
+  alloy: $.new(registry='docker.io', name='grafana/alloy', version='v1.16.0'),
   // https://github.com/prometheus-operator/prometheus-operator/releases/latest
   // https://github.com/prometheus-operator/prometheus-operator/pkgs/container/prometheus-config-reloader
   'prometheus-config-reloader': $.new(registry='ghcr.io', name='prometheus-operator/prometheus-config-reloader', version='v0.90.1'),
 } +
 {
   // https://github.com/grafana/rollout-operator/releases/latest
-  grafana_rollout_operator: $.new(name='grafana/rollout-operator', version='v0.36.0'),
+  grafana_rollout_operator: $.new(name='grafana/rollout-operator', version='v0.36.1'),
   // https://github.com/memcached/memcached/tags
   memcached: $.new(name='memcached', version='1.6.41-alpine'),
   // See https://github.com/prometheus/memcached_exporter/releases/latest
-  memcachedExporter: $.new(name='prom/memcached-exporter', version='v0.15.5'),
+  memcachedExporter: $.new(name='prom/memcached-exporter', version='v0.16.0'),
 }
 {
   // https://github.com/grafana/loki/releases/latest
@@ -142,7 +142,7 @@ local k = import 'k.libsonnet';
   // https://github.com/grafana/mimir/releases/latest
   // See https://github.com/grafana/mimir/blob/main/operations/mimir/images.libsonnet
   mimir:: {
-    mimir: $.new(name='grafana/mimir', version='3.0.4'),
+    mimir: $.new(name='grafana/mimir', version='3.0.6'),
     query_tee: $.new(name='grafana/query-tee', version=self.mimir.version),
     continuous_test: $.new(name='grafana/mimir-continuous-test', version=self.mimir.version),
     memcached: $.memcached,
@@ -159,7 +159,7 @@ local k = import 'k.libsonnet';
   // https://artifacthub.io/packages/helm/external-secrets-operator/external-secrets?modal=values
 
   // https://github.com/external-secrets/external-secrets/releases/latest
-  'external-secrets': $.new(registry='oci.external-secrets.io', name='external-secrets/external-secrets', version='v2.2.0'),
+  'external-secrets': $.new(registry='oci.external-secrets.io', name='external-secrets/external-secrets', version='v2.4.0'),
   // https://github.com/external-secrets/bitwarden-sdk-server/releases/latest
   'bitwarden-sdk-server': $.new(registry='ghcr.io', name='external-secrets/bitwarden-sdk-server', version='v0.6.0'),
 } +

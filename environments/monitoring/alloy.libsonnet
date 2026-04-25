@@ -52,9 +52,6 @@ local image = import 'images.libsonnet';
 
           local env = k.core.v1.envVar,
           extraEnv: [
-            env.withName('K8S_NODE_NAME') +
-            env.valueFrom.fieldRef.withFieldPath('spec.nodeName'),
-
             env.withName('POD_IP') +
             env.valueFrom.fieldRef.withFieldPath('status.podIP'),
           ],
