@@ -22,7 +22,7 @@ requires:
 - chart: grafana/alloy
   version: 1.8.0
 - chart: externalSecrets/external-secrets
-  version: v2.4.0
+  version: v2.4.1
 - chart: externalSecretsGHCR/bitwarden-sdk-server
   version: v0.6.0
 version: 1
