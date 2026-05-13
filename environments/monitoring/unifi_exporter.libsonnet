@@ -12,6 +12,7 @@ local image = import 'images.libsonnet';
         disable: false,
         namespace: 'unifi',
         report_errors: true,
+        interval: '0s',
       },
 
       influxdb: {
