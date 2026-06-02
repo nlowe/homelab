@@ -31,14 +31,14 @@ local k = import 'k.libsonnet';
 } +
 {
   // https://github.com/linuxserver/docker-code-server/releases/latest
-  'code-server': $.new(registry='lscr.io', name='linuxserver/code-server', version='4.121.0-ls339'),
+  'code-server': $.new(registry='lscr.io', name='linuxserver/code-server', version='4.122.0-ls340'),
 
   // https://github.com/cloudflare/cloudflared/releases/latest
-  cloudflared: $.new(name='cloudflare/cloudflared', version='2026.5.0'),
+  cloudflared: $.new(name='cloudflare/cloudflared', version='2026.5.2'),
 
   // https://github.com/esphome/esphome/releases/latest
   // https://github.com/esphome/esphome/pkgs/container/esphome
-  esphome: $.new(registry='ghcr.io', name='esphome/esphome', version='2026.5.0'),
+  esphome: $.new(registry='ghcr.io', name='esphome/esphome', version='2026.5.1'),
   // https://github.com/home-assistant/core/releases/latest
   // https://github.com/home-assistant/core/pkgs/container/home-assistant
   'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2026.5.4'),
@@ -46,13 +46,13 @@ local k = import 'k.libsonnet';
   // https://github.com/sensy-one/home-assistant-addons/pkgs/container/zone-editor
   'sensy-one-zone-editor': $.new(registry='ghcr.io', name='sensy-one/zone-editor', version='v1.4.9'),
   // https://github.com/zwave-js/zwave-js-ui/releases/latest
-  'zwave-js-ui': $.new(name='zwavejs/zwave-js-ui', version='11.18.0'),
+  'zwave-js-ui': $.new(name='zwavejs/zwave-js-ui', version='11.19.0'),
   // https://hub.docker.com/r/vernemq/vernemq/tags
   // https://github.com/vernemq/vernemq/releases/latest
   vernemq: $.new(name='vernemq/vernemq', version='2.1.2'),
   // https://github.com/Koenkk/zigbee2mqtt/releases/latest
   // https://github.com/koenkk/zigbee2mqtt/pkgs/container/zigbee2mqtt
-  zigbee2mqtt: $.new(registry='ghcr.io', name='koenkk/zigbee2mqtt', version='2.10.1'),
+  zigbee2mqtt: $.new(registry='ghcr.io', name='koenkk/zigbee2mqtt', version='2.11.0'),
   // https://github.com/mikefarah/yq/releases/latest
   // https://github.com/mikefarah/yq/pkgs/container/yq
   yq: $.new(registry='ghcr.io', name='mikefarah/yq', version='4.53.2'),
@@ -90,15 +90,17 @@ local k = import 'k.libsonnet';
   // See https://artifacthub.io/packages/helm/democratic-csi/democratic-csi?modal=values
   democratic_csi:: {
     // https://github.com/kubernetes-csi/external-attacher/releases/latest
-    // v4.12.0 is out but images have not been published: https://github.com/kubernetes-csi/external-attacher/issues/724
-    externalAttacher: $.new(registry='registry.k8s.io', name='sig-storage/csi-attacher', version='v4.11.0'),
+    externalAttacher: $.new(registry='registry.k8s.io', name='sig-storage/csi-attacher', version='v4.12.0'),
     // https://github.com/kubernetes-csi/external-provisioner/releases/latest
     externalProvisioner: $.new(registry='registry.k8s.io', name='sig-storage/csi-provisioner', version='v6.2.0'),
     // https://github.com/kubernetes-csi/external-resizer/releases/latest
+    // v2.2.0 is released but the image has not been promoted yet
     externalResizer: $.new(registry='registry.k8s.io', name='sig-storage/csi-resizer', version='v2.1.0'),
     // https://github.com/kubernetes-csi/external-snapshotter/releases/latest
+    // v8.6.0 is released but the image has not been promoted yet
     externalSnapshotter: $.new(registry='registry.k8s.io', name='sig-storage/csi-snapshotter', version='v8.5.0'),
     // https://github.com/kubernetes-csi/external-health-monitor/releases/latest
+    // v0.18.0 is released but the image has not been promoted yet
     externalHealthMonitorController: $.new(registry='registry.k8s.io', name='sig-storage/csi-external-health-monitor-controller', version='v0.17.0'),
     // https://github.com/democratic-csi/democratic-csi/tags
     // https://github.com/democratic-csi/democratic-csi/pkgs/container/democratic-csi
@@ -106,7 +108,7 @@ local k = import 'k.libsonnet';
     // https://hub.docker.com/_/busybox#supported-tags-and-respective-dockerfile-links
     busybox: $.new(registry='docker.io', name='busybox', version='1.38.0'),
     // See https://github.com/kubernetes-csi/node-driver-registrar/releases/latest
-    driverRegistrar: $.new(registry='registry.k8s.io', name='sig-storage/csi-node-driver-registrar', version='v2.16.0'),
+    driverRegistrar: $.new(registry='registry.k8s.io', name='sig-storage/csi-node-driver-registrar', version='v2.17.0'),
     // https://github.com/democratic-csi/csi-grpc-proxy/releases/latest
     csiProxy: $.new(registry='docker.io', name='democraticcsi/csi-grpc-proxy', version='v0.5.7'),
   },
