@@ -205,21 +205,21 @@
       "source": {
         "git": {
           "remote": "https://github.com/jsonnet-libs/cert-manager-libsonnet.git",
-          "subdir": "1.15"
+          "subdir": "1.19"
         }
       },
-      "version": "a446f72305009ebcacba37e7fa793bd571c4c5e4",
-      "sum": "pVU2z2a9dlMyrc9dTvsQM+8wfmHI92c/s3+zHMnHUfU="
+      "version": "ae8dca53562a92f87ed183b9d4b02bff69b51c39",
+      "sum": "PgUZyMDmXf6KwDtjWNT3YWKg1kLt/MkTSQZjf6Ni+G8="
     },
     {
       "source": {
         "git": {
           "remote": "https://github.com/jsonnet-libs/cilium-libsonnet.git",
-          "subdir": "1.16"
+          "subdir": "1.18"
         }
       },
-      "version": "831362d44ec66506008adb15cca0683e92cac202",
-      "sum": "NGOYYiRTjBCPIVRAE0F+hN4q/FXXhoAbq18WY90Pvks="
+      "version": "add73a2cf00dadee047fc5c6835c374cdcb8c1e1",
+      "sum": "JmlFpdpNeOCYxBF5kAuoa3yGIT1x+co+XSsoX85IgRo="
     },
     {
       "source": {
@@ -235,41 +235,41 @@
       "source": {
         "git": {
           "remote": "https://github.com/jsonnet-libs/external-secrets-libsonnet.git",
-          "subdir": "0.19"
+          "subdir": "1.1"
         }
       },
-      "version": "cbc2b4842c0888c74c2b895d54edce027ae3c4bd",
-      "sum": "uUCavW09mUrc+UPQf+roMny8bA/uIBEnw69/WzGjwv4="
+      "version": "ddce992764944c4e8e93de79a593a4c8a9768ed2",
+      "sum": "ryxHLodoGQq0pCFAhCtINjKrs4umCDkP+8BekFdX/9I="
     },
     {
       "source": {
         "git": {
           "remote": "https://github.com/jsonnet-libs/gateway-api-libsonnet.git",
-          "subdir": "1.2"
+          "subdir": "1.4"
         }
       },
-      "version": "3aba85d3a616e1ef95f5d1e3a783f9c9083846a5",
-      "sum": "oh7NG+vnwhqKsz6Pw89e6Fv5nWkxjY7EuRpK81dsgwo="
+      "version": "3fa622d87a7ec729c063e6d83a3911c726c83414",
+      "sum": "WCOA1KwDTExIvUmz6GYMHvfPrUcN+8G3tsdqvVCC1e4="
     },
     {
       "source": {
         "git": {
           "remote": "https://github.com/jsonnet-libs/k8s-libsonnet.git",
-          "subdir": "1.33"
+          "subdir": "1.34"
         }
       },
-      "version": "291653b2c17d03e855e7e00ce0e4ec25502b2ce2",
-      "sum": "FTic3KWLxPcO/DpkwJ6AgvWmbxouYiAVrflXtbAiIhY="
+      "version": "ee5c4c5ee02571eaf82f1170c60af47eee5496be",
+      "sum": "E17cbu3ZmqX9ILxumK2jmu8KlUijg/DME3LaOcPxaX0="
     },
     {
       "source": {
         "git": {
           "remote": "https://github.com/jsonnet-libs/prometheus-operator-libsonnet.git",
-          "subdir": "0.83"
+          "subdir": "0.86"
         }
       },
-      "version": "e74ac47c28bc29c2d7e7bc15286bc2dc99c2d7f6",
-      "sum": "RH2kDmPHQUwN0wKRujnax3jma2Cv7R4JeE2q29KNz0U="
+      "version": "91d2d9355cbef02035d84e54ac6bebcf9d29afa7",
+      "sum": "a/ustu0QeOJfq/yGjpK8peBCP8UfPkS6WLsZ02rLWWo="
     },
     {
       "source": {

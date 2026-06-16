@@ -1,6 +1,6 @@
 local k = import 'k.libsonnet';
-local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.2/main.libsonnet').gateway;
-local prom = import 'github.com/jsonnet-libs/prometheus-operator-libsonnet/0.83/main.libsonnet';
+local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.4/main.libsonnet').gateway;
+local prom = import 'github.com/jsonnet-libs/prometheus-operator-libsonnet/0.86/main.libsonnet';
 
 local image = import 'images.libsonnet';
 

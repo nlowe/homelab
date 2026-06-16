@@ -1,5 +1,5 @@
 local k = import 'k.libsonnet';
-local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.2/main.libsonnet').gateway;
+local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.4/main.libsonnet').gateway;
 
 local image = import 'images.libsonnet';
 

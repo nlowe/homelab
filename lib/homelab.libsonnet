@@ -1,14 +1,14 @@
 local k = import 'k.libsonnet';
 
-local cm = import 'github.com/jsonnet-libs/cert-manager-libsonnet/1.15/main.libsonnet';
+local cm = import 'github.com/jsonnet-libs/cert-manager-libsonnet/1.19/main.libsonnet';
 local cert = cm.nogroup.v1.certificate;
 local issuer = cm.nogroup.v1.clusterIssuer;
 
-local es = import 'github.com/jsonnet-libs/external-secrets-libsonnet/0.19/main.libsonnet';
+local es = import 'github.com/jsonnet-libs/external-secrets-libsonnet/1.1/main.libsonnet';
 local clusterSecretStore = es.nogroup.v1.clusterSecretStore;
 local externalSecret = es.nogroup.v1.externalSecret;
 
-local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.2/main.libsonnet').gateway;
+local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.4/main.libsonnet').gateway;
 
 {
   _config+:: {
