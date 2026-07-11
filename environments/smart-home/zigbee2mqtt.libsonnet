@@ -31,12 +31,21 @@ local image = import 'images.libsonnet';
         status_topic: 'homeassistant/status',
       },
 
+      // Disable join by default, enable in the Web UI when pairing devices
       permit_join: false,
+
+      advanced: {
+        // ZLL Channel 15 (2425 MHz) is in-between WiFi 2.4 channels 1 and 6
+        channel: 15,
+      },
+
       serial: {
         // https://www.zigbee2mqtt.io/guide/adapters/emberznet.html#network-tcp
         adapter: 'ember',
         port: 'tcp://zigbee-controller.home.nlowe.dev:6638',
+        baudrate: 115200,
       },
+
       // Optional: Availability feature
       availability: {
         // Enable the feature (default: false)
