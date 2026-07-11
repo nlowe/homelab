@@ -7,10 +7,10 @@ local excludeKubeSystemSelector =
   matchLabel.withValues(['kube-system']);
 
 {
-  local map = k.admissionregistration.v1alpha1.mutatingAdmissionPolicy,
-  local constraint = k.admissionregistration.v1alpha1.namedRuleWithOperations,
+  local map = k.admissionregistration.v1beta1.mutatingAdmissionPolicy,
+  local constraint = k.admissionregistration.v1beta1.namedRuleWithOperations,
   local condition = k.admissionregistration.v1.matchCondition,
-  local mu = k.admissionregistration.v1alpha1.mutation,
+  local mu = k.admissionregistration.v1beta1.mutation,
 
   // By default, k8s sets ndots to 5 which means most external host names aren't treated as fully-qualified. Some pods
   // do not accept fully qualified hostnames (names with a trailing '.') and thus require ndots to be set for the pod.
@@ -67,7 +67,7 @@ local excludeKubeSystemSelector =
       |||),
     ]),
 
-  local binding = k.admissionregistration.v1alpha1.mutatingAdmissionPolicyBinding,
+  local binding = k.admissionregistration.v1beta1.mutatingAdmissionPolicyBinding,
   ndotsBinding:
     binding.new('pod-dns-default-ndots') +
     binding.spec.withPolicyName($.ndots.metadata.name) +
