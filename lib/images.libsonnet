@@ -31,17 +31,17 @@ local k = import 'k.libsonnet';
 } +
 {
   // https://github.com/linuxserver/docker-code-server/releases/latest
-  'code-server': $.new(registry='lscr.io', name='linuxserver/code-server', version='4.126.0-ls348'),
+  'code-server': $.new(registry='lscr.io', name='linuxserver/code-server', version='4.127.0-ls350'),
 
   // https://github.com/cloudflare/cloudflared/releases/latest
-  cloudflared: $.new(name='cloudflare/cloudflared', version='2026.6.1'),
+  cloudflared: $.new(name='cloudflare/cloudflared', version='2026.7.1'),
 
   // https://github.com/esphome/esphome/releases/latest
   // https://github.com/esphome/esphome/pkgs/container/esphome
-  esphome: $.new(registry='ghcr.io', name='esphome/esphome', version='2026.6.3'),
+  esphome: $.new(registry='ghcr.io', name='esphome/esphome', version='2026.6.5'),
   // https://github.com/home-assistant/core/releases/latest
   // https://github.com/home-assistant/core/pkgs/container/home-assistant
-  'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2026.6.4'),
+  'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2026.7.2'),
   // https://github.com/sensy-one/home-assistant-addons
   // https://github.com/sensy-one/home-assistant-addons/pkgs/container/zone-editor
   'sensy-one-zone-editor': $.new(registry='ghcr.io', name='sensy-one/zone-editor', version='v1.4.9'),
@@ -52,16 +52,16 @@ local k = import 'k.libsonnet';
   vernemq: $.new(name='vernemq/vernemq', version='2.1.2'),
   // https://github.com/Koenkk/zigbee2mqtt/releases/latest
   // https://github.com/koenkk/zigbee2mqtt/pkgs/container/zigbee2mqtt
-  zigbee2mqtt: $.new(registry='ghcr.io', name='koenkk/zigbee2mqtt', version='2.12.0'),
+  zigbee2mqtt: $.new(registry='ghcr.io', name='koenkk/zigbee2mqtt', version='2.12.1'),
   // https://github.com/mikefarah/yq/releases/latest
   // https://github.com/mikefarah/yq/pkgs/container/yq
   yq: $.new(registry='ghcr.io', name='mikefarah/yq', version='4.53.3'),
 
   // https://github.com/brancz/kube-rbac-proxy/releases/latest
-  'kube-rbac-proxy': $.new(registry='quay.io', name='brancz/kube-rbac-proxy', version='v0.22.0'),
+  'kube-rbac-proxy': $.new(registry='quay.io', name='brancz/kube-rbac-proxy', version='v0.22.1'),
 
   // https://github.com/grafana/grafana/releases/latest
-  grafana: $.new(name='grafana/grafana', version='13.0.3'),
+  grafana: $.new(name='grafana/grafana', version='13.1.0'),
   // https://github.com/kubernetes/kube-state-metrics/releases/latest
   'kube-state-metrics': $.new(registry='registry.k8s.io', name='kube-state-metrics/kube-state-metrics', version='v2.19.1'),
   // https://github.com/unpoller/unpoller/releases/latest
@@ -72,7 +72,7 @@ local k = import 'k.libsonnet';
   // From charts/cert-manager
   // See https://github.com/cert-manager/cert-manager/releases/latest
   // See https://artifacthub.io/packages/helm/cert-manager/cert-manager?modal=values
-  ['cert-manager-%s' % name]: $.new(registry='quay.io', name='jetstack/cert-manager-%s' % name, version='v1.20.3')
+  ['cert-manager-%s' % name]: $.new(registry='quay.io', name='jetstack/cert-manager-%s' % name, version='v1.21.0')
   for name in ['controller', 'webhook', 'cainjector', 'acmesolver', 'startupapicheck']
 } +
 {
@@ -123,7 +123,7 @@ local k = import 'k.libsonnet';
   // https://github.com/grafana/rollout-operator/releases/latest
   grafana_rollout_operator: $.new(name='grafana/rollout-operator', version='v0.38.0'),
   // https://github.com/memcached/memcached/tags
-  memcached: $.new(name='memcached', version='1.6.42-alpine'),
+  memcached: $.new(name='memcached', version='1.6.45-alpine'),
   // See https://github.com/prometheus/memcached_exporter/releases/latest
   memcachedExporter: $.new(name='prom/memcached-exporter', version='v0.16.0'),
 }
