@@ -93,33 +93,6 @@ local image = import 'images.libsonnet';
           mount.withReadOnly(true),
         ]),
 
-      code:
-        image.forContainer('code-server') +
-        container.resources.withRequests({ memory: '4Gi' }) +
-        container.resources.withLimits({ memory: '4Gi' }) +
-        container.withPorts([{ name: 'http-code', containerPort: 8443 }]) +
-        container.withEnv([
-          env.new('PUID', '0'),
-          env.new('PGID', '0'),
-          env.new('DEFAULT_WORKSPACE', '/config/workspace'),
-        ]) +
-        container.withVolumeMounts([
-          mount.withMountPath('/config') +
-          mount.withName('code-server'),
-
-          mount.withMountPath('/config/workspace/hass-config-nfs') +
-          mount.withName('k8s-generic-nfs') +
-          mount.withSubPath('hass-config') +
-          mount.withReadOnly(true),
-
-          mount.withMountPath('/config/workspace') +
-          mount.withName('data'),
-
-          mount.withMountPath('/root/.ssh') +
-          mount.withName('github-ssh-key') +
-          mount.withReadOnly(true),
-        ]),
-
       zone_editor:
         image.forContainer('sensy-one-zone-editor') +
         container.resources.withRequests({ memory: '128Mi' }) +
@@ -133,16 +106,6 @@ local image = import 'images.libsonnet';
         ]),
     },
 
-    github_ssh_key_secret:
-      $._config.externalSecret.new('github-ssh-key', $.namespace.metadata.name) +
-      es.spec.withData([
-        es.spec.data.withSecretKey('id_ed25519') +
-        es.spec.data.remoteRef.withKey('de805969-0577-4c13-930d-b318015a29d0'),
-
-        es.spec.data.withSecretKey('id_ed25519.pub') +
-        es.spec.data.remoteRef.withKey('03aecc60-b715-4b52-83ea-b318015a39d8'),
-      ]),
-
     local sts = k.apps.v1.statefulSet,
     local volume = k.core.v1.volume,
     local pvc = k.core.v1.persistentVolumeClaim,
@@ -152,7 +115,6 @@ local image = import 'images.libsonnet';
         1,
         [
           $.homeAssistant.containers.hass,
-          $.homeAssistant.containers.code,
           $.homeAssistant.containers.zone_editor,
         ],
         [
@@ -160,6 +122,7 @@ local image = import 'images.libsonnet';
           pvc.spec.withAccessModes(['ReadWriteOnce']) +
           pvc.spec.resources.withRequests({ storage: '100Gi' }),
 
+          // This volume is no longer needed, but the StatefulSet API will not let us remove it.
           pvc.new('code-server') +
           pvc.spec.withAccessModes(['ReadWriteOnce']) +
           pvc.spec.resources.withRequests({ storage: '5Gi' }),
@@ -180,13 +143,6 @@ local image = import 'images.libsonnet';
         volume.fromSecret('config', $.homeAssistant.configSecret.metadata.name),
 
         $._config.media.mount.forKind('k8s-generic-nfs'),
-
-        volume.fromSecret('github-ssh-key', $.homeAssistant.github_ssh_key_secret.metadata.name) +
-        volume.secret.withDefaultMode(std.parseOctal('0600')) +
-        volume.secret.withItems([
-          { key: 'id_ed25519', path: 'id_ed25519' },
-          { key: 'id_ed25519.pub', path: 'id_ed25519.pub' },
-        ]),
       ]),
 
     podMonitorToken:
@@ -217,33 +173,6 @@ local image = import 'images.libsonnet';
       $._config.cilium.gateway.route() +
       route.spec.withHostnames(['hass.home.nlowe.dev']) +
       route.spec.withRules([
-        // This is required because code-server requires a trailing / in the URL to work on a sub-path
-        rule.withMatches([
-          rule.matches.path.withType('Exact') +
-          rule.matches.path.withValue('/_code_server'),
-        ]) +
-        rule.withFilters([
-          rule.filters.withType('RequestRedirect') +
-          rule.filters.requestRedirect.path.withType('ReplaceFullPath') +
-          rule.filters.requestRedirect.path.withReplaceFullPath('/_code_server/'),
-        ]),
-
-        rule.withMatches([
-          rule.matches.path.withType('PathPrefix') +
-          // We need to omit the trailing / here so the gateway doesn't strip off the leading "/", otherwise static assets won't load
-          rule.matches.path.withValue('/_code_server'),
-        ]) +
-        rule.withFilters([
-          rule.filters.withType('URLRewrite') +
-          rule.filters.urlRewrite.path.withType('ReplacePrefixMatch') +
-          rule.filters.urlRewrite.path.withReplacePrefixMatch('/'),
-        ]) +
-        rule.withBackendRefs([
-          rule.backendRefs.withName($.homeAssistant.service.app.metadata.name) +
-          rule.backendRefs.withNamespace($.homeAssistant.service.app.metadata.namespace) +
-          rule.backendRefs.withPort(8443),
-        ]),
-
         // TODO: Accurate?
         // This is required because zone-editor requires a trailing / in the URL to work on a sub-path
         rule.withMatches([

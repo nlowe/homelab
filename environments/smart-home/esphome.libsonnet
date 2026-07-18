@@ -1,6 +1,8 @@
 local k = import 'k.libsonnet';
 local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.4/main.libsonnet').gateway;
 
+local es = (import 'github.com/jsonnet-libs/external-secrets-libsonnet/1.1/main.libsonnet').nogroup.v1.externalSecret;
+
 local image = import 'images.libsonnet';
 
 {
@@ -31,14 +33,25 @@ local image = import 'images.libsonnet';
         svc.spec.withClusterIP('None'),
     },
 
+    dashboardPassword:
+      $._config.externalSecret.new('esphome-dashboard-password', $.namespace.metadata.name) +
+      es.spec.withData(
+        es.spec.data.withSecretKey('ESPHOME_PASSWORD') +
+        es.spec.data.remoteRef.withKey('016d7ab6-dccc-4d8d-bd57-b48b0157be8a')
+      ),
+
     local container = k.core.v1.container,
+    local env = k.core.v1.envVar,
     local mount = k.core.v1.volumeMount,
     container::
       image.forContainer('esphome') +
-      container.withCommand(['esphome']) +
       container.withArgs(['dashboard', '/data']) +
       container.withPorts([
         { containerPort: 6052, name: 'http', protocol: 'TCP' },
+      ]) +
+      container.withEnv([
+        env.new('ESPHOME_USERNAME', 'nlowe'),
+        env.fromSecretRef('ESPHOME_PASSWORD', $.esphome.dashboardPassword.metadata.name, 'ESPHOME_PASSWORD'),
       ]) +
       // TODO: Tune resources
       container.withVolumeMounts([

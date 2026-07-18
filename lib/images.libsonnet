@@ -30,15 +30,12 @@ local k = import 'k.libsonnet';
     k.core.v1.container.new(if container_name != null then container_name else name, $[name].ref()),
 } +
 {
-  // https://github.com/linuxserver/docker-code-server/releases/latest
-  'code-server': $.new(registry='lscr.io', name='linuxserver/code-server', version='4.127.0-ls350'),
-
   // https://github.com/cloudflare/cloudflared/releases/latest
-  cloudflared: $.new(name='cloudflare/cloudflared', version='2026.7.1'),
+  cloudflared: $.new(name='cloudflare/cloudflared', version='2026.7.2'),
 
   // https://github.com/esphome/esphome/releases/latest
   // https://github.com/esphome/esphome/pkgs/container/esphome
-  esphome: $.new(registry='ghcr.io', name='esphome/esphome', version='2026.6.5'),
+  esphome: $.new(registry='ghcr.io', name='esphome/esphome', version='2026.7.0'),
   // https://github.com/home-assistant/core/releases/latest
   // https://github.com/home-assistant/core/pkgs/container/home-assistant
   'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2026.7.2'),
@@ -121,7 +118,7 @@ local k = import 'k.libsonnet';
 } +
 {
   // https://github.com/grafana/rollout-operator/releases/latest
-  grafana_rollout_operator: $.new(name='grafana/rollout-operator', version='v0.38.0'),
+  grafana_rollout_operator: $.new(name='grafana/rollout-operator', version='v0.38.1'),
   // https://github.com/memcached/memcached/tags
   memcached: $.new(name='memcached', version='1.6.45-alpine'),
   // See https://github.com/prometheus/memcached_exporter/releases/latest
@@ -142,7 +139,7 @@ local k = import 'k.libsonnet';
   // https://github.com/grafana/mimir/releases/latest
   // See https://github.com/grafana/mimir/blob/main/operations/mimir/images.libsonnet
   mimir:: {
-    mimir: $.new(name='grafana/mimir', version='3.1.2'),
+    mimir: $.new(name='grafana/mimir', version='3.1.3'),
     query_tee: $.new(name='grafana/query-tee', version=self.mimir.version),
     continuous_test: $.new(name='grafana/mimir-continuous-test', version=self.mimir.version),
     memcached: $.memcached,
@@ -159,7 +156,7 @@ local k = import 'k.libsonnet';
   // https://artifacthub.io/packages/helm/external-secrets-operator/external-secrets?modal=values
 
   // https://github.com/external-secrets/external-secrets/releases/latest
-  'external-secrets': $.new(registry='oci.external-secrets.io', name='external-secrets/external-secrets', version='v2.7.0'),
+  'external-secrets': $.new(registry='oci.external-secrets.io', name='external-secrets/external-secrets', version='v2.8.0'),
   // https://github.com/external-secrets/bitwarden-sdk-server/releases/latest
   'bitwarden-sdk-server': $.new(registry='ghcr.io', name='external-secrets/bitwarden-sdk-server', version='v0.7.0'),
 } +
