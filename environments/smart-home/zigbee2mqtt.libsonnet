@@ -105,7 +105,7 @@ local image = import 'images.libsonnet';
       container.withWorkingDir('/app/data') +
       container.withArgs([
         '-c',
-        // this scripts copies all the data from the configmap to configuration.yaml (except the version)
+        // This script copies all the data from the configmap to configuration.yaml (except the version)
         // and then copies the version from the configmap if it does not (already) exist in configuration.yaml
         //
         // See https://github.com/Koenkk/zigbee2mqtt-chart/blob/5e2bf6ebe6e00509119ddf4d11d5d21d589e1f27/charts/zigbee2mqtt/templates/statefulset.yaml#L99-L114

@@ -154,6 +154,16 @@ local image = import 'images.libsonnet';
       daemon_set_alloy+: namespaceMixin,
       service_alloy+: namespaceMixin,
       service_alloy_cluster+: namespaceMixin,
+
+      // Additional permissions to scrape cadvisor metrics
+      local cr = k.rbac.v1.clusterRole,
+      local rule = k.rbac.v1.policyRule,
+      cluster_role_alloy+:
+        cr.withRulesMixin([
+          rule.withApiGroups(['']) +
+          rule.withResources(['nodes/metrics', 'nodes/stats']) +
+          rule.withVerbs(['get']),
+        ]),
     },
 
     local cm = k.core.v1.configMap,

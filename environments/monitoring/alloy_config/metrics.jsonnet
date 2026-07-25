@@ -74,28 +74,65 @@ local alloy = import 'github.com/grafana/alloy/operations/alloy-syntax-jsonnet/m
     role: 'node',
   },
 
+  // cadvisor metrics for each node
   [alloy.block('discovery.relabel', 'k8s_node_cadvisor')]: {
     targets: alloy.expr('discovery.kubernetes.nodes.targets'),
     [alloy.block('rule', index=0)]: {
-      action: 'labelmap',
-      regex: '__meta_kubernetes_node_label_(.+)',
+      source_labels: ['__meta_kubernetes_node_name'],
+      target_label: 'node',
     },
     [alloy.block('rule', index=1)]: {
       action: 'replace',
+      source_labels: ['__meta_kubernetes_node_name'],
+      regex: '(.+)',
+      target_label: '__metrics_path__',
+      replacement: '/metrics/cadvisor',
+    },
+  },
+  [alloy.block('prometheus.scrape', 'cadvisor')]: {
+    targets: alloy.expr('discovery.relabel.k8s_node_cadvisor.output'),
+    forward_to: [this.mimir],
+
+    honor_labels: true,
+    scheme: 'https',
+    bearer_token_file: '/var/run/secrets/kubernetes.io/serviceaccount/token',
+    [alloy.block('tls_config')]: {
+      ca_file: '/var/run/secrets/kubernetes.io/serviceaccount/ca.crt',
+    },
+
+    // Support native histograms by indicating support for PrometheusProto
+    scrape_protocols: ['PrometheusProto', 'OpenMetricsText1.0.0', 'OpenMetricsText0.0.1', 'PrometheusText0.0.4'],
+
+    scrape_interval: default_interval,
+    scrape_timeout: default_interval,
+
+    [alloy.block('clustering')]: {
+      enabled: true,
+    },
+  },
+
+  // rke2 metrics for each node: https://docs.rke2.io/reference/metrics
+  [alloy.block('discovery.relabel', 'k8s_node_rke2')]: {
+    targets: alloy.expr('discovery.kubernetes.nodes.targets'),
+    [alloy.block('rule', index=0)]: {
+      source_labels: ['__meta_kubernetes_node_name'],
+      target_label: 'node',
+    },
+    [alloy.block('rule', index=1)]: {
+      source_labels: ['__meta_kubernetes_node_address_InternalIP'],
       target_label: '__address__',
-      replacement: 'kubernetes.default.svc.cluster.local.:443',
+      replacement: '${1}:9345',
     },
     [alloy.block('rule', index=2)]: {
       action: 'replace',
       source_labels: ['__meta_kubernetes_node_name'],
       regex: '(.+)',
       target_label: '__metrics_path__',
-      replacement: '/api/v1/nodes/${1}/proxy/metrics/cadvisor',
+      replacement: '/metrics',
     },
   },
-
-  [alloy.block('prometheus.scrape', 'cadvisor')]: {
-    targets: alloy.expr('discovery.relabel.k8s_node_cadvisor.output'),
+  [alloy.block('prometheus.scrape', 'rke2')]: {
+    targets: alloy.expr('discovery.relabel.k8s_node_rke2.output'),
     forward_to: [this.mimir],
 
     honor_labels: true,
