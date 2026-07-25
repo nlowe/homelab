@@ -20,7 +20,7 @@ requires:
 - chart: jetstack/cert-manager-csi-driver
   version: v0.15.0
 - chart: grafana/alloy
-  version: 1.10.1
+  version: 1.11.0
 - chart: externalSecrets/external-secrets
   version: v2.8.0
 - chart: externalSecretsGHCR/bitwarden-sdk-server
