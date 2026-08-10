@@ -122,7 +122,7 @@ local alloy = import 'github.com/grafana/alloy/operations/alloy-syntax-jsonnet/m
     forward_to: [this.loki],
   },
 
-  // Syslog for unifi switches
+  // Syslog for unifi switches and ESPHome Devices
   [alloy.block('loki.relabel', 'syslog')]: {
     forward_to: [],
 
@@ -133,15 +133,20 @@ local alloy = import 'github.com/grafana/alloy/operations/alloy-syntax-jsonnet/m
     },
   },
   [alloy.block('loki.source.syslog', 'ingest')]: {
+    // TODO: Forward to processing stage(s) to parse raw syslog
     forward_to: [this.loki],
     relabel_rules: alloy.expr('loki.relabel.syslog.rules'),
 
     [alloy.block('listener', index=0)]: {
       address: '0.0.0.0:5514',
       protocol: 'udp',
-      syslog_format: 'rfc3164',
-      use_incoming_timestamp: true,
-      rfc3164_default_to_current_year: true,
+      // syslog_format: 'rfc3164',
+      // use_incoming_timestamp: true,
+      // rfc3164_default_to_current_year: true,
+
+      // ESPHome and some Unifi messages don't conform to rfc3164, so accept raw
+      syslog_format: 'raw',
+
       labels: {
         component: 'loki.source.syslog',
         protocol: 'udp',

@@ -42,6 +42,8 @@ local image = import 'images.libsonnet';
             name: 'homelab',
           },
 
+          stabilityLevel: 'experimental',
+
           enableReporting: false,
 
           extraPorts: $._config.alloy.syslogPorts,
