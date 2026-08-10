@@ -35,18 +35,18 @@ local k = import 'k.libsonnet';
 
   // https://github.com/esphome/esphome/releases/latest
   // https://github.com/esphome/esphome/pkgs/container/esphome
-  esphome: $.new(registry='ghcr.io', name='esphome/esphome', version='2026.7.3'),
+  esphome: $.new(registry='ghcr.io', name='esphome/esphome', version='2026.7.4'),
   // https://github.com/home-assistant/core/releases/latest
   // https://github.com/home-assistant/core/pkgs/container/home-assistant
-  'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2026.7.4'),
+  'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2026.8.1'),
   // https://github.com/sensy-one/home-assistant-addons
   // https://github.com/sensy-one/home-assistant-addons/pkgs/container/zone-editor
   'sensy-one-zone-editor': $.new(registry='ghcr.io', name='sensy-one/zone-editor', version='v1.4.9'),
   // https://github.com/zwave-js/zwave-js-ui/releases/latest
-  'zwave-js-ui': $.new(name='zwavejs/zwave-js-ui', version='11.22.0'),
+  'zwave-js-ui': $.new(name='zwavejs/zwave-js-ui', version='11.22.2'),
   // https://hub.docker.com/r/vernemq/vernemq/tags
   // https://github.com/vernemq/vernemq/releases/latest
-  vernemq: $.new(name='vernemq/vernemq', version='2.1.2'),
+  vernemq: $.new(name='vernemq/vernemq', version='2.2.0-alpine'),
   // https://github.com/Koenkk/zigbee2mqtt/releases/latest
   // https://github.com/koenkk/zigbee2mqtt/pkgs/container/zigbee2mqtt
   zigbee2mqtt: $.new(registry='ghcr.io', name='koenkk/zigbee2mqtt', version='2.13.0'),
@@ -58,12 +58,15 @@ local k = import 'k.libsonnet';
   'kube-rbac-proxy': $.new(registry='quay.io', name='brancz/kube-rbac-proxy', version='v0.22.1'),
 
   // https://github.com/grafana/grafana/releases/latest
-  grafana: $.new(name='grafana/grafana', version='13.1.1'),
+  grafana: $.new(name='grafana/grafana', version='13.1.3'),
   // https://github.com/kubernetes/kube-state-metrics/releases/latest
   'kube-state-metrics': $.new(registry='registry.k8s.io', name='kube-state-metrics/kube-state-metrics', version='v2.19.1'),
   // https://github.com/unpoller/unpoller/releases/latest
   // https://github.com/unpoller/unpoller/pkgs/container/unpoller
-  'unifi-exporter': $.new(registry='ghcr.io', name='unpoller/unpoller', version='v3.3.4'),
+  'unifi-exporter': $.new(registry='ghcr.io', name='unpoller/unpoller', version='v3.4.1'),
+
+  // https://hub.docker.com/_/busybox#supported-tags-and-respective-dockerfile-links
+  busybox: $.new(registry='docker.io', name='busybox', version='1.38.0'),
 } +
 {
   // From charts/cert-manager
@@ -76,7 +79,7 @@ local k = import 'k.libsonnet';
   // From charts/cert-manager-csi-driver
   // https://github.com/cert-manager/csi-driver/releases/latest
   // See https://artifacthub.io/packages/helm/cert-manager/cert-manager-csi-driver?modal=values
-  'cert-manager-csi-driver': $.new(registry='quay.io', name='jetstack/cert-manager-csi-driver', version='v0.15.0'),
+  'cert-manager-csi-driver': $.new(registry='quay.io', name='jetstack/cert-manager-csi-driver', version='v0.16.0'),
   // See https://quay.io/repository/jetstack/csi-node-driver-registrar?tab=tags
   'csi-node-driver-registrar': $.new(registry='quay.io', name='jetstack/csi-node-driver-registrar', version='v2.17.0'),
   // See https://quay.io/repository/jetstack/livenessprobe?tab=tags&tag=latest
@@ -99,8 +102,7 @@ local k = import 'k.libsonnet';
     // https://github.com/democratic-csi/democratic-csi/tags
     // https://github.com/democratic-csi/democratic-csi/pkgs/container/democratic-csi
     driver: $.new(registry='ghcr.io', name='democratic-csi/democratic-csi', version='v1.9.5'),
-    // https://hub.docker.com/_/busybox#supported-tags-and-respective-dockerfile-links
-    busybox: $.new(registry='docker.io', name='busybox', version='1.38.0'),
+    busybox: $.busybox,
     // See https://github.com/kubernetes-csi/node-driver-registrar/releases/latest
     driverRegistrar: $.new(registry='registry.k8s.io', name='sig-storage/csi-node-driver-registrar', version='v2.17.0'),
     // https://github.com/democratic-csi/csi-grpc-proxy/releases/latest
@@ -111,10 +113,10 @@ local k = import 'k.libsonnet';
   // From charts/alloy
   // See https://artifacthub.io/packages/helm/grafana/alloy?modal=values
   // https://github.com/grafana/alloy/releases/latest
-  alloy: $.new(registry='docker.io', name='grafana/alloy', version='v1.18.0'),
+  alloy: $.new(registry='docker.io', name='grafana/alloy', version='v1.18.1'),
   // https://github.com/prometheus-operator/prometheus-operator/releases/latest
   // https://github.com/prometheus-operator/prometheus-operator/pkgs/container/prometheus-config-reloader
-  'prometheus-config-reloader': $.new(registry='ghcr.io', name='prometheus-operator/prometheus-config-reloader', version='v0.93.0'),
+  'prometheus-config-reloader': $.new(registry='ghcr.io', name='prometheus-operator/prometheus-config-reloader', version='v0.93.1'),
 } +
 {
   // https://github.com/grafana/rollout-operator/releases/latest
@@ -129,7 +131,7 @@ local k = import 'k.libsonnet';
   // See https://github.com/grafana/loki/blob/main/production/ksonnet/loki/images.libsonnet
   // See https://github.com/grafana/loki/blob/main/production/ksonnet/loki/rollout-operator.libsonnet
   loki:: {
-    loki: $.new(name='grafana/loki', version='3.7.4'),
+    loki: $.new(name='grafana/loki', version='3.7.6'),
     memcached: $.memcached,
     memcachedExporter: $.memcachedExporter,
     rollout_operator: $.grafana_rollout_operator,
@@ -150,13 +152,13 @@ local k = import 'k.libsonnet';
 {
   // https://github.com/rancher/local-path-provisioner/releases/latest
   // See https://github.com/rancher/local-path-provisioner/blob/master/deploy/local-path-storage.yaml
-  'local-path-provisioner': $.new(name='rancher/local-path-provisioner', version='v0.0.36'),
+  'local-path-provisioner': $.new(name='rancher/local-path-provisioner', version='v0.0.37'),
 } +
 {
   // https://artifacthub.io/packages/helm/external-secrets-operator/external-secrets?modal=values
 
   // https://github.com/external-secrets/external-secrets/releases/latest
-  'external-secrets': $.new(registry='oci.external-secrets.io', name='external-secrets/external-secrets', version='v2.8.0'),
+  'external-secrets': $.new(registry='oci.external-secrets.io', name='external-secrets/external-secrets', version='v2.9.0'),
   // https://github.com/external-secrets/bitwarden-sdk-server/releases/latest
   'bitwarden-sdk-server': $.new(registry='ghcr.io', name='external-secrets/bitwarden-sdk-server', version='v0.7.0'),
 } +

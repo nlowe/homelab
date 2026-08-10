@@ -23,6 +23,15 @@ apply-all: restore
 		tk diff $$env -s >/dev/null || tk apply $$env; \
 	done
 
+.PHONY: prune
+prune: prune-all
+
+.PHONY: prune-all
+prune-all: restore
+	for env in $(shell tk env list --names); do \
+		tk prune $$env; \
+	done
+
 .PHONY: render-test
 render-test: restore
 	@SHOW_FAIL=0; \

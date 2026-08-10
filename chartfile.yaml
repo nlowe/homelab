@@ -12,17 +12,21 @@ repositories:
   url: https://charts.external-secrets.io
 - name: externalSecretsGHCR
   url: oci://ghcr.io/external-secrets/charts
+- name: local-path-provisioner
+  url: oci://ghcr.io/rancher/local-path-provisioner/charts
 requires:
 - chart: dcsi/democratic-csi
   version: 0.15.1
 - chart: jetstack/cert-manager
   version: v1.21.1
 - chart: jetstack/cert-manager-csi-driver
-  version: v0.15.0
+  version: v0.16.0
 - chart: grafana/alloy
-  version: 1.11.0
+  version: 1.11.1
 - chart: externalSecrets/external-secrets
-  version: v2.8.0
+  version: v2.9.0
 - chart: externalSecretsGHCR/bitwarden-sdk-server
   version: v0.6.0
+- chart: local-path-provisioner/local-path-provisioner
+  version: 0.0.37
 version: 1

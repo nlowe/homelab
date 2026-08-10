@@ -8,7 +8,7 @@
           "subdir": "operations/alloy-mixin"
         }
       },
-      "version": "v1.17.0"
+      "version": "v1.18.1"
     },
     {
       "source": {
@@ -17,7 +17,7 @@
           "subdir": "operations/alloy-syntax-jsonnet"
         }
       },
-      "version": "v1.17.0"
+      "version": "v1.18.1"
     },
     {
       "source": {
@@ -44,7 +44,7 @@
           "subdir": "production/ksonnet/loki"
         }
       },
-      "version": "v3.7.2"
+      "version": "v3.7.6"
     },
     {
       "source": {
@@ -53,7 +53,7 @@
           "subdir": "production/loki-mixin"
         }
       },
-      "version": "v3.7.2"
+      "version": "v3.7.6"
     },
     {
       "source": {
@@ -62,7 +62,7 @@
           "subdir": "operations/mimir"
         }
       },
-      "version": "mimir-3.1.1"
+      "version": "mimir-3.1.4"
     },
     {
       "source": {
@@ -71,7 +71,7 @@
           "subdir": "operations/mimir-mixin"
         }
       },
-      "version": "mimir-3.1.1"
+      "version": "mimir-3.1.4"
     },
     {
       "source": {
@@ -80,7 +80,7 @@
           "subdir": "operations/rollout-operator"
         }
       },
-      "version": "v0.38.0"
+      "version": "v0.38.1"
     },
     {
       "source": {
@@ -131,7 +131,7 @@
       "source": {
         "git": {
           "remote": "https://github.com/jsonnet-libs/k8s-libsonnet.git",
-          "subdir": "1.34"
+          "subdir": "1.35"
         }
       },
       "version": "main"
@@ -188,7 +188,7 @@
           "subdir": "jsonnet/prometheus-operator"
         }
       },
-      "version": "v0.91.0"
+      "version": "v0.93.1"
     },
     {
       "source": {
@@ -197,7 +197,7 @@
           "subdir": "deploy"
         }
       },
-      "version": "v0.0.36"
+      "version": "v0.0.37"
     }
   ],
   "legacyImports": true

@@ -1,60 +1,40 @@
 local k = import 'k.libsonnet';
 
+local tk = import 'github.com/grafana/jsonnet-libs/tanka-util/main.libsonnet';
+local helm = tk.helm.new(std.thisFile);
+
 local image = import 'images.libsonnet';
 
 {
   _config+:: {
-    storageClassConfigs: {
-      [$.storageClasses.localSSD.metadata.name]: {
-        nodePathMap: [
-          {
-            node: 'DEFAULT_PATH_FOR_NON_LISTED_NODES',
-            paths: ['/mnt/k8s'],
-          },
-        ],
-      },
+    image: {
+      repository: image['local-path-provisioner'].repo(),
+      tag: image['local-path-provisioner'].version,
     },
-  },
-} +
-{
-  [
-  '%s_%s' % [
-    std.asciiLower(obj.kind),
-    std.asciiLower(std.strReplace(obj.metadata.name, '-', '_')),
-  ]
-  ]: obj
-  for obj in std.parseYaml((importstr 'github.com/rancher/local-path-provisioner/deploy/local-path-storage.yaml'))
-} +
-{
-  provisionerName:: 'rancher.io/local-path',
 
-  deployment_local_path_provisioner+: {
-    spec+: {
-      template+: {
-        spec+: {
-          containers: [
-            super.containers[0] +
-            image.forContainer('local-path-provisioner'),
-          ],
-        },
-      },
+    helperImage: {
+      repository: image.busybox.repo(),
+      tag: image.busybox.version,
     },
+
+    storageClass: {
+      provisionerName: 'rancher.io/local-path',
+      name: 'local-ssd',
+      pathPattern: '{{ .PVC.Namespace }}/{{ .PVC.Name }}/',
+    },
+
+    nodePathMap: [
+      {
+        node: 'DEFAULT_PATH_FOR_NON_LISTED_NODES',
+        paths: ['/mnt/k8s'],
+      },
+    ],
   },
 
-  configmap_local_path_config+: k.core.v1.configMap.withDataMixin({
-    'config.json': std.manifestJson($._config),
+  namespace: k.core.v1.namespace.new('local-path-storage'),
+
+  provisioner: helm.template('local-path-provisioner', '../../charts/local-path-provisioner', {
+    namespace: $.namespace.metadata.name,
+    values: $._config,
   }),
-
-  local sc = k.storage.v1.storageClass,
-  storageClasses+: {
-    localSSD:
-      sc.new('local-ssd') +
-      sc.withProvisioner($.provisionerName) +
-      sc.withParameters({
-        nodePath: '/mnt/k8s',
-        pathPattern: '{{ .PVC.Namespace }}/{{ .PVC.Name }}/',
-      }) +
-      sc.withVolumeBindingMode('WaitForFirstConsumer') +
-      sc.withReclaimPolicy('Delete'),
-  },
 }
