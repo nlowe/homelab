@@ -31,19 +31,19 @@ local k = import 'k.libsonnet';
 } +
 {
   // https://github.com/cloudflare/cloudflared/releases/latest
-  cloudflared: $.new(name='cloudflare/cloudflared', version='2026.7.3'),
+  cloudflared: $.new(name='cloudflare/cloudflared', version='2026.8.2'),
 
   // https://github.com/esphome/esphome/releases/latest
   // https://github.com/esphome/esphome/pkgs/container/esphome
   esphome: $.new(registry='ghcr.io', name='esphome/esphome', version='2026.7.4'),
   // https://github.com/home-assistant/core/releases/latest
   // https://github.com/home-assistant/core/pkgs/container/home-assistant
-  'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2026.8.1'),
+  'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2026.8.2'),
   // https://github.com/sensy-one/home-assistant-addons
   // https://github.com/sensy-one/home-assistant-addons/pkgs/container/zone-editor
   'sensy-one-zone-editor': $.new(registry='ghcr.io', name='sensy-one/zone-editor', version='v1.4.9'),
   // https://github.com/zwave-js/zwave-js-ui/releases/latest
-  'zwave-js-ui': $.new(name='zwavejs/zwave-js-ui', version='11.22.2'),
+  'zwave-js-ui': $.new(name='zwavejs/zwave-js-ui', version='11.22.3'),
   // https://hub.docker.com/r/vernemq/vernemq/tags
   // https://github.com/vernemq/vernemq/releases/latest
   vernemq: $.new(name='vernemq/vernemq', version='2.2.0-alpine'),
@@ -124,7 +124,7 @@ local k = import 'k.libsonnet';
   // https://github.com/memcached/memcached/tags
   memcached: $.new(name='memcached', version='1.6.45-alpine'),
   // See https://github.com/prometheus/memcached_exporter/releases/latest
-  memcachedExporter: $.new(name='prom/memcached-exporter', version='v0.16.0'),
+  memcachedExporter: $.new(name='prom/memcached-exporter', version='v0.17.0'),
 }
 {
   // https://github.com/grafana/loki/releases/latest
