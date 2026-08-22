@@ -62,7 +62,7 @@
           "subdir": "operations/mimir"
         }
       },
-      "version": "mimir-3.1.4"
+      "version": "mimir-3.2.0"
     },
     {
       "source": {
@@ -71,7 +71,7 @@
           "subdir": "operations/mimir-mixin"
         }
       },
-      "version": "mimir-3.1.4"
+      "version": "mimir-3.2.0"
     },
     {
       "source": {
@@ -80,7 +80,7 @@
           "subdir": "operations/rollout-operator"
         }
       },
-      "version": "v0.38.1"
+      "version": "v0.39.0"
     },
     {
       "source": {

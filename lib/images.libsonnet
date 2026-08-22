@@ -35,10 +35,10 @@ local k = import 'k.libsonnet';
 
   // https://github.com/esphome/esphome/releases/latest
   // https://github.com/esphome/esphome/pkgs/container/esphome
-  esphome: $.new(registry='ghcr.io', name='esphome/esphome', version='2026.7.4'),
+  esphome: $.new(registry='ghcr.io', name='esphome/esphome', version='2026.8.0'),
   // https://github.com/home-assistant/core/releases/latest
   // https://github.com/home-assistant/core/pkgs/container/home-assistant
-  'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2026.8.2'),
+  'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2026.8.3'),
   // https://github.com/sensy-one/home-assistant-addons
   // https://github.com/sensy-one/home-assistant-addons/pkgs/container/zone-editor
   'sensy-one-zone-editor': $.new(registry='ghcr.io', name='sensy-one/zone-editor', version='v1.4.9'),
@@ -52,18 +52,18 @@ local k = import 'k.libsonnet';
   zigbee2mqtt: $.new(registry='ghcr.io', name='koenkk/zigbee2mqtt', version='2.13.0'),
   // https://github.com/mikefarah/yq/releases/latest
   // https://github.com/mikefarah/yq/pkgs/container/yq
-  yq: $.new(registry='ghcr.io', name='mikefarah/yq', version='4.53.3'),
+  yq: $.new(registry='ghcr.io', name='mikefarah/yq', version='4.53.6'),
 
   // https://github.com/brancz/kube-rbac-proxy/releases/latest
   'kube-rbac-proxy': $.new(registry='quay.io', name='brancz/kube-rbac-proxy', version='v0.22.1'),
 
   // https://github.com/grafana/grafana/releases/latest
-  grafana: $.new(name='grafana/grafana', version='13.1.3'),
+  grafana: $.new(name='grafana/grafana', version='13.2.0'),
   // https://github.com/kubernetes/kube-state-metrics/releases/latest
-  'kube-state-metrics': $.new(registry='registry.k8s.io', name='kube-state-metrics/kube-state-metrics', version='v2.19.1'),
+  'kube-state-metrics': $.new(registry='registry.k8s.io', name='kube-state-metrics/kube-state-metrics', version='v2.20.0'),
   // https://github.com/unpoller/unpoller/releases/latest
   // https://github.com/unpoller/unpoller/pkgs/container/unpoller
-  'unifi-exporter': $.new(registry='ghcr.io', name='unpoller/unpoller', version='v3.4.1'),
+  'unifi-exporter': $.new(registry='ghcr.io', name='unpoller/unpoller', version='v4.0.0'),
 
   // https://hub.docker.com/_/busybox#supported-tags-and-respective-dockerfile-links
   busybox: $.new(registry='docker.io', name='busybox', version='1.38.0'),
@@ -120,7 +120,7 @@ local k = import 'k.libsonnet';
 } +
 {
   // https://github.com/grafana/rollout-operator/releases/latest
-  grafana_rollout_operator: $.new(name='grafana/rollout-operator', version='v0.38.1'),
+  grafana_rollout_operator: $.new(name='grafana/rollout-operator', version='v0.39.0'),
   // https://github.com/memcached/memcached/tags
   memcached: $.new(name='memcached', version='1.6.45-alpine'),
   // See https://github.com/prometheus/memcached_exporter/releases/latest
@@ -141,7 +141,7 @@ local k = import 'k.libsonnet';
   // https://github.com/grafana/mimir/releases/latest
   // See https://github.com/grafana/mimir/blob/main/operations/mimir/images.libsonnet
   mimir:: {
-    mimir: $.new(name='grafana/mimir', version='3.1.4'),
+    mimir: $.new(name='grafana/mimir', version='3.2.0'),
     query_tee: $.new(name='grafana/query-tee', version=self.mimir.version),
     continuous_test: $.new(name='grafana/mimir-continuous-test', version=self.mimir.version),
     memcached: $.memcached,
