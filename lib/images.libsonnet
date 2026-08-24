@@ -30,6 +30,8 @@ local k = import 'k.libsonnet';
     k.core.v1.container.new(if container_name != null then container_name else name, $[name].ref()),
 } +
 {
+  // rke2: https://update.rke2.io/v1-release/channels/stable
+
   // https://github.com/cloudflare/cloudflared/releases/latest
   cloudflared: $.new(name='cloudflare/cloudflared', version='2026.8.2'),
 
