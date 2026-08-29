@@ -22,9 +22,9 @@ requires:
 - chart: jetstack/cert-manager-csi-driver
   version: v0.16.0
 - chart: grafana/alloy
-  version: 1.11.1
+  version: 1.12.1
 - chart: externalSecrets/external-secrets
-  version: v2.9.0
+  version: v2.10.0
 - chart: externalSecretsGHCR/bitwarden-sdk-server
   version: v0.6.0
 - chart: local-path-provisioner/local-path-provisioner
