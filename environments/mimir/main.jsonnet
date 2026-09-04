@@ -139,6 +139,12 @@ local image = (import 'images.libsonnet').mimir;
     'ruler.alertmanager-url': 'http://alertmanager.%(namespace)s.svc.%(cluster_domain)s:8080/alertmanager' % $._config,
   },
 
+  // This seems to be required in 3.2.0+
+  query_frontend_args+:: {
+    'memberlist.bind-port': '7946',
+    'memberlist.join': 'dns+gossip-ring.mimir.svc.cluster.local.:7946',
+  },
+
   monitoring: {
     local pr = prom.monitoring.v1.prometheusRule,
     rules:
