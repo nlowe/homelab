@@ -38,14 +38,15 @@ local image = import 'images.libsonnet';
             type: 'mqtt',
             namespace: 'appdaemon',
 
+            client_topics: 'NONE',
             // qolsysgw v1.7.0 broke MQTT as it no longer subscribes to these topics, assuming AppDaemon handles it.
             // Manually add them back as a workaround.
             //
             // See: https://github.com/xaf/qolsysgw/issues/208
-            client_topics: [
-              'homeassistant/alarm_control_panel/qolsys_iq4_alarm_panel/set',
-              'qolsys/qolsys_iq4_alarm_panel/event',
-            ],
+            // client_topics: [
+            //   'homeassistant/alarm_control_panel/qolsys_iq4_alarm_panel/set',
+            //   'qolsys/qolsys_iq4_alarm_panel/event',
+            // ],
 
             client_host: 'vernemq.smart-home.svc.cluster.local',
             client_port: 8883,

@@ -172,5 +172,5 @@ local k = import 'k.libsonnet';
   // images/qolsysgw/Dockerfile
   // https://github.com/xaf/qolsysgw/releases/latest
   // https://github.com/AppDaemon/appdaemon/releases/latest
-  qolsysgw: $.new(name='nlowe/qolsysgw', version='v1.7.0-appdaemon4.5.13'),
+  qolsysgw: $.new(name='nlowe/qolsysgw', version='main-pr-209-appdaemon4.5.13'),
 }
