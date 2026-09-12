@@ -35,19 +35,19 @@ local k = import 'k.libsonnet';
   //   curl -sfL https://get.rke2.io | INSTALL_RKE2_CHANNEL=stable sh -
 
   // https://github.com/cloudflare/cloudflared/releases/latest
-  cloudflared: $.new(name='cloudflare/cloudflared', version='2026.8.3'),
+  cloudflared: $.new(name='cloudflare/cloudflared', version='2026.9.1'),
 
   // https://github.com/esphome/esphome/releases/latest
   // https://github.com/esphome/esphome/pkgs/container/esphome
   esphome: $.new(registry='ghcr.io', name='esphome/esphome', version='2026.8.2'),
   // https://github.com/home-assistant/core/releases/latest
   // https://github.com/home-assistant/core/pkgs/container/home-assistant
-  'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2026.9.1'),
+  'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2026.9.2'),
   // https://github.com/sensy-one/home-assistant-addons
   // https://github.com/sensy-one/home-assistant-addons/pkgs/container/zone-editor
   'sensy-one-zone-editor': $.new(registry='ghcr.io', name='sensy-one/zone-editor', version='v1.4.9'),
   // https://github.com/zwave-js/zwave-js-ui/releases/latest
-  'zwave-js-ui': $.new(name='zwavejs/zwave-js-ui', version='11.23.0'),
+  'zwave-js-ui': $.new(name='zwavejs/zwave-js-ui', version='11.24.0'),
   // https://hub.docker.com/r/vernemq/vernemq/tags
   // https://github.com/vernemq/vernemq/releases/latest
   vernemq: $.new(name='vernemq/vernemq', version='2.2.0-alpine'),
@@ -76,7 +76,7 @@ local k = import 'k.libsonnet';
   // From charts/cert-manager
   // See https://github.com/cert-manager/cert-manager/releases/latest
   // See https://artifacthub.io/packages/helm/cert-manager/cert-manager?modal=values
-  ['cert-manager-%s' % name]: $.new(registry='quay.io', name='jetstack/cert-manager-%s' % name, version='v1.21.1')
+  ['cert-manager-%s' % name]: $.new(registry='quay.io', name='jetstack/cert-manager-%s' % name, version='v1.21.2')
   for name in ['controller', 'webhook', 'cainjector', 'acmesolver', 'startupapicheck']
 } +
 {
@@ -94,8 +94,7 @@ local k = import 'k.libsonnet';
   // See https://artifacthub.io/packages/helm/democratic-csi/democratic-csi?modal=values
   democratic_csi:: {
     // https://github.com/kubernetes-csi/external-attacher/releases/latest
-    // v4.13.0 was released on 2026-09-04 but doesn't have an image yet
-    externalAttacher: $.new(registry='registry.k8s.io', name='sig-storage/csi-attacher', version='v4.12.0'),
+    externalAttacher: $.new(registry='registry.k8s.io', name='sig-storage/csi-attacher', version='v4.13.0'),
     // https://github.com/kubernetes-csi/external-provisioner/releases/latest
     externalProvisioner: $.new(registry='registry.k8s.io', name='sig-storage/csi-provisioner', version='v6.3.0'),
     // https://github.com/kubernetes-csi/external-resizer/releases/latest
@@ -110,7 +109,7 @@ local k = import 'k.libsonnet';
     busybox: $.busybox,
     // See https://github.com/kubernetes-csi/node-driver-registrar/releases/latest
     // v2.18.0 was released on 2026-09-04 but doesn't have an image yet
-    driverRegistrar: $.new(registry='registry.k8s.io', name='sig-storage/csi-node-driver-registrar', version='v2.17.0'),
+    driverRegistrar: $.new(registry='registry.k8s.io', name='sig-storage/csi-node-driver-registrar', version='v2.18.0'),
     // https://github.com/democratic-csi/csi-grpc-proxy/releases/latest
     csiProxy: $.new(registry='docker.io', name='democraticcsi/csi-grpc-proxy', version='v0.5.7'),
   },
@@ -122,11 +121,11 @@ local k = import 'k.libsonnet';
   alloy: $.new(registry='docker.io', name='grafana/alloy', version='v1.19.2'),
   // https://github.com/prometheus-operator/prometheus-operator/releases/latest
   // https://github.com/prometheus-operator/prometheus-operator/pkgs/container/prometheus-config-reloader
-  'prometheus-config-reloader': $.new(registry='ghcr.io', name='prometheus-operator/prometheus-config-reloader', version='v0.93.1'),
+  'prometheus-config-reloader': $.new(registry='ghcr.io', name='prometheus-operator/prometheus-config-reloader', version='v0.94.0'),
 } +
 {
   // https://github.com/grafana/rollout-operator/releases/latest
-  grafana_rollout_operator: $.new(name='grafana/rollout-operator', version='v0.39.0'),
+  grafana_rollout_operator: $.new(name='grafana/rollout-operator', version='v0.40.0'),
   // https://github.com/memcached/memcached/tags
   memcached: $.new(name='memcached', version='1.6.45-alpine'),
   // See https://github.com/prometheus/memcached_exporter/releases/latest
@@ -147,7 +146,7 @@ local k = import 'k.libsonnet';
   // https://github.com/grafana/mimir/releases/latest
   // See https://github.com/grafana/mimir/blob/main/operations/mimir/images.libsonnet
   mimir:: {
-    mimir: $.new(name='grafana/mimir', version='3.2.0'),
+    mimir: $.new(name='grafana/mimir', version='3.2.1'),
     query_tee: $.new(name='grafana/query-tee', version=self.mimir.version),
     continuous_test: $.new(name='grafana/mimir-continuous-test', version=self.mimir.version),
     memcached: $.memcached,
@@ -172,5 +171,5 @@ local k = import 'k.libsonnet';
   // images/qolsysgw/Dockerfile
   // https://github.com/xaf/qolsysgw/releases/latest
   // https://github.com/AppDaemon/appdaemon/releases/latest
-  qolsysgw: $.new(name='nlowe/qolsysgw', version='main-pr-209-appdaemon4.5.13'),
+  qolsysgw: $.new(name='nlowe/qolsysgw', version='v1.7.1-appdaemon4.5.13'),
 }
