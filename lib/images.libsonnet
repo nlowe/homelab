@@ -172,4 +172,36 @@ local k = import 'k.libsonnet';
   // https://github.com/xaf/qolsysgw/releases/latest
   // https://github.com/AppDaemon/appdaemon/releases/latest
   qolsysgw: $.new(name='nlowe/qolsysgw', version='v1.7.1-appdaemon4.5.13'),
+} +
+{
+  // https://github.com/cloudnative-pg/cloudnative-pg/releases/latest
+  // https://github.com/cloudnative-pg/charts/releases
+  'cloudnative-pg': $.new(registry='ghcr.io', name='cloudnative-pg/cloudnative-pg', version='1.30.0'),
+
+  // https://github.com/cloudnative-pg/pgbouncer-containers/pkgs/container/pgbouncer
+  // https://github.com/cloudnative-pg/pgbouncer-containers/tags
+  pgbouncer: $.new(registry='ghcr.io', name='cloudnative-pg/pgbouncer', version='1.25.2'),
+
+  // https://github.com/cloudnative-pg/artifacts/blob/main/image-catalogs/catalog-standard-trixie.yaml
+  // https://github.com/cloudnative-pg/postgres-containers
+  // https://github.com/cloudnative-pg/postgres-containers/pkgs/container/postgresql
+  pg: $.new(registry='ghcr.io', name='cloudnative-pg/postgresql', version='18.6-standard-trixie'),
+
+  // https://github.com/tensorchord/cloudnative-vectorchord/blob/main/versions.yaml
+  // https://github.com/tensorchord/cloudnative-vectorchord/pkgs/container/cloudnative-vectorchord
+  'pg-vectorchord': $.new(registry='ghcr.io', name='tensorchord/cloudnative-vectorchord', version='18.6-1.1.1'),
+} +
+{
+  immich:: {
+    // https://github.com/immich-app/immich/releases/latest
+    // https://github.com/immich-app/immich-charts/releases/latest
+    version:: 'v3.2.2',
+
+    server: $.new(registry='ghcr.io', name='immich-app/immich-server', version=self.version),
+    'machine-learning': $.new(registry='ghcr.io', name='immich-app/immich-machine-learning', version=self.version),
+
+    // https://github.com/valkey-io/valkey/releases/latest
+    // https://github.com/valkey-io/valkey-container/pkgs/container/valkey
+    valkey: $.new(registry='ghcr.io', name='valkey-io/valkey', version='9.1.2-alpine'),
+  },
 }

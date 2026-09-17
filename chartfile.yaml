@@ -14,6 +14,10 @@ repositories:
   url: oci://ghcr.io/external-secrets/charts
 - name: local-path-provisioner
   url: oci://ghcr.io/rancher/local-path-provisioner/charts
+- name: cnpg
+  url: https://cloudnative-pg.github.io/charts
+- name: immich
+  url: oci://ghcr.io/immich-app/immich-charts
 requires:
 - chart: dcsi/democratic-csi
   version: 0.15.1
@@ -29,4 +33,8 @@ requires:
   version: v0.6.0
 - chart: local-path-provisioner/local-path-provisioner
   version: 0.0.37
+- chart: cnpg/cloudnative-pg
+  version: v0.29.0
+- chart: immich/immich
+  version: 0.13.2
 version: 1

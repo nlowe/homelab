@@ -26,6 +26,10 @@ local image = import 'images.libsonnet';
           hostname: 'hass-cf.nlowe.dev',
           service: 'http://hass.smart-home.svc.cluster.local.:8123',
         },
+        {
+          hostname: 'immich-cf.nlowe.dev',
+          service: 'http://immich-server.immich.svc.cluster.local.:2283',
+        },
 
         { service: 'http_status:503' },
       ],

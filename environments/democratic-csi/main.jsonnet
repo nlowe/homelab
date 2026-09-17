@@ -10,7 +10,7 @@ local image = (import 'images.libsonnet').democratic_csi;
 (import 'homelab.libsonnet') +
 {
   _config+:: {
-    iscsi: {
+    common:: {
       controller: {
         externalAttacher: {
           image: {
@@ -87,7 +87,9 @@ local image = (import 'images.libsonnet').democratic_csi;
           tag: self.image.version,
         },
       },
+    },
 
+    iscsi: self.common {
       csiDriver: {
         name: 'org.democratic-csi.iscsi',
         fsGroupPolicy: 'File',
@@ -169,6 +171,96 @@ local image = (import 'images.libsonnet').democratic_csi;
         },
       },
     },
+
+    nfs: self.common {
+      controller+: {
+        enabled: true,
+        externalResizer: {
+          enabled: false,
+        },
+
+        strategy: 'deployment',
+        hostNetwork: true,
+        hostIPC: true,
+
+        driver+: {
+          securityContext+: {
+            runAsNonRoot: true,
+            runAsUser: $._config.media.uid,
+            runAsGroup: $._config.media.gid,
+            // TODO: fsGroup?
+          },
+
+          extraVolumeMounts: [
+            {
+              name: 'storage',
+              mountPath: '/storage',
+            },
+          ],
+        },
+
+        extraVolumes: [
+          {
+            name: 'storage',
+            nfs: {
+              server: $._config.nfs.driver.config.nfs.shareHost,
+              path: $._config.nfs.driver.config.nfs.shareBasePath,
+            },
+          },
+        ],
+      },
+
+      csiDriver: {
+        name: 'org.democratic-csi.nfs-client',
+        fsGroupPolicy: 'File',
+      },
+
+      storageClasses: [
+        {
+          name: 'nfs',
+          defaultClass: false,
+          reclaimPolicy: 'Delete',
+          volumeBindingMode: 'Immediate',
+          allowVolumeExpansion: true,
+
+          parameters: {
+            fsType: 'nfs',
+          },
+
+          mountOptions: $._config.media.mount.options,
+
+          secrets: {
+            'provisioner-secret': {},
+            'controller-publish-secret': {},
+            'node-stage-secret': {},
+            'node-publish-secret': {},
+            'controller-expand-secret': {},
+          },
+        },
+      ],
+
+      // TODO: Figure out snapshots
+      volumeSnapshotClasses: [],
+
+      driver: {
+        config: {
+          driver: 'nfs-client',
+
+          nfs: {
+            shareHost: 'storage.home.nlowe.dev',
+            shareBasePath: '/mnt/data/k8s/nfs/pv',
+            controllerBasePath: '/storage',
+
+            dirPermissionsMode: '0755',
+            // TODO: Do we need names for these?
+            dirPermissionsUser: $._config.media.uid,
+            dirPermissionsGroup: $._config.media.gid,
+
+            // TODO: snapshots?
+          },
+        },
+      },
+    },
   },
 
   namespace: k.core.v1.namespace.new('democratic-csi'),
@@ -192,4 +284,9 @@ local image = (import 'images.libsonnet').democratic_csi;
     ]) +
     es.spec.target.template.withEngineVersion('v2') +
     es.spec.target.template.withData($.iscsi.secret_truenas_iscsi_democratic_csi_driver_config.stringData),
+
+  nfs: helm.template('nfs', '../../charts/democratic-csi', {
+    namespace: $.namespace.metadata.name,
+    values: $._config.nfs,
+  }),
 }
