@@ -37,6 +37,12 @@ local image = import 'images.libsonnet';
       advanced: {
         // ZLL Channel 15 (2425 MHz) is in-between WiFi 2.4 channels 1 and 6
         channel: 15,
+
+        // Don't log to file since we're using loki
+        log_output: ['console'],
+
+        // Add a last_seen attribute to MQTT messages, contains date/time of last Zigbee message
+        last_seen: 'ISO_8601',
       },
 
       serial: {
@@ -44,6 +50,10 @@ local image = import 'images.libsonnet';
         adapter: 'ember',
         port: 'tcp://zigbee-controller.home.nlowe.dev:6638',
         baudrate: 115200,
+
+        // Enable hardware flow control. The z2m documentation doesn't say this addapter supports it, but the data sheet
+        // says it does and it seems to work.
+        rtscts: true,
       },
 
       // Optional: Availability feature
@@ -139,13 +149,18 @@ local image = import 'images.libsonnet';
       container.withEnv([
         // Skip the onboarding workflow and use the configmap
         env.new('Z2M_ONBOARD_NO_SERVER', '1'),
+
+        // Try handling soft failures gracefully before crashing
+        // https://www.zigbee2mqtt.io/guide/installation/15_watchdog.html
+        env.new('Z2M_WATCHDOG', 'default'),
       ]) +
       // TODO: Tune resources
       container.livenessProbe.httpGet.withPath('/') +
       container.livenessProbe.httpGet.withPort('http') +
-      container.livenessProbe.withPeriodSeconds(10) +
-      container.livenessProbe.withTimeoutSeconds(5) +
-      container.livenessProbe.withFailureThreshold(3) +
+      container.livenessProbe.withPeriodSeconds(30) +
+      container.livenessProbe.withTimeoutSeconds(10) +
+      container.livenessProbe.withFailureThreshold(5) +
+      container.livenessProbe.withInitialDelaySeconds(60) +
       container.withVolumeMounts([
         mount.new('data', '/app/data', readOnly=false),
 
