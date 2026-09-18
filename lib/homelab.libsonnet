@@ -98,7 +98,7 @@ local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.4/main.libson
           volume.nfs.withPath($._config.media.mount[kind]),
 
         'k8s-generic-nfs': '/mnt/data/k8s/nfs',
-        photos: '/mnt/data/media/photos',
+        photos: '/mnt/data/media/photos/immich',
       },
     },
 
