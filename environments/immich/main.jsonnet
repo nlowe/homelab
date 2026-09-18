@@ -9,6 +9,10 @@ local image = import 'images.libsonnet';
 local es = (import 'github.com/jsonnet-libs/external-secrets-libsonnet/1.1/main.libsonnet').nogroup.v1.externalSecret;
 local cnpg = (import 'github.com/jsonnet-libs/cloudnative-pg-libsonnet/1.27.0/main.libsonnet').postgresql.v1;
 
+local prom = import 'github.com/jsonnet-libs/prometheus-operator-libsonnet/0.86/main.libsonnet';
+local pm = prom.monitoring.v1.podMonitor;
+local endpoint = pm.spec.podMetricsEndpoints;
+
 (import 'homelab.libsonnet') +
 {
   _config+:: {
@@ -26,6 +30,7 @@ local cnpg = (import 'github.com/jsonnet-libs/cloudnative-pg-libsonnet/1.27.0/ma
               env: {
                 TZ: 'America/New_York',
 
+                IMMICH_METRICS: 'true',
                 IMMICH_TELEMETRY_INCLUDE: 'all',
 
                 DB_HOSTNAME: 'immich-db-rw',
@@ -60,7 +65,6 @@ local cnpg = (import 'github.com/jsonnet-libs/cloudnative-pg-libsonnet/1.27.0/ma
       immich: {
         metrics: {
           // TODO: No metrics for machine-learning?
-          // TODO: PodMonitor for postgres and valkey
           enabled: true,
         },
         persistence: {
@@ -159,6 +163,28 @@ local cnpg = (import 'github.com/jsonnet-libs/cloudnative-pg-libsonnet/1.27.0/ma
                   tag: self.image.version,
                 },
               },
+
+              exporter: {
+                image: {
+                  image:: image.immich['redis-exporter'],
+
+                  repository: self.image.repo(),
+                  tag: self.image.version,
+                },
+
+                ports: [
+                  { name: 'http-metrics', containerPort: 9121, protocol: 'TCP' },
+                ],
+
+                securityContext: {
+                  runAsUser: 59000,
+                  runAsGroup: 59000,
+                  allowPrivilegeEscalation: false,
+                  capabilities: {
+                    drop: ['ALL'],
+                  },
+                },
+              },
             },
           },
         },
@@ -249,6 +275,15 @@ local cnpg = (import 'github.com/jsonnet-libs/cloudnative-pg-libsonnet/1.27.0/ma
         extension.withName('cube') +
         extension.withEnsure('present'),
       ]),
+
+    podMonitor:
+      pm.new('immich-db') +
+      pm.spec.withPodMetricsEndpoints([
+        endpoint.withPort('metrics'),
+      ]) +
+      pm.spec.selector.withMatchLabels({
+        'cnpg.io/cluster': 'immich-db',
+      }),
   },
 
   library: {
@@ -283,6 +318,23 @@ local cnpg = (import 'github.com/jsonnet-libs/cloudnative-pg-libsonnet/1.27.0/ma
     values: $._config.helm_values,
   }) {
     service_monitor_immich_server:: null,
+    pod_monitor_immich_server+: {
+      spec+: {
+        jobLabel:: null,
+      },
+    },
+
+    valkey+: {
+      podMonitor:
+        pm.new('immich-valkey') +
+        pm.spec.withPodMetricsEndpoints([
+          endpoint.withPort('http-metrics'),
+        ]) +
+        pm.spec.selector.withMatchLabels({
+          'app.kubernetes.io/instance': 'immich',
+          'app.kubernetes.io/name': 'valkey',
+        }),
+    },
   },
 
   local route = g.v1.httpRoute,

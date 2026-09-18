@@ -203,5 +203,7 @@ local k = import 'k.libsonnet';
     // https://github.com/valkey-io/valkey/releases/latest
     // https://github.com/valkey-io/valkey-container/pkgs/container/valkey
     valkey: $.new(registry='ghcr.io', name='valkey-io/valkey', version='9.1.2-alpine'),
+    // https://github.com/oliver006/redis_exporter/releases/latest
+    'redis-exporter': $.new(registry='ghcr.io', name='oliver006/redis_exporter', version='v1.91.1'),
   },
 }
