@@ -20,6 +20,7 @@ apply: apply-all
 .PHONY: apply-all
 apply-all: restore
 	for env in $(shell tk env list --names); do \
+		echo -n "$${env}: "; \
 		tk diff $$env -s >/dev/null || tk apply $$env; \
 	done
 
