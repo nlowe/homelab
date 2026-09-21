@@ -111,7 +111,6 @@ local image = import 'images.libsonnet';
           $._config.media.mount.forKind('k8s-generic-nfs'),
         ]),
 
-      local tsc = k.core.v1.topologySpreadConstraint,
       local affinity = k.core.v1.podAffinityTerm,
       agents:
         sts.new('esphome-build-agent', 3, [this.container.agent], [this.pvcTemplate], null) +
