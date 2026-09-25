@@ -26,7 +26,7 @@ requires:
 - chart: jetstack/cert-manager-csi-driver
   version: v0.16.0
 - chart: grafana/alloy
-  version: 1.12.1
+  version: 1.13.0
 - chart: externalSecrets/external-secrets
   version: v2.11.0
 - chart: externalSecretsGHCR/bitwarden-sdk-server

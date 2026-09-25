@@ -35,7 +35,7 @@ local k = import 'k.libsonnet';
   //   curl -sfL https://get.rke2.io | INSTALL_RKE2_CHANNEL=stable sh -
 
   // https://github.com/cloudflare/cloudflared/releases/latest
-  cloudflared: $.new(name='cloudflare/cloudflared', version='2026.9.1'),
+  cloudflared: $.new(name='cloudflare/cloudflared', version='2026.9.3'),
 
   // https://github.com/esphome/esphome/releases/latest
   // https://github.com/esphome/esphome/pkgs/container/esphome
@@ -59,7 +59,7 @@ local k = import 'k.libsonnet';
   yq: $.new(registry='ghcr.io', name='mikefarah/yq', version='4.53.6'),
 
   // https://github.com/brancz/kube-rbac-proxy/releases/latest
-  'kube-rbac-proxy': $.new(registry='quay.io', name='brancz/kube-rbac-proxy', version='v0.22.1'),
+  'kube-rbac-proxy': $.new(registry='quay.io', name='brancz/kube-rbac-proxy', version='v0.23.0'),
 
   // https://github.com/grafana/grafana/releases/latest
   grafana: $.new(name='grafana/grafana', version='13.2.2'),
@@ -67,7 +67,7 @@ local k = import 'k.libsonnet';
   'kube-state-metrics': $.new(registry='registry.k8s.io', name='kube-state-metrics/kube-state-metrics', version='v2.20.0'),
   // https://github.com/unpoller/unpoller/releases/latest
   // https://github.com/unpoller/unpoller/pkgs/container/unpoller
-  'unifi-exporter': $.new(registry='ghcr.io', name='unpoller/unpoller', version='v5.2.7'),
+  'unifi-exporter': $.new(registry='ghcr.io', name='unpoller/unpoller', version='v5.2.8'),
 
   // https://hub.docker.com/_/busybox#supported-tags-and-respective-dockerfile-links
   busybox: $.new(registry='docker.io', name='busybox', version='1.38.0'),
@@ -98,6 +98,7 @@ local k = import 'k.libsonnet';
     // https://github.com/kubernetes-csi/external-provisioner/releases/latest
     externalProvisioner: $.new(registry='registry.k8s.io', name='sig-storage/csi-provisioner', version='v6.3.0'),
     // https://github.com/kubernetes-csi/external-resizer/releases/latest
+    // TODO: v2.3.0 is released but the image does not exist
     externalResizer: $.new(registry='registry.k8s.io', name='sig-storage/csi-resizer', version='v2.2.1'),
     // https://github.com/kubernetes-csi/external-snapshotter/releases/latest
     externalSnapshotter: $.new(registry='registry.k8s.io', name='sig-storage/csi-snapshotter', version='v8.6.0'),
@@ -118,10 +119,10 @@ local k = import 'k.libsonnet';
   // From charts/alloy
   // See https://artifacthub.io/packages/helm/grafana/alloy?modal=values
   // https://github.com/grafana/alloy/releases/latest
-  alloy: $.new(registry='docker.io', name='grafana/alloy', version='v1.19.2'),
+  alloy: $.new(registry='docker.io', name='grafana/alloy', version='v1.20.0'),
   // https://github.com/prometheus-operator/prometheus-operator/releases/latest
   // https://github.com/prometheus-operator/prometheus-operator/pkgs/container/prometheus-config-reloader
-  'prometheus-config-reloader': $.new(registry='ghcr.io', name='prometheus-operator/prometheus-config-reloader', version='v0.94.0'),
+  'prometheus-config-reloader': $.new(registry='ghcr.io', name='prometheus-operator/prometheus-config-reloader', version='v0.94.1'),
 } +
 {
   // https://github.com/grafana/rollout-operator/releases/latest
@@ -176,7 +177,7 @@ local k = import 'k.libsonnet';
 {
   // https://github.com/cloudnative-pg/cloudnative-pg/releases/latest
   // https://github.com/cloudnative-pg/charts/releases
-  'cloudnative-pg': $.new(registry='ghcr.io', name='cloudnative-pg/cloudnative-pg', version='1.30.0'),
+  'cloudnative-pg': $.new(registry='ghcr.io', name='cloudnative-pg/cloudnative-pg', version='1.30.1'),
 
   // https://github.com/cloudnative-pg/pgbouncer-containers/pkgs/container/pgbouncer
   // https://github.com/cloudnative-pg/pgbouncer-containers/tags
@@ -204,6 +205,6 @@ local k = import 'k.libsonnet';
     // https://github.com/valkey-io/valkey-container/pkgs/container/valkey
     valkey: $.new(registry='ghcr.io', name='valkey-io/valkey', version='9.1.2-alpine'),
     // https://github.com/oliver006/redis_exporter/releases/latest
-    'redis-exporter': $.new(registry='ghcr.io', name='oliver006/redis_exporter', version='v1.91.1'),
+    'redis-exporter': $.new(registry='ghcr.io', name='oliver006/redis_exporter', version='v1.92.0'),
   },
 }
