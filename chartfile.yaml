@@ -34,7 +34,7 @@ requires:
 - chart: local-path-provisioner/local-path-provisioner
   version: 0.0.37
 - chart: cnpg/cloudnative-pg
-  version: v0.29.0
+  version: v0.29.1
 - chart: immich/immich
   version: 0.13.2
 version: 1

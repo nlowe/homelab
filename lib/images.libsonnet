@@ -42,7 +42,7 @@ local k = import 'k.libsonnet';
   esphome: $.new(registry='ghcr.io', name='esphome/esphome', version='2026.9.0'),
   // https://github.com/home-assistant/core/releases/latest
   // https://github.com/home-assistant/core/pkgs/container/home-assistant
-  'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2026.9.3'),
+  'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2026.9.4'),
   // https://github.com/sensy-one/home-assistant-addons
   // https://github.com/sensy-one/home-assistant-addons/pkgs/container/zone-editor
   'sensy-one-zone-editor': $.new(registry='ghcr.io', name='sensy-one/zone-editor', version='v1.4.9'),
@@ -67,7 +67,7 @@ local k = import 'k.libsonnet';
   'kube-state-metrics': $.new(registry='registry.k8s.io', name='kube-state-metrics/kube-state-metrics', version='v2.20.0'),
   // https://github.com/unpoller/unpoller/releases/latest
   // https://github.com/unpoller/unpoller/pkgs/container/unpoller
-  'unifi-exporter': $.new(registry='ghcr.io', name='unpoller/unpoller', version='v5.2.8'),
+  'unifi-exporter': $.new(registry='ghcr.io', name='unpoller/unpoller', version='v5.2.10'),
 
   // https://hub.docker.com/_/busybox#supported-tags-and-respective-dockerfile-links
   busybox: $.new(registry='docker.io', name='busybox', version='1.38.0'),
@@ -98,7 +98,7 @@ local k = import 'k.libsonnet';
     // https://github.com/kubernetes-csi/external-provisioner/releases/latest
     externalProvisioner: $.new(registry='registry.k8s.io', name='sig-storage/csi-provisioner', version='v6.3.0'),
     // https://github.com/kubernetes-csi/external-resizer/releases/latest
-    // TODO: v2.3.0 is released but the image does not exist
+    // TODO: v2.3.0 is released but the image does not exist: https://github.com/kubernetes-csi/external-resizer/issues/623
     externalResizer: $.new(registry='registry.k8s.io', name='sig-storage/csi-resizer', version='v2.2.1'),
     // https://github.com/kubernetes-csi/external-snapshotter/releases/latest
     externalSnapshotter: $.new(registry='registry.k8s.io', name='sig-storage/csi-snapshotter', version='v8.6.0'),
@@ -119,7 +119,7 @@ local k = import 'k.libsonnet';
   // From charts/alloy
   // See https://artifacthub.io/packages/helm/grafana/alloy?modal=values
   // https://github.com/grafana/alloy/releases/latest
-  alloy: $.new(registry='docker.io', name='grafana/alloy', version='v1.20.0'),
+  alloy: $.new(registry='docker.io', name='grafana/alloy', version='v1.20.1'),
   // https://github.com/prometheus-operator/prometheus-operator/releases/latest
   // https://github.com/prometheus-operator/prometheus-operator/pkgs/container/prometheus-config-reloader
   'prometheus-config-reloader': $.new(registry='ghcr.io', name='prometheus-operator/prometheus-config-reloader', version='v0.94.1'),
@@ -181,7 +181,7 @@ local k = import 'k.libsonnet';
 
   // https://github.com/cloudnative-pg/pgbouncer-containers/pkgs/container/pgbouncer
   // https://github.com/cloudnative-pg/pgbouncer-containers/tags
-  pgbouncer: $.new(registry='ghcr.io', name='cloudnative-pg/pgbouncer', version='1.25.2'),
+  pgbouncer: $.new(registry='ghcr.io', name='cloudnative-pg/pgbouncer', version='1.26.0'),
 
   // https://github.com/cloudnative-pg/artifacts/blob/main/image-catalogs/catalog-standard-trixie.yaml
   // https://github.com/cloudnative-pg/postgres-containers
@@ -196,7 +196,7 @@ local k = import 'k.libsonnet';
   immich:: {
     // https://github.com/immich-app/immich/releases/latest
     // https://github.com/immich-app/immich-charts/releases/latest
-    version:: 'v3.2.2',
+    version:: 'v3.2.4',
 
     server: $.new(registry='ghcr.io', name='immich-app/immich-server', version=self.version),
     'machine-learning': $.new(registry='ghcr.io', name='immich-app/immich-machine-learning', version=self.version),
@@ -205,6 +205,6 @@ local k = import 'k.libsonnet';
     // https://github.com/valkey-io/valkey-container/pkgs/container/valkey
     valkey: $.new(registry='ghcr.io', name='valkey-io/valkey', version='9.1.2-alpine'),
     // https://github.com/oliver006/redis_exporter/releases/latest
-    'redis-exporter': $.new(registry='ghcr.io', name='oliver006/redis_exporter', version='v1.92.0'),
+    'redis-exporter': $.new(registry='ghcr.io', name='oliver006/redis_exporter', version='v1.92.1'),
   },
 }
