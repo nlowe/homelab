@@ -26,8 +26,8 @@ local k = import 'k.libsonnet';
         ),
     },
 
-  forContainer(name, container_name=null)::
-    k.core.v1.container.new(if container_name != null then container_name else name, $[name].ref()),
+  forContainer(name, container_name=null, group=null)::
+    k.core.v1.container.new(if container_name != null then container_name else name, if group != null then std.get(group, name).ref() else $[name].ref()),
 } +
 {
   // rke2: https://update.rke2.io/v1-release/channels/stable
@@ -204,5 +204,16 @@ local k = import 'k.libsonnet';
     valkey: $.new(registry='ghcr.io', name='valkey-io/valkey', version='9.1.2-alpine'),
     // https://github.com/oliver006/redis_exporter/releases/latest
     'redis-exporter': $.new(registry='ghcr.io', name='oliver006/redis_exporter', version='v1.93.0'),
+  },
+} +
+{
+  conatus:: {
+    // https://github.com/nojusmorkunas/conatus/releases/latest
+    version:: '1.1.1',
+
+    conatus:
+      $.new(registry='docker.io', name='nlowe/conatus', version='GH-42-allow-secure-s3'),
+    //$.new(registry='ghcr.io', name='nojusmorkunas/conatus', version=self.version),
+    'conatus-ops': $.new(registry='ghcr.io', name='nojusmorkunas/conatus', version='%s-ops' % self.version),
   },
 }
