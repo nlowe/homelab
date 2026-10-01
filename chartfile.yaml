@@ -30,7 +30,7 @@ requires:
 - chart: externalSecrets/external-secrets
   version: v2.11.0
 - chart: externalSecretsGHCR/bitwarden-sdk-server
-  version: v0.6.0
+  version: v0.8.0
 - chart: local-path-provisioner/local-path-provisioner
   version: 0.0.37
 - chart: cnpg/cloudnative-pg

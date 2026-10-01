@@ -39,7 +39,7 @@ local k = import 'k.libsonnet';
 
   // https://github.com/esphome/esphome/releases/latest
   // https://github.com/esphome/esphome/pkgs/container/esphome
-  esphome: $.new(registry='ghcr.io', name='esphome/esphome', version='2026.9.0'),
+  esphome: $.new(registry='ghcr.io', name='esphome/esphome', version='2026.9.1'),
   // https://github.com/home-assistant/core/releases/latest
   // https://github.com/home-assistant/core/pkgs/container/home-assistant
   'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2026.9.4'),
@@ -47,7 +47,7 @@ local k = import 'k.libsonnet';
   // https://github.com/sensy-one/home-assistant-addons/pkgs/container/zone-editor
   'sensy-one-zone-editor': $.new(registry='ghcr.io', name='sensy-one/zone-editor', version='v1.4.9'),
   // https://github.com/zwave-js/zwave-js-ui/releases/latest
-  'zwave-js-ui': $.new(name='zwavejs/zwave-js-ui', version='11.24.1'),
+  'zwave-js-ui': $.new(name='zwavejs/zwave-js-ui', version='11.24.2'),
   // https://hub.docker.com/r/vernemq/vernemq/tags
   // https://github.com/vernemq/vernemq/releases/latest
   vernemq: $.new(name='vernemq/vernemq', version='2.2.1-alpine'),
@@ -56,18 +56,18 @@ local k = import 'k.libsonnet';
   zigbee2mqtt: $.new(registry='ghcr.io', name='koenkk/zigbee2mqtt', version='2.14.1'),
   // https://github.com/mikefarah/yq/releases/latest
   // https://github.com/mikefarah/yq/pkgs/container/yq
-  yq: $.new(registry='ghcr.io', name='mikefarah/yq', version='4.53.6'),
+  yq: $.new(registry='ghcr.io', name='mikefarah/yq', version='4.54.1'),
 
   // https://github.com/brancz/kube-rbac-proxy/releases/latest
   'kube-rbac-proxy': $.new(registry='quay.io', name='brancz/kube-rbac-proxy', version='v0.23.0'),
 
   // https://github.com/grafana/grafana/releases/latest
-  grafana: $.new(name='grafana/grafana', version='13.2.2'),
+  grafana: $.new(name='grafana/grafana', version='13.2.3'),
   // https://github.com/kubernetes/kube-state-metrics/releases/latest
   'kube-state-metrics': $.new(registry='registry.k8s.io', name='kube-state-metrics/kube-state-metrics', version='v2.20.0'),
   // https://github.com/unpoller/unpoller/releases/latest
   // https://github.com/unpoller/unpoller/pkgs/container/unpoller
-  'unifi-exporter': $.new(registry='ghcr.io', name='unpoller/unpoller', version='v5.2.10'),
+  'unifi-exporter': $.new(registry='ghcr.io', name='unpoller/unpoller', version='v5.4.0'),
 
   // https://hub.docker.com/_/busybox#supported-tags-and-respective-dockerfile-links
   busybox: $.new(registry='docker.io', name='busybox', version='1.38.0'),
@@ -109,7 +109,6 @@ local k = import 'k.libsonnet';
     driver: $.new(registry='ghcr.io', name='democratic-csi/democratic-csi', version='v1.9.5'),
     busybox: $.busybox,
     // See https://github.com/kubernetes-csi/node-driver-registrar/releases/latest
-    // v2.18.0 was released on 2026-09-04 but doesn't have an image yet
     driverRegistrar: $.new(registry='registry.k8s.io', name='sig-storage/csi-node-driver-registrar', version='v2.18.0'),
     // https://github.com/democratic-csi/csi-grpc-proxy/releases/latest
     csiProxy: $.new(registry='docker.io', name='democraticcsi/csi-grpc-proxy', version='v0.5.7'),
@@ -166,7 +165,7 @@ local k = import 'k.libsonnet';
   // https://github.com/external-secrets/external-secrets/releases/latest
   'external-secrets': $.new(registry='oci.external-secrets.io', name='external-secrets/external-secrets', version='v2.11.0'),
   // https://github.com/external-secrets/bitwarden-sdk-server/releases/latest
-  'bitwarden-sdk-server': $.new(registry='ghcr.io', name='external-secrets/bitwarden-sdk-server', version='v0.7.0'),
+  'bitwarden-sdk-server': $.new(registry='ghcr.io', name='external-secrets/bitwarden-sdk-server', version='v0.8.0'),
 } +
 {
   // images/qolsysgw/Dockerfile
@@ -180,7 +179,6 @@ local k = import 'k.libsonnet';
   'cloudnative-pg': $.new(registry='ghcr.io', name='cloudnative-pg/cloudnative-pg', version='1.30.1'),
 
   // https://github.com/cloudnative-pg/pgbouncer-containers/pkgs/container/pgbouncer
-  // https://github.com/cloudnative-pg/pgbouncer-containers/tags
   pgbouncer: $.new(registry='ghcr.io', name='cloudnative-pg/pgbouncer', version='1.26.0'),
 
   // https://github.com/cloudnative-pg/artifacts/blob/main/image-catalogs/catalog-standard-trixie.yaml
@@ -205,6 +203,6 @@ local k = import 'k.libsonnet';
     // https://github.com/valkey-io/valkey-container/pkgs/container/valkey
     valkey: $.new(registry='ghcr.io', name='valkey-io/valkey', version='9.1.2-alpine'),
     // https://github.com/oliver006/redis_exporter/releases/latest
-    'redis-exporter': $.new(registry='ghcr.io', name='oliver006/redis_exporter', version='v1.92.1'),
+    'redis-exporter': $.new(registry='ghcr.io', name='oliver006/redis_exporter', version='v1.93.0'),
   },
 }
