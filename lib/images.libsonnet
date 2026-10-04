@@ -53,7 +53,7 @@ local k = import 'k.libsonnet';
   vernemq: $.new(name='vernemq/vernemq', version='2.2.1-alpine'),
   // https://github.com/Koenkk/zigbee2mqtt/releases/latest
   // https://github.com/koenkk/zigbee2mqtt/pkgs/container/zigbee2mqtt
-  zigbee2mqtt: $.new(registry='ghcr.io', name='koenkk/zigbee2mqtt', version='2.14.1'),
+  zigbee2mqtt: $.new(registry='ghcr.io', name='koenkk/zigbee2mqtt', version='2.14.2'),
   // https://github.com/mikefarah/yq/releases/latest
   // https://github.com/mikefarah/yq/pkgs/container/yq
   yq: $.new(registry='ghcr.io', name='mikefarah/yq', version='4.54.1'),
@@ -67,9 +67,10 @@ local k = import 'k.libsonnet';
   'kube-state-metrics': $.new(registry='registry.k8s.io', name='kube-state-metrics/kube-state-metrics', version='v2.20.0'),
   // https://github.com/unpoller/unpoller/releases/latest
   // https://github.com/unpoller/unpoller/pkgs/container/unpoller
-  'unifi-exporter': $.new(registry='ghcr.io', name='unpoller/unpoller', version='v5.4.0'),
+  'unifi-exporter': $.new(registry='ghcr.io', name='unpoller/unpoller', version='v5.5.0'),
 
   // https://hub.docker.com/_/busybox#supported-tags-and-respective-dockerfile-links
+  // https://busybox.net/
   busybox: $.new(registry='docker.io', name='busybox', version='1.38.0'),
 } +
 {
@@ -209,11 +210,9 @@ local k = import 'k.libsonnet';
 {
   conatus:: {
     // https://github.com/nojusmorkunas/conatus/releases/latest
-    version:: '1.1.1',
+    version:: '1.2.1',
 
-    conatus:
-      $.new(registry='docker.io', name='nlowe/conatus', version='GH-42-allow-secure-s3'),
-    //$.new(registry='ghcr.io', name='nojusmorkunas/conatus', version=self.version),
+    conatus: $.new(registry='ghcr.io', name='nojusmorkunas/conatus', version=self.version),
     'conatus-ops': $.new(registry='ghcr.io', name='nojusmorkunas/conatus', version='%s-ops' % self.version),
   },
 }

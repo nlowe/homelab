@@ -103,6 +103,7 @@ local endpoint = pm.spec.podMetricsEndpoints;
     es.spec.target.template.withData({
       S3_ENDPOINT: 'minio.home.nlowe.dev',
       S3_PORT: '9000',
+      S3_USE_SSL: '1',
       S3_BUCKET: 'conatus',
       S3_ACCESS_KEY: 'conatus',
       S3_SECRET_KEY: '{{ .data }}',
