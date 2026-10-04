@@ -161,7 +161,7 @@
           "subdir": "config/crd/experimental"
         }
       },
-      "version": "v1.4.0"
+      "version": "v1.6.0"
     },
     {
       "source": {
@@ -170,7 +170,16 @@
           "subdir": "config/crd/standard"
         }
       },
-      "version": "v1.4.0"
+      "version": "v1.6.0"
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/kubernetes-sigs/mcs-api.git",
+          "subdir": "config/crd"
+        }
+      },
+      "version": "v0.5.2"
     },
     {
       "source": {

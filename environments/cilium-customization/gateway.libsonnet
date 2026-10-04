@@ -6,12 +6,20 @@ local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.4/main.libson
     labels:: { app: 'cilium-gateway' },
 
     crds: [
+      // These kinds are required for the cilium gateway controller
       std.parseYaml((importstr 'github.com/kubernetes-sigs/gateway-api/config/crd/standard/gateway.networking.k8s.io_gatewayclasses.yaml')),
       std.parseYaml((importstr 'github.com/kubernetes-sigs/gateway-api/config/crd/standard/gateway.networking.k8s.io_gateways.yaml')),
       std.parseYaml((importstr 'github.com/kubernetes-sigs/gateway-api/config/crd/standard/gateway.networking.k8s.io_httproutes.yaml')),
-      std.parseYaml((importstr 'github.com/kubernetes-sigs/gateway-api/config/crd/standard/gateway.networking.k8s.io_referencegrants.yaml')),
       std.parseYaml((importstr 'github.com/kubernetes-sigs/gateway-api/config/crd/standard/gateway.networking.k8s.io_grpcroutes.yaml')),
-      std.parseYaml((importstr 'github.com/kubernetes-sigs/gateway-api/config/crd/experimental/gateway.networking.k8s.io_tlsroutes.yaml')),
+      std.parseYaml((importstr 'github.com/kubernetes-sigs/gateway-api/config/crd/standard/gateway.networking.k8s.io_tlsroutes.yaml')),
+      std.parseYaml((importstr 'github.com/kubernetes-sigs/gateway-api/config/crd/standard/gateway.networking.k8s.io_referencegrants.yaml')),
+      std.parseYaml((importstr 'github.com/kubernetes-sigs/gateway-api/config/crd/standard/gateway.networking.k8s.io_backendtlspolicies.yaml')),
+
+      // These kinds are optional
+      std.parseYaml((importstr 'github.com/kubernetes-sigs/gateway-api/config/crd/standard/gateway.networking.k8s.io_listenersets.yaml')),
+      std.parseYaml((importstr 'github.com/kubernetes-sigs/mcs-api/config/crd/multicluster.x-k8s.io_serviceimports.yaml')),
+      std.parseYaml((importstr 'github.com/kubernetes-sigs/gateway-api/config/crd/standard/gateway.networking.k8s.io_tcproutes.yaml')),
+      std.parseYaml((importstr 'github.com/kubernetes-sigs/gateway-api/config/crd/standard/gateway.networking.k8s.io_udproutes.yaml')),
     ],
 
     local cert = cm.nogroup.v1.certificate,

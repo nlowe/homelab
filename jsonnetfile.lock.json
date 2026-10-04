@@ -319,8 +319,8 @@
           "subdir": "config/crd/experimental"
         }
       },
-      "version": "5e5891a5adad272363de782eb02a042166f1913c",
-      "sum": "rYpw8D6GLbvJuRgC8a3xbw7Epm7o3VZ0jY9FfUhjIig="
+      "version": "89b3b0c3fa63f9342f43ba0fb2cf93d6aab53af7",
+      "sum": "ixsk2jGdk3HISugF+Ek4jpLiwxZF527foMH7RQ9Jajo="
     },
     {
       "source": {
@@ -329,8 +329,18 @@
           "subdir": "config/crd/standard"
         }
       },
-      "version": "5e5891a5adad272363de782eb02a042166f1913c",
-      "sum": "sTa1bB64J8HEp9aLWDZSf93XsWWEMeGOhVBH3C0aDrU="
+      "version": "89b3b0c3fa63f9342f43ba0fb2cf93d6aab53af7",
+      "sum": "iGFmBa6HwEBsRydW/NodmmNAeV4sNhVakcxnKhuFZMo="
+    },
+    {
+      "source": {
+        "git": {
+          "remote": "https://github.com/kubernetes-sigs/mcs-api.git",
+          "subdir": "config/crd"
+        }
+      },
+      "version": "a1fadbc5d9dd362eff3f3fecb456864c7810e160",
+      "sum": "WxGm9C92N9UwJa4v2kXN5ZqrlidoFchupLkdYCXdzRQ="
     },
     {
       "source": {
