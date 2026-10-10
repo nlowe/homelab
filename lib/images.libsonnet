@@ -35,7 +35,7 @@ local k = import 'k.libsonnet';
   //   curl -sfL https://get.rke2.io | INSTALL_RKE2_CHANNEL=stable sh -
 
   // https://github.com/cloudflare/cloudflared/releases/latest
-  cloudflared: $.new(name='cloudflare/cloudflared', version='2026.9.3'),
+  cloudflared: $.new(name='cloudflare/cloudflared', version='2026.10.0'),
 
   // https://github.com/esphome/esphome/releases/latest
   // https://github.com/esphome/esphome/pkgs/container/esphome
@@ -43,7 +43,7 @@ local k = import 'k.libsonnet';
 
   // https://github.com/home-assistant/core/releases/latest
   // https://github.com/home-assistant/core/pkgs/container/home-assistant
-  'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2026.9.4'),
+  'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2026.10.1'),
   // https://github.com/OHF-Voice/wyoming-piper/releases/latest
   // https://hub.docker.com/r/rhasspy/wyoming-piper/tags
   piper: $.new(name='rhasspy/wyoming-piper', version='2.5.2'),
@@ -55,7 +55,7 @@ local k = import 'k.libsonnet';
   // https://github.com/sensy-one/home-assistant-addons/pkgs/container/zone-editor
   'sensy-one-zone-editor': $.new(registry='ghcr.io', name='sensy-one/zone-editor', version='v1.4.9'),
   // https://github.com/zwave-js/zwave-js-ui/releases/latest
-  'zwave-js-ui': $.new(name='zwavejs/zwave-js-ui', version='11.24.2'),
+  'zwave-js-ui': $.new(name='zwavejs/zwave-js-ui', version='11.24.3'),
   // https://hub.docker.com/r/vernemq/vernemq/tags
   // https://github.com/vernemq/vernemq/releases/latest
   vernemq: $.new(name='vernemq/vernemq', version='2.2.1-alpine'),
@@ -75,7 +75,7 @@ local k = import 'k.libsonnet';
   'kube-state-metrics': $.new(registry='registry.k8s.io', name='kube-state-metrics/kube-state-metrics', version='v2.20.0'),
   // https://github.com/unpoller/unpoller/releases/latest
   // https://github.com/unpoller/unpoller/pkgs/container/unpoller
-  'unifi-exporter': $.new(registry='ghcr.io', name='unpoller/unpoller', version='v5.5.0'),
+  'unifi-exporter': $.new(registry='ghcr.io', name='unpoller/unpoller', version='v5.5.1'),
 
   // https://hub.docker.com/_/busybox#supported-tags-and-respective-dockerfile-links
   // https://busybox.net/
@@ -105,10 +105,9 @@ local k = import 'k.libsonnet';
     // https://github.com/kubernetes-csi/external-attacher/releases/latest
     externalAttacher: $.new(registry='registry.k8s.io', name='sig-storage/csi-attacher', version='v4.13.0'),
     // https://github.com/kubernetes-csi/external-provisioner/releases/latest
-    externalProvisioner: $.new(registry='registry.k8s.io', name='sig-storage/csi-provisioner', version='v6.3.0'),
+    externalProvisioner: $.new(registry='registry.k8s.io', name='sig-storage/csi-provisioner', version='v6.4.0'),
     // https://github.com/kubernetes-csi/external-resizer/releases/latest
-    // TODO: v2.3.0 is released but the image does not exist: https://github.com/kubernetes-csi/external-resizer/issues/623
-    externalResizer: $.new(registry='registry.k8s.io', name='sig-storage/csi-resizer', version='v2.2.1'),
+    externalResizer: $.new(registry='registry.k8s.io', name='sig-storage/csi-resizer', version='v2.3.0'),
     // https://github.com/kubernetes-csi/external-snapshotter/releases/latest
     externalSnapshotter: $.new(registry='registry.k8s.io', name='sig-storage/csi-snapshotter', version='v8.6.0'),
     // https://github.com/kubernetes-csi/external-health-monitor/releases/latest
@@ -155,7 +154,7 @@ local k = import 'k.libsonnet';
   // https://github.com/grafana/mimir/releases/latest
   // See https://github.com/grafana/mimir/blob/main/operations/mimir/images.libsonnet
   mimir:: {
-    mimir: $.new(name='grafana/mimir', version='3.2.1'),
+    mimir: $.new(name='grafana/mimir', version='3.2.2'),
     query_tee: $.new(name='grafana/query-tee', version=self.mimir.version),
     continuous_test: $.new(name='grafana/mimir-continuous-test', version=self.mimir.version),
     memcached: $.memcached,
@@ -172,9 +171,9 @@ local k = import 'k.libsonnet';
   // https://artifacthub.io/packages/helm/external-secrets-operator/external-secrets?modal=values
 
   // https://github.com/external-secrets/external-secrets/releases/latest
-  'external-secrets': $.new(registry='oci.external-secrets.io', name='external-secrets/external-secrets', version='v2.11.0'),
+  'external-secrets': $.new(registry='oci.external-secrets.io', name='external-secrets/external-secrets', version='v2.12.0'),
   // https://github.com/external-secrets/bitwarden-sdk-server/releases/latest
-  'bitwarden-sdk-server': $.new(registry='ghcr.io', name='external-secrets/bitwarden-sdk-server', version='v0.8.0'),
+  'bitwarden-sdk-server': $.new(registry='ghcr.io', name='external-secrets/bitwarden-sdk-server', version='v0.8.1'),
 } +
 {
   // images/qolsysgw/Dockerfile
@@ -203,7 +202,7 @@ local k = import 'k.libsonnet';
   immich:: {
     // https://github.com/immich-app/immich/releases/latest
     // https://github.com/immich-app/immich-charts/releases/latest
-    version:: 'v3.2.4',
+    version:: 'v3.3.1',
 
     server: $.new(registry='ghcr.io', name='immich-app/immich-server', version=self.version),
     'machine-learning': $.new(registry='ghcr.io', name='immich-app/immich-machine-learning', version=self.version),

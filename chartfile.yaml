@@ -26,9 +26,9 @@ requires:
 - chart: jetstack/cert-manager-csi-driver
   version: v0.16.0
 - chart: grafana/alloy
-  version: 1.13.0
+  version: 1.13.1
 - chart: externalSecrets/external-secrets
-  version: v2.11.0
+  version: v2.12.0
 - chart: externalSecretsGHCR/bitwarden-sdk-server
   version: v0.8.0
 - chart: local-path-provisioner/local-path-provisioner
@@ -36,5 +36,5 @@ requires:
 - chart: cnpg/cloudnative-pg
   version: v0.29.1
 - chart: immich/immich
-  version: 0.13.2
+  version: 0.13.4
 version: 1
