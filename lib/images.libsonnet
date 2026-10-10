@@ -40,9 +40,17 @@ local k = import 'k.libsonnet';
   // https://github.com/esphome/esphome/releases/latest
   // https://github.com/esphome/esphome/pkgs/container/esphome
   esphome: $.new(registry='ghcr.io', name='esphome/esphome', version='2026.9.1'),
+
   // https://github.com/home-assistant/core/releases/latest
   // https://github.com/home-assistant/core/pkgs/container/home-assistant
   'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2026.9.4'),
+  // https://github.com/OHF-Voice/wyoming-piper/releases/latest
+  // https://hub.docker.com/r/rhasspy/wyoming-piper/tags
+  piper: $.new(name='rhasspy/wyoming-piper', version='2.5.2'),
+  // https://github.com/OHF-Voice/wyoming-faster-whisper/releases/latest
+  // https://hub.docker.com/r/rhasspy/wyoming-whisper/tags
+  whisper: $.new(name='rhasspy/wyoming-whisper', version='3.8.1'),
+
   // https://github.com/sensy-one/home-assistant-addons
   // https://github.com/sensy-one/home-assistant-addons/pkgs/container/zone-editor
   'sensy-one-zone-editor': $.new(registry='ghcr.io', name='sensy-one/zone-editor', version='v1.4.9'),
