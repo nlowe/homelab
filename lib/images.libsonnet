@@ -35,7 +35,7 @@ local k = import 'k.libsonnet';
   //   curl -sfL https://get.rke2.io | INSTALL_RKE2_CHANNEL=stable sh -
 
   // https://github.com/cloudflare/cloudflared/releases/latest
-  cloudflared: $.new(name='cloudflare/cloudflared', version='2026.10.0'),
+  cloudflared: $.new(name='cloudflare/cloudflared', version='2026.10.1'),
 
   // https://github.com/esphome/esphome/releases/latest
   // https://github.com/esphome/esphome/pkgs/container/esphome
@@ -70,7 +70,7 @@ local k = import 'k.libsonnet';
   'kube-rbac-proxy': $.new(registry='quay.io', name='brancz/kube-rbac-proxy', version='v0.23.0'),
 
   // https://github.com/grafana/grafana/releases/latest
-  grafana: $.new(name='grafana/grafana', version='13.2.3'),
+  grafana: $.new(name='grafana/grafana', version='13.2.4'),
   // https://github.com/kubernetes/kube-state-metrics/releases/latest
   'kube-state-metrics': $.new(registry='registry.k8s.io', name='kube-state-metrics/kube-state-metrics', version='v2.20.0'),
   // https://github.com/unpoller/unpoller/releases/latest
@@ -109,7 +109,7 @@ local k = import 'k.libsonnet';
     // https://github.com/kubernetes-csi/external-resizer/releases/latest
     externalResizer: $.new(registry='registry.k8s.io', name='sig-storage/csi-resizer', version='v2.3.0'),
     // https://github.com/kubernetes-csi/external-snapshotter/releases/latest
-    externalSnapshotter: $.new(registry='registry.k8s.io', name='sig-storage/csi-snapshotter', version='v8.6.0'),
+    externalSnapshotter: $.new(registry='registry.k8s.io', name='sig-storage/csi-snapshotter', version='v8.7.0'),
     // https://github.com/kubernetes-csi/external-health-monitor/releases/latest
     externalHealthMonitorController: $.new(registry='registry.k8s.io', name='sig-storage/csi-external-health-monitor-controller', version='v0.19.0'),
     // https://github.com/democratic-csi/democratic-csi/tags
@@ -133,7 +133,7 @@ local k = import 'k.libsonnet';
 } +
 {
   // https://github.com/grafana/rollout-operator/releases/latest
-  grafana_rollout_operator: $.new(name='grafana/rollout-operator', version='v0.40.0'),
+  grafana_rollout_operator: $.new(name='grafana/rollout-operator', version='v0.41.0'),
   // https://github.com/memcached/memcached/tags
   memcached: $.new(name='memcached', version='1.6.45-alpine'),
   // See https://github.com/prometheus/memcached_exporter/releases/latest
@@ -171,7 +171,7 @@ local k = import 'k.libsonnet';
   // https://artifacthub.io/packages/helm/external-secrets-operator/external-secrets?modal=values
 
   // https://github.com/external-secrets/external-secrets/releases/latest
-  'external-secrets': $.new(registry='oci.external-secrets.io', name='external-secrets/external-secrets', version='v2.12.0'),
+  'external-secrets': $.new(registry='oci.external-secrets.io', name='external-secrets/external-secrets', version='v2.13.0'),
   // https://github.com/external-secrets/bitwarden-sdk-server/releases/latest
   'bitwarden-sdk-server': $.new(registry='ghcr.io', name='external-secrets/bitwarden-sdk-server', version='v0.8.1'),
 } +
@@ -202,7 +202,7 @@ local k = import 'k.libsonnet';
   immich:: {
     // https://github.com/immich-app/immich/releases/latest
     // https://github.com/immich-app/immich-charts/releases/latest
-    version:: 'v3.3.1',
+    version:: 'v3.3.3',
 
     server: $.new(registry='ghcr.io', name='immich-app/immich-server', version=self.version),
     'machine-learning': $.new(registry='ghcr.io', name='immich-app/immich-machine-learning', version=self.version),
@@ -211,13 +211,13 @@ local k = import 'k.libsonnet';
     // https://github.com/valkey-io/valkey-container/pkgs/container/valkey
     valkey: $.new(registry='ghcr.io', name='valkey-io/valkey', version='9.1.2-alpine'),
     // https://github.com/oliver006/redis_exporter/releases/latest
-    'redis-exporter': $.new(registry='ghcr.io', name='oliver006/redis_exporter', version='v1.93.0'),
+    'redis-exporter': $.new(registry='ghcr.io', name='oliver006/redis_exporter', version='v1.94.0'),
   },
 } +
 {
   conatus:: {
     // https://github.com/nojusmorkunas/conatus/releases/latest
-    version:: '1.2.1',
+    version:: '1.2.2',
 
     conatus: $.new(registry='ghcr.io', name='nojusmorkunas/conatus', version=self.version),
     'conatus-ops': $.new(registry='ghcr.io', name='nojusmorkunas/conatus', version='%s-ops' % self.version),
