@@ -56,20 +56,35 @@ local image = import 'images.libsonnet';
     local env = k.core.v1.envVar,
     local mount = k.core.v1.volumeMount,
     container:: {
+      sharedEnv:: [
+        env.new('PLATFORMIO_CORE_DIR', '/data/.platformio'),
+        env.new('PLATFORMIO_BUILD_CACHE_DIR', '/data/.platformio/build_cache'),
+        env.new('ESPHOME_DATA_DIR', '/data/.esphome/data'),
+      ],
+
       dashboard:
         image.forContainer('esphome') +
         container.withArgs(['dashboard', '/data']) +
         container.withPorts([
           { containerPort: 6052, name: 'http', protocol: 'TCP' },
         ]) +
-        container.withEnv([
-          env.new('ESPHOME_USERNAME', 'nlowe'),
-          env.fromSecretRef('ESPHOME_PASSWORD', this.dashboardPassword.metadata.name, 'ESPHOME_PASSWORD'),
-        ]) +
+        container.withEnv(
+          [
+            env.new('ESPHOME_USERNAME', 'nlowe'),
+            env.fromSecretRef('ESPHOME_PASSWORD', this.dashboardPassword.metadata.name, 'ESPHOME_PASSWORD'),
+          ]
+          +
+          $.esphome.container.sharedEnv
+        ) +
         // TODO: Tune resources
         container.withVolumeMounts([
           mount.withMountPath('/data') +
           mount.withName('data'),
+
+          mount.withMountPath('/data/configs') +
+          mount.withName('k8s-generic-nfs') +
+          mount.withSubPath('esphome-config') +
+          mount.withReadOnly(true),
 
           mount.withMountPath('/data/local_components') +
           mount.withName('k8s-generic-nfs') +
@@ -83,6 +98,7 @@ local image = import 'images.libsonnet';
         container.withPorts([
           { containerPort: 6055, name: 'peer-link', protocol: 'TCP' },
         ]) +
+        container.withEnv($.esphome.container.sharedEnv) +
         // TODO: Tune resources
         container.withVolumeMounts([
           mount.withMountPath('/data') +
