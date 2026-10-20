@@ -35,7 +35,7 @@ local k = import 'k.libsonnet';
   //   curl -sfL https://get.rke2.io | INSTALL_RKE2_CHANNEL=stable sh -
 
   // https://github.com/cloudflare/cloudflared/releases/latest
-  cloudflared: $.new(name='cloudflare/cloudflared', version='2026.10.1'),
+  cloudflared: $.new(name='cloudflare/cloudflared', version='2026.10.2'),
 
   // https://github.com/esphome/esphome/releases/latest
   // https://github.com/esphome/esphome/pkgs/container/esphome
@@ -43,7 +43,7 @@ local k = import 'k.libsonnet';
 
   // https://github.com/home-assistant/core/releases/latest
   // https://github.com/home-assistant/core/pkgs/container/home-assistant
-  'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2026.10.1'),
+  'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2026.10.2'),
   // https://github.com/OHF-Voice/wyoming-piper/releases/latest
   // https://hub.docker.com/r/rhasspy/wyoming-piper/tags
   piper: $.new(name='rhasspy/wyoming-piper', version='2.5.2'),
@@ -75,7 +75,7 @@ local k = import 'k.libsonnet';
   'kube-state-metrics': $.new(registry='registry.k8s.io', name='kube-state-metrics/kube-state-metrics', version='v2.20.0'),
   // https://github.com/unpoller/unpoller/releases/latest
   // https://github.com/unpoller/unpoller/pkgs/container/unpoller
-  'unifi-exporter': $.new(registry='ghcr.io', name='unpoller/unpoller', version='v5.5.1'),
+  'unifi-exporter': $.new(registry='ghcr.io', name='unpoller/unpoller', version='v5.6.3'),
 
   // https://hub.docker.com/_/busybox#supported-tags-and-respective-dockerfile-links
   // https://busybox.net/
@@ -126,7 +126,7 @@ local k = import 'k.libsonnet';
   // From charts/alloy
   // See https://artifacthub.io/packages/helm/grafana/alloy?modal=values
   // https://github.com/grafana/alloy/releases/latest
-  alloy: $.new(registry='docker.io', name='grafana/alloy', version='v1.20.1'),
+  alloy: $.new(registry='docker.io', name='grafana/alloy', version='v1.21.0'),
   // https://github.com/prometheus-operator/prometheus-operator/releases/latest
   // https://github.com/prometheus-operator/prometheus-operator/pkgs/container/prometheus-config-reloader
   'prometheus-config-reloader': $.new(registry='ghcr.io', name='prometheus-operator/prometheus-config-reloader', version='v0.94.1'),
@@ -187,7 +187,7 @@ local k = import 'k.libsonnet';
   'cloudnative-pg': $.new(registry='ghcr.io', name='cloudnative-pg/cloudnative-pg', version='1.30.1'),
 
   // https://github.com/cloudnative-pg/pgbouncer-containers/pkgs/container/pgbouncer
-  pgbouncer: $.new(registry='ghcr.io', name='cloudnative-pg/pgbouncer', version='1.26.0'),
+  pgbouncer: $.new(registry='ghcr.io', name='cloudnative-pg/pgbouncer', version='1.26.1'),
 
   // https://github.com/cloudnative-pg/artifacts/blob/main/image-catalogs/catalog-standard-trixie.yaml
   // https://github.com/cloudnative-pg/postgres-containers
@@ -202,7 +202,7 @@ local k = import 'k.libsonnet';
   immich:: {
     // https://github.com/immich-app/immich/releases/latest
     // https://github.com/immich-app/immich-charts/releases/latest
-    version:: 'v3.3.3',
+    version:: 'v3.3.4',
 
     server: $.new(registry='ghcr.io', name='immich-app/immich-server', version=self.version),
     'machine-learning': $.new(registry='ghcr.io', name='immich-app/immich-machine-learning', version=self.version),
