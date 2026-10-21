@@ -103,6 +103,16 @@ local image = import 'images.libsonnet';
         container.withVolumeMounts([
           mount.withMountPath('/data') +
           mount.withName('data'),
+
+          mount.withMountPath('/data/configs') +
+          mount.withName('k8s-generic-nfs') +
+          mount.withSubPath('esphome-config') +
+          mount.withReadOnly(true),
+
+          mount.withMountPath('/data/local_components') +
+          mount.withName('k8s-generic-nfs') +
+          mount.withSubPath('esphome-local-components') +
+          mount.withReadOnly(true),
         ]),
     },
 
@@ -140,6 +150,9 @@ local image = import 'images.libsonnet';
           affinity.withTopologyKey('kubernetes.io/hostname') +
           affinity.labelSelector.withMatchLabels(this.agentLabels) +
           affinity.withMatchLabelKeys(['controller-revision-hash']),
+        ]) +
+        sts.spec.template.spec.withVolumes([
+          $._config.media.mount.forKind('k8s-generic-nfs'),
         ]),
     },
 
