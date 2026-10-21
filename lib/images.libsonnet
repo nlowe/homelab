@@ -222,4 +222,8 @@ local k = import 'k.libsonnet';
     conatus: $.new(registry='ghcr.io', name='nojusmorkunas/conatus', version=self.version),
     'conatus-ops': $.new(registry='ghcr.io', name='nojusmorkunas/conatus', version='%s-ops' % self.version),
   },
+} +
+{
+  // https://github.com/dancwilliams/protonmail-bridge-docker/releases/latest
+  'protonmail-bridge': $.new(registry='ghcr.io', name='dancwilliams/protonmail-bridge-docker', version='v3.27.1-1'),
 }
