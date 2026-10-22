@@ -230,4 +230,8 @@ local k = import 'k.libsonnet';
 {
   // https://github.com/alam00000/bentopdf/releases/latest
   bentopdf: $.new(registry='ghcr.io', name='alam00000/bentopdf-simple', version='v2.8.10'),
+} +
+{
+  // https://github.com/gregtwallace/certwarden/releases/latest
+  certwarden: $.new(registry='ghcr.io', name='gregtwallace/certwarden', version='v0.30.1'),
 }
