@@ -226,4 +226,8 @@ local k = import 'k.libsonnet';
 {
   // https://github.com/dancwilliams/protonmail-bridge-docker/releases/latest
   'protonmail-bridge': $.new(registry='ghcr.io', name='dancwilliams/protonmail-bridge-docker', version='v3.27.1-1'),
+} +
+{
+  // https://github.com/alam00000/bentopdf/releases/latest
+  bentopdf: $.new(registry='ghcr.io', name='alam00000/bentopdf-simple', version='v2.8.10'),
 }
