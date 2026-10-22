@@ -36,6 +36,7 @@ local image = import 'images.libsonnet';
   },
 
   local container = k.core.v1.container,
+  local mount = k.core.v1.volumeMount,
   container::
     image.forContainer('certwarden') +
     container.withPorts([
@@ -46,7 +47,10 @@ local image = import 'images.libsonnet';
     container.livenessProbe.httpGet.withPort('http') +
     container.livenessProbe.withFailureThreshold(3) +
     container.livenessProbe.withPeriodSeconds(30) +
-    container.livenessProbe.withTimeoutSeconds(10),
+    container.livenessProbe.withTimeoutSeconds(10) +
+    container.withVolumeMounts([
+      mount.new('data', '/app/data'),
+    ]),
 
   local pvc = k.core.v1.persistentVolumeClaim,
   pvcTemplate::
