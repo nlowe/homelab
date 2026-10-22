@@ -33,6 +33,7 @@ local g = (import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.4/main.libson
           cilium_gateway: $._config.cilium.bgp.loadBalancerMixin('10.200.200.10'),
           alloy_syslog: $._config.cilium.bgp.loadBalancerMixin('10.200.200.11'),
           vernemq_mqtts: $._config.cilium.bgp.loadBalancerMixin('10.200.200.12'),
+          music_assistant_stream_server: $._config.cilium.bgp.loadBalancerMixin('10.200.200.13'),
         },
       },
 

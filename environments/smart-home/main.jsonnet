@@ -3,6 +3,7 @@ local k = import 'k.libsonnet';
 (import 'homelab.libsonnet') +
 (import 'esphome.libsonnet') +
 (import 'home-assistant.libsonnet') +
+(import 'music-assistant.libsonnet') +
 (import 'qolsysgw.libsonnet') +
 (import 'vernemq.libsonnet') +
 (import 'wyoming.libsonnet') +

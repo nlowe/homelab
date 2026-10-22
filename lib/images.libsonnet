@@ -44,6 +44,9 @@ local k = import 'k.libsonnet';
   // https://github.com/home-assistant/core/releases/latest
   // https://github.com/home-assistant/core/pkgs/container/home-assistant
   'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2026.10.2'),
+  // https://github.com/music-assistant/server/releases/latest
+  // https://github.com/music-assistant/server/pkgs/container/server
+  'music-assistant': $.new(registry='ghcr.io', name='music-assistant/server', version='2.10.7'),
   // https://github.com/OHF-Voice/wyoming-piper/releases/latest
   // https://hub.docker.com/r/rhasspy/wyoming-piper/tags
   piper: $.new(name='rhasspy/wyoming-piper', version='2.5.2'),
