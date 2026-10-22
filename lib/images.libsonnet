@@ -39,7 +39,7 @@ local k = import 'k.libsonnet';
 
   // https://github.com/esphome/esphome/releases/latest
   // https://github.com/esphome/esphome/pkgs/container/esphome
-  esphome: $.new(registry='ghcr.io', name='esphome/esphome', version='2026.9.1'),
+  esphome: $.new(registry='ghcr.io', name='esphome/esphome', version='2026.10.0'),
 
   // https://github.com/home-assistant/core/releases/latest
   // https://github.com/home-assistant/core/pkgs/container/home-assistant
@@ -202,7 +202,7 @@ local k = import 'k.libsonnet';
   immich:: {
     // https://github.com/immich-app/immich/releases/latest
     // https://github.com/immich-app/immich-charts/releases/latest
-    version:: 'v3.3.4',
+    version:: 'v3.3.5',
 
     server: $.new(registry='ghcr.io', name='immich-app/immich-server', version=self.version),
     'machine-learning': $.new(registry='ghcr.io', name='immich-app/immich-machine-learning', version=self.version),
