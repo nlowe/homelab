@@ -22,13 +22,13 @@ requires:
 - chart: dcsi/democratic-csi
   version: 0.15.1
 - chart: jetstack/cert-manager
-  version: v1.21.2
+  version: v1.21.3
 - chart: jetstack/cert-manager-csi-driver
-  version: v0.16.0
+  version: v0.16.1
 - chart: grafana/alloy
-  version: 1.14.0
+  version: 1.14.3
 - chart: externalSecrets/external-secrets
-  version: v2.13.0
+  version: v2.14.0
 - chart: externalSecretsGHCR/bitwarden-sdk-server
   version: v0.8.0
 - chart: local-path-provisioner/local-path-provisioner
