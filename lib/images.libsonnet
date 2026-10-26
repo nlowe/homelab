@@ -35,7 +35,7 @@ local k = import 'k.libsonnet';
   //   curl -sfL https://get.rke2.io | INSTALL_RKE2_CHANNEL=stable sh -
 
   // https://github.com/cloudflare/cloudflared/releases/latest
-  cloudflared: $.new(name='cloudflare/cloudflared', version='2026.10.3'),
+  cloudflared: $.new(name='cloudflare/cloudflared', version='2026.10.4'),
 
   // https://github.com/esphome/esphome/releases/latest
   // https://github.com/esphome/esphome/pkgs/container/esphome
@@ -43,7 +43,7 @@ local k = import 'k.libsonnet';
 
   // https://github.com/home-assistant/core/releases/latest
   // https://github.com/home-assistant/core/pkgs/container/home-assistant
-  'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2026.10.3'),
+  'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2026.10.4'),
   // https://github.com/music-assistant/server/releases/latest
   // https://github.com/music-assistant/server/pkgs/container/server
   'music-assistant': $.new(registry='ghcr.io', name='music-assistant/server', version='2.10.8'),
@@ -58,7 +58,7 @@ local k = import 'k.libsonnet';
   // https://github.com/sensy-one/home-assistant-addons/pkgs/container/zone-editor
   'sensy-one-zone-editor': $.new(registry='ghcr.io', name='sensy-one/zone-editor', version='v1.4.9'),
   // https://github.com/zwave-js/zwave-js-ui/releases/latest
-  'zwave-js-ui': $.new(name='zwavejs/zwave-js-ui', version='11.25.1'),
+  'zwave-js-ui': $.new(name='zwavejs/zwave-js-ui', version='11.25.2'),
   // https://hub.docker.com/r/vernemq/vernemq/tags
   // https://github.com/vernemq/vernemq/releases/latest
   vernemq: $.new(name='vernemq/vernemq', version='2.2.1-alpine'),
@@ -70,7 +70,7 @@ local k = import 'k.libsonnet';
   yq: $.new(registry='ghcr.io', name='mikefarah/yq', version='4.54.1'),
 
   // https://github.com/brancz/kube-rbac-proxy/releases/latest
-  'kube-rbac-proxy': $.new(registry='quay.io', name='brancz/kube-rbac-proxy', version='v0.23.0'),
+  'kube-rbac-proxy': $.new(registry='quay.io', name='brancz/kube-rbac-proxy', version='v0.23.1'),
 
   // https://github.com/grafana/grafana/releases/latest
   grafana: $.new(name='grafana/grafana', version='13.2.4'),
@@ -78,7 +78,7 @@ local k = import 'k.libsonnet';
   'kube-state-metrics': $.new(registry='registry.k8s.io', name='kube-state-metrics/kube-state-metrics', version='v2.20.0'),
   // https://github.com/unpoller/unpoller/releases/latest
   // https://github.com/unpoller/unpoller/pkgs/container/unpoller
-  'unifi-exporter': $.new(registry='ghcr.io', name='unpoller/unpoller', version='v5.7.0'),
+  'unifi-exporter': $.new(registry='ghcr.io', name='unpoller/unpoller', version='v5.8.3'),
 
   // https://hub.docker.com/_/busybox#supported-tags-and-respective-dockerfile-links
   // https://busybox.net/
@@ -221,7 +221,7 @@ local k = import 'k.libsonnet';
   conatus:: {
     // https://github.com/nojusmorkunas/conatus/releases/latest
     // v1.3.0 released, but the app image isn't available: https://github.com/nojusmorkunas/conatus/issues/52
-    version:: '1.2.2',
+    version:: '1.3.1',
 
     conatus: $.new(registry='ghcr.io', name='nojusmorkunas/conatus', version=self.version),
     'conatus-ops': $.new(registry='ghcr.io', name='nojusmorkunas/conatus', version='%s-ops' % self.version),
@@ -229,7 +229,7 @@ local k = import 'k.libsonnet';
 } +
 {
   // https://github.com/dancwilliams/protonmail-bridge-docker/releases/latest
-  'protonmail-bridge': $.new(registry='ghcr.io', name='dancwilliams/protonmail-bridge-docker', version='v3.27.1-4'),
+  'protonmail-bridge': $.new(registry='ghcr.io', name='dancwilliams/protonmail-bridge-docker', version='v3.27.1-5'),
 } +
 {
   // https://github.com/alam00000/bentopdf/releases/latest
