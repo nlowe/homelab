@@ -35,11 +35,11 @@ local k = import 'k.libsonnet';
   //   curl -sfL https://get.rke2.io | INSTALL_RKE2_CHANNEL=stable sh -
 
   // https://github.com/cloudflare/cloudflared/releases/latest
-  cloudflared: $.new(name='cloudflare/cloudflared', version='2026.10.4'),
+  cloudflared: $.new(name='cloudflare/cloudflared', version='2026.10.5'),
 
   // https://github.com/esphome/esphome/releases/latest
   // https://github.com/esphome/esphome/pkgs/container/esphome
-  esphome: $.new(registry='ghcr.io', name='esphome/esphome', version='2026.10.0'),
+  esphome: $.new(registry='ghcr.io', name='esphome/esphome', version='2026.10.1'),
 
   // https://github.com/home-assistant/core/releases/latest
   // https://github.com/home-assistant/core/pkgs/container/home-assistant
@@ -73,7 +73,7 @@ local k = import 'k.libsonnet';
   'kube-rbac-proxy': $.new(registry='quay.io', name='brancz/kube-rbac-proxy', version='v0.23.1'),
 
   // https://github.com/grafana/grafana/releases/latest
-  grafana: $.new(name='grafana/grafana', version='13.2.4'),
+  grafana: $.new(name='grafana/grafana', version='13.3.0'),
   // https://github.com/kubernetes/kube-state-metrics/releases/latest
   'kube-state-metrics': $.new(registry='registry.k8s.io', name='kube-state-metrics/kube-state-metrics', version='v2.20.0'),
   // https://github.com/unpoller/unpoller/releases/latest
@@ -212,7 +212,7 @@ local k = import 'k.libsonnet';
 
     // https://github.com/valkey-io/valkey/releases/latest
     // https://github.com/valkey-io/valkey-container/pkgs/container/valkey
-    valkey: $.new(registry='ghcr.io', name='valkey-io/valkey', version='9.1.2-alpine'),
+    valkey: $.new(registry='ghcr.io', name='valkey-io/valkey', version='9.1.3-alpine'),
     // https://github.com/oliver006/redis_exporter/releases/latest
     'redis-exporter': $.new(registry='ghcr.io', name='oliver006/redis_exporter', version='v1.96.0'),
   },
@@ -221,7 +221,7 @@ local k = import 'k.libsonnet';
   conatus:: {
     // https://github.com/nojusmorkunas/conatus/releases/latest
     // v1.3.0 released, but the app image isn't available: https://github.com/nojusmorkunas/conatus/issues/52
-    version:: '1.3.1',
+    version:: '1.3.2',
 
     conatus: $.new(registry='ghcr.io', name='nojusmorkunas/conatus', version=self.version),
     'conatus-ops': $.new(registry='ghcr.io', name='nojusmorkunas/conatus', version='%s-ops' % self.version),
@@ -229,7 +229,7 @@ local k = import 'k.libsonnet';
 } +
 {
   // https://github.com/dancwilliams/protonmail-bridge-docker/releases/latest
-  'protonmail-bridge': $.new(registry='ghcr.io', name='dancwilliams/protonmail-bridge-docker', version='v3.27.1-5'),
+  'protonmail-bridge': $.new(registry='ghcr.io', name='dancwilliams/protonmail-bridge-docker', version='v3.27.1-6'),
 } +
 {
   // https://github.com/alam00000/bentopdf/releases/latest
