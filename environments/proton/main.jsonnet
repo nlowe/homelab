@@ -21,7 +21,7 @@ local image = import 'images.libsonnet';
         port.withTargetPort('smtp'),
 
         port.withName('smtps') +
-        port.withPort(456) +
+        port.withPort(465) +
         port.withTargetPort('smtp'),
 
         // This is technically IMAPS, but the bridge only exposes 143
