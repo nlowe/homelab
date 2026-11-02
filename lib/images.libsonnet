@@ -35,18 +35,18 @@ local k = import 'k.libsonnet';
   //   curl -sfL https://get.rke2.io | INSTALL_RKE2_CHANNEL=stable sh -
 
   // https://github.com/cloudflare/cloudflared/releases/latest
-  cloudflared: $.new(name='cloudflare/cloudflared', version='2026.10.5'),
+  cloudflared: $.new(name='cloudflare/cloudflared', version='2026.10.7'),
 
   // https://github.com/esphome/esphome/releases/latest
   // https://github.com/esphome/esphome/pkgs/container/esphome
-  esphome: $.new(registry='ghcr.io', name='esphome/esphome', version='2026.10.1'),
+  esphome: $.new(registry='ghcr.io', name='esphome/esphome', version='2026.10.2'),
 
   // https://github.com/home-assistant/core/releases/latest
   // https://github.com/home-assistant/core/pkgs/container/home-assistant
   'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2026.10.4'),
   // https://github.com/music-assistant/server/releases/latest
   // https://github.com/music-assistant/server/pkgs/container/server
-  'music-assistant': $.new(registry='ghcr.io', name='music-assistant/server', version='2.10.8'),
+  'music-assistant': $.new(registry='ghcr.io', name='music-assistant/server', version='2.10.9'),
   // https://github.com/OHF-Voice/wyoming-piper/releases/latest
   // https://hub.docker.com/r/rhasspy/wyoming-piper/tags
   piper: $.new(name='rhasspy/wyoming-piper', version='2.5.2'),
@@ -64,7 +64,7 @@ local k = import 'k.libsonnet';
   vernemq: $.new(name='vernemq/vernemq', version='2.2.1-alpine'),
   // https://github.com/Koenkk/zigbee2mqtt/releases/latest
   // https://github.com/koenkk/zigbee2mqtt/pkgs/container/zigbee2mqtt
-  zigbee2mqtt: $.new(registry='ghcr.io', name='koenkk/zigbee2mqtt', version='2.14.2'),
+  zigbee2mqtt: $.new(registry='ghcr.io', name='koenkk/zigbee2mqtt', version='2.14.3'),
   // https://github.com/mikefarah/yq/releases/latest
   // https://github.com/mikefarah/yq/pkgs/container/yq
   yq: $.new(registry='ghcr.io', name='mikefarah/yq', version='4.54.1'),
@@ -78,7 +78,7 @@ local k = import 'k.libsonnet';
   'kube-state-metrics': $.new(registry='registry.k8s.io', name='kube-state-metrics/kube-state-metrics', version='v2.20.0'),
   // https://github.com/unpoller/unpoller/releases/latest
   // https://github.com/unpoller/unpoller/pkgs/container/unpoller
-  'unifi-exporter': $.new(registry='ghcr.io', name='unpoller/unpoller', version='v5.8.3'),
+  'unifi-exporter': $.new(registry='ghcr.io', name='unpoller/unpoller', version='v5.9.3'),
 
   // https://hub.docker.com/_/busybox#supported-tags-and-respective-dockerfile-links
   // https://busybox.net/
@@ -87,14 +87,14 @@ local k = import 'k.libsonnet';
 {
   // From charts/cert-manager
   // See https://github.com/cert-manager/cert-manager/releases/latest
-  // See https://artifacthub.io/packages/helm/cert-manager/cert-manager?modal=values
+  // See https://artifacthub.io/packages/helm/cert-manager/cert-manager
   ['cert-manager-%s' % name]: $.new(registry='quay.io', name='jetstack/cert-manager-%s' % name, version='v1.21.3')
   for name in ['controller', 'webhook', 'cainjector', 'acmesolver', 'startupapicheck']
 } +
 {
   // From charts/cert-manager-csi-driver
   // https://github.com/cert-manager/csi-driver/releases/latest
-  // See https://artifacthub.io/packages/helm/cert-manager/cert-manager-csi-driver?modal=values
+  // See https://artifacthub.io/packages/helm/cert-manager/cert-manager-csi-driver
   'cert-manager-csi-driver': $.new(registry='quay.io', name='jetstack/cert-manager-csi-driver', version='v0.16.1'),
   // See https://quay.io/repository/jetstack/csi-node-driver-registrar?tab=tags
   'csi-node-driver-registrar': $.new(registry='quay.io', name='jetstack/csi-node-driver-registrar', version='v2.18.0'),
@@ -103,7 +103,7 @@ local k = import 'k.libsonnet';
 } +
 {
   // From charts/democratic-csi
-  // See https://artifacthub.io/packages/helm/democratic-csi/democratic-csi?modal=values
+  // See https://artifacthub.io/packages/helm/democratic-csi/democratic-csi
   democratic_csi:: {
     // https://github.com/kubernetes-csi/external-attacher/releases/latest
     externalAttacher: $.new(registry='registry.k8s.io', name='sig-storage/csi-attacher', version='v4.13.0'),
@@ -127,9 +127,9 @@ local k = import 'k.libsonnet';
 } +
 {
   // From charts/alloy
-  // See https://artifacthub.io/packages/helm/grafana/alloy?modal=values
+  // See https://artifacthub.io/packages/helm/grafana/alloy
   // https://github.com/grafana/alloy/releases/latest
-  alloy: $.new(registry='docker.io', name='grafana/alloy', version='v1.21.2'),
+  alloy: $.new(registry='docker.io', name='grafana/alloy', version='v1.21.3'),
   // https://github.com/prometheus-operator/prometheus-operator/releases/latest
   // https://github.com/prometheus-operator/prometheus-operator/pkgs/container/prometheus-config-reloader
   'prometheus-config-reloader': $.new(registry='ghcr.io', name='prometheus-operator/prometheus-config-reloader', version='v0.94.2'),
@@ -157,7 +157,7 @@ local k = import 'k.libsonnet';
   // https://github.com/grafana/mimir/releases/latest
   // See https://github.com/grafana/mimir/blob/main/operations/mimir/images.libsonnet
   mimir:: {
-    mimir: $.new(name='grafana/mimir', version='3.2.3'),
+    mimir: $.new(name='grafana/mimir', version='3.2.4'),
     query_tee: $.new(name='grafana/query-tee', version=self.mimir.version),
     continuous_test: $.new(name='grafana/mimir-continuous-test', version=self.mimir.version),
     memcached: $.memcached,
@@ -171,7 +171,7 @@ local k = import 'k.libsonnet';
   'local-path-provisioner': $.new(name='rancher/local-path-provisioner', version='v0.0.37'),
 } +
 {
-  // https://artifacthub.io/packages/helm/external-secrets-operator/external-secrets?modal=values
+  // https://artifacthub.io/packages/helm/external-secrets-operator/external-secrets
 
   // https://github.com/external-secrets/external-secrets/releases/latest
   'external-secrets': $.new(registry='oci.external-secrets.io', name='external-secrets/external-secrets', version='v2.14.0'),
@@ -221,7 +221,7 @@ local k = import 'k.libsonnet';
   conatus:: {
     // https://github.com/nojusmorkunas/conatus/releases/latest
     // v1.3.0 released, but the app image isn't available: https://github.com/nojusmorkunas/conatus/issues/52
-    version:: '1.3.2',
+    version:: '1.4.0',
 
     conatus: $.new(registry='ghcr.io', name='nojusmorkunas/conatus', version=self.version),
     'conatus-ops': $.new(registry='ghcr.io', name='nojusmorkunas/conatus', version='%s-ops' % self.version),
@@ -229,13 +229,13 @@ local k = import 'k.libsonnet';
 } +
 {
   // https://github.com/dancwilliams/protonmail-bridge-docker/releases/latest
-  'protonmail-bridge': $.new(registry='ghcr.io', name='dancwilliams/protonmail-bridge-docker', version='v3.27.1-6'),
+  'protonmail-bridge': $.new(registry='ghcr.io', name='dancwilliams/protonmail-bridge-docker', version='v3.27.1-7'),
 } +
 {
   // https://github.com/alam00000/bentopdf/releases/latest
-  bentopdf: $.new(registry='ghcr.io', name='alam00000/bentopdf-simple', version='v2.8.10'),
+  bentopdf: $.new(registry='ghcr.io', name='alam00000/bentopdf-simple', version='v2.8.11'),
 } +
 {
   // https://github.com/gregtwallace/certwarden/releases/latest
-  certwarden: $.new(registry='ghcr.io', name='gregtwallace/certwarden', version='v0.30.1'),
+  certwarden: $.new(registry='ghcr.io', name='gregtwallace/certwarden', version='v0.31.0'),
 }
