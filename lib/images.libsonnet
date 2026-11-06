@@ -43,7 +43,7 @@ local k = import 'k.libsonnet';
 
   // https://github.com/home-assistant/core/releases/latest
   // https://github.com/home-assistant/core/pkgs/container/home-assistant
-  'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2026.10.4'),
+  'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2026.11.0'),
   // https://github.com/music-assistant/server/releases/latest
   // https://github.com/music-assistant/server/pkgs/container/server
   'music-assistant': $.new(registry='ghcr.io', name='music-assistant/server', version='2.10.9'),
@@ -78,7 +78,7 @@ local k = import 'k.libsonnet';
   'kube-state-metrics': $.new(registry='registry.k8s.io', name='kube-state-metrics/kube-state-metrics', version='v2.20.0'),
   // https://github.com/unpoller/unpoller/releases/latest
   // https://github.com/unpoller/unpoller/pkgs/container/unpoller
-  'unifi-exporter': $.new(registry='ghcr.io', name='unpoller/unpoller', version='v5.9.3'),
+  'unifi-exporter': $.new(registry='ghcr.io', name='unpoller/unpoller', version='v5.9.4'),
 
   // https://hub.docker.com/_/busybox#supported-tags-and-respective-dockerfile-links
   // https://busybox.net/
@@ -205,7 +205,7 @@ local k = import 'k.libsonnet';
   immich:: {
     // https://github.com/immich-app/immich/releases/latest
     // https://github.com/immich-app/immich-charts/releases/latest
-    version:: 'v3.3.5',
+    version:: 'v3.3.6',
 
     server: $.new(registry='ghcr.io', name='immich-app/immich-server', version=self.version),
     'machine-learning': $.new(registry='ghcr.io', name='immich-app/immich-machine-learning', version=self.version),
@@ -214,7 +214,7 @@ local k = import 'k.libsonnet';
     // https://github.com/valkey-io/valkey-container/pkgs/container/valkey
     valkey: $.new(registry='ghcr.io', name='valkey-io/valkey', version='9.1.3-alpine'),
     // https://github.com/oliver006/redis_exporter/releases/latest
-    'redis-exporter': $.new(registry='ghcr.io', name='oliver006/redis_exporter', version='v1.96.0'),
+    'redis-exporter': $.new(registry='ghcr.io', name='oliver006/redis_exporter', version='v1.97.0'),
   },
 } +
 {
@@ -229,7 +229,7 @@ local k = import 'k.libsonnet';
 } +
 {
   // https://github.com/dancwilliams/protonmail-bridge-docker/releases/latest
-  'protonmail-bridge': $.new(registry='ghcr.io', name='dancwilliams/protonmail-bridge-docker', version='v3.27.1-7'),
+  'protonmail-bridge': $.new(registry='ghcr.io', name='dancwilliams/protonmail-bridge-docker', version='v3.27.1-9'),
 } +
 {
   // https://github.com/alam00000/bentopdf/releases/latest

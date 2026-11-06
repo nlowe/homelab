@@ -134,6 +134,9 @@ local endpoint = pm.spec.podMetricsEndpoints;
                   TRANSFORMERS_CACHE: '/cache',
                   HF_XET_CACHE: '/cache/huggingface-xet',
                   MPLCONFIGDIR: '/cache/matplotlib-config',
+
+                  // Fuck off Microsoft
+                  ORT_DISABLE_TELEMETRY: '1',
                 },
               },
             },
