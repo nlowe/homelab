@@ -210,6 +210,10 @@ local k = import 'k.libsonnet';
     server: $.new(registry='ghcr.io', name='immich-app/immich-server', version=self.version),
     'machine-learning': $.new(registry='ghcr.io', name='immich-app/immich-machine-learning', version=self.version),
 
+    // https://github.com/tedornitier/immich-pet-tagger/releases/latest
+    // https://github.com/tedornitier/immich-pet-tagger/pkgs/container/immich-pet-tagger
+    'pet-tagger': $.new(registry='ghcr.io', name='tedornitier/immich-pet-tagger', version='v1.9.0-cpu'),
+
     // https://github.com/valkey-io/valkey/releases/latest
     // https://github.com/valkey-io/valkey-container/pkgs/container/valkey
     valkey: $.new(registry='ghcr.io', name='valkey-io/valkey', version='9.1.3-alpine'),

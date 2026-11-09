@@ -340,6 +340,86 @@ local endpoint = pm.spec.podMetricsEndpoints;
     },
   },
 
+  petTagger: {
+    labels:: {
+      'app.kubernetes.io/instance': 'immich',
+      'app.kubernetes.io/name': 'pet-tagger',
+    },
+
+    apiKey:
+      $._config.externalSecret.new('pet-tagger-api-key', $.namespace.metadata.name) +
+      es.spec.withData([
+        es.spec.data.withSecretKey('IMMICH_API_KEY') +
+        es.spec.data.remoteRef.withKey('ee0031bd-9f01-4408-af86-b4fd000a8aa0'),
+      ]),
+
+    local svc = k.core.v1.service,
+    local port = k.core.v1.servicePort,
+    service: {
+      app:
+        svc.new('pet-tagger', $.petTagger.labels, [
+          port.withName('http') +
+          port.withPort(8000) +
+          port.withTargetPort('http'),
+        ]) +
+        svc.metadata.withNamespace($.namespace.metadata.name) +
+        svc.metadata.withLabels($.petTagger.labels),
+
+      headless:
+        $.petTagger.service.app +
+        svc.metadata.withName('pet-tagger-headless') +
+        svc.spec.withClusterIP('None'),
+    },
+
+    local container = k.core.v1.container,
+    local env = k.core.v1.envVar,
+    local envFrom = k.core.v1.envFromSource,
+    local mount = k.core.v1.volumeMount,
+    container::
+      image.forContainer('pet-tagger', group=image.immich) +
+      container.withPorts([
+        { containerPort: 8000, name: 'http', protocol: 'TCP' },
+      ]) +
+      container.withEnv([
+        env.new('IMMICH_URL', 'http://%s.%s.svc.cluster.local.:2283' % [
+          $.immich.service_immich_server.metadata.name,
+          $.namespace.metadata.name,
+        ]),
+        env.new('IMMICH_EXTERNAL_URL', 'https://immich.home.nlowe.dev'),
+        env.new('TAG_NAME', 'immich-pet-tagger'),
+        env.new('POLL_INTERVAL', '3600'),
+        env.new('GPU_WORKERS', '1'),
+        env.new('YOLO_INPUT_SIZE', '640'),
+        env.new('THRESHOLD', '0.8'),
+        env.new('THRESHOLD_FALLBACK', '0.85'),
+        env.new('YOLO_CONF', '0.2'),
+      ]) +
+      container.withEnvFrom([
+        envFrom.secretRef.withName($.petTagger.apiKey.metadata.name),
+      ]) +
+      // TODO: Probes
+      // TODO: Resources
+      container.withVolumeMounts([
+        mount.new('data', '/data'),
+      ]),
+
+    local pvc = k.core.v1.persistentVolumeClaim,
+    pvcTemplate::
+      pvc.new('data') +
+      pvc.spec.withAccessModes(['ReadWriteOnce']) +
+      // TODO: how much data does this need?
+      pvc.spec.resources.withRequests({ storage: '10Gi' }),
+
+    local sts = k.apps.v1.statefulSet,
+    statefulSet:
+      sts.new('pet-tagger', 1, [$.petTagger.container], [$.petTagger.pvcTemplate], null) +
+      sts.metadata.withNamespace($.namespace.metadata.name) +
+      sts.metadata.withLabels($.petTagger.labels) +
+      sts.spec.withServiceName($.petTagger.service.headless.metadata.name) +
+      sts.spec.selector.withMatchLabels($.petTagger.labels) +
+      sts.spec.template.metadata.withLabels($.petTagger.labels),
+  },
+
   local route = g.v1.httpRoute,
   local rule = route.spec.rules,
   route:
@@ -354,4 +434,6 @@ local endpoint = pm.spec.podMetricsEndpoints;
         rule.backendRefs.withPort(2283),
       ]),
     ]),
+
+  // No route for pet-tagger because it has no auth, need to figure out auth proxy
 }
