@@ -43,7 +43,7 @@ local k = import 'k.libsonnet';
 
   // https://github.com/home-assistant/core/releases/latest
   // https://github.com/home-assistant/core/pkgs/container/home-assistant
-  'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2026.11.0'),
+  'home-assistant': $.new(registry='ghcr.io', name='home-assistant/home-assistant', version='2026.11.1'),
   // https://github.com/music-assistant/server/releases/latest
   // https://github.com/music-assistant/server/pkgs/container/server
   'music-assistant': $.new(registry='ghcr.io', name='music-assistant/server', version='2.10.9'),
@@ -58,7 +58,7 @@ local k = import 'k.libsonnet';
   // https://github.com/sensy-one/home-assistant-addons/pkgs/container/zone-editor
   'sensy-one-zone-editor': $.new(registry='ghcr.io', name='sensy-one/zone-editor', version='v1.4.9'),
   // https://github.com/zwave-js/zwave-js-ui/releases/latest
-  'zwave-js-ui': $.new(name='zwavejs/zwave-js-ui', version='11.25.2'),
+  'zwave-js-ui': $.new(name='zwavejs/zwave-js-ui', version='11.26.2'),
   // https://hub.docker.com/r/vernemq/vernemq/tags
   // https://github.com/vernemq/vernemq/releases/latest
   vernemq: $.new(name='vernemq/vernemq', version='2.2.1-alpine'),
@@ -67,13 +67,13 @@ local k = import 'k.libsonnet';
   zigbee2mqtt: $.new(registry='ghcr.io', name='koenkk/zigbee2mqtt', version='2.14.3'),
   // https://github.com/mikefarah/yq/releases/latest
   // https://github.com/mikefarah/yq/pkgs/container/yq
-  yq: $.new(registry='ghcr.io', name='mikefarah/yq', version='4.54.1'),
+  yq: $.new(registry='ghcr.io', name='mikefarah/yq', version='4.54.3'),
 
   // https://github.com/brancz/kube-rbac-proxy/releases/latest
   'kube-rbac-proxy': $.new(registry='quay.io', name='brancz/kube-rbac-proxy', version='v0.23.1'),
 
   // https://github.com/grafana/grafana/releases/latest
-  grafana: $.new(name='grafana/grafana', version='13.3.0'),
+  grafana: $.new(name='grafana/grafana', version='13.3.1'),
   // https://github.com/kubernetes/kube-state-metrics/releases/latest
   'kube-state-metrics': $.new(registry='registry.k8s.io', name='kube-state-metrics/kube-state-metrics', version='v2.20.0'),
   // https://github.com/unpoller/unpoller/releases/latest
@@ -132,11 +132,11 @@ local k = import 'k.libsonnet';
   alloy: $.new(registry='docker.io', name='grafana/alloy', version='v1.21.3'),
   // https://github.com/prometheus-operator/prometheus-operator/releases/latest
   // https://github.com/prometheus-operator/prometheus-operator/pkgs/container/prometheus-config-reloader
-  'prometheus-config-reloader': $.new(registry='ghcr.io', name='prometheus-operator/prometheus-config-reloader', version='v0.94.2'),
+  'prometheus-config-reloader': $.new(registry='ghcr.io', name='prometheus-operator/prometheus-config-reloader', version='v0.95.1'),
 } +
 {
   // https://github.com/grafana/rollout-operator/releases/latest
-  grafana_rollout_operator: $.new(name='grafana/rollout-operator', version='v0.41.1'),
+  grafana_rollout_operator: $.new(name='grafana/rollout-operator', version='v0.42.0'),
   // https://github.com/memcached/memcached/tags
   memcached: $.new(name='memcached', version='1.6.45-alpine'),
   // See https://github.com/prometheus/memcached_exporter/releases/latest
@@ -174,7 +174,7 @@ local k = import 'k.libsonnet';
   // https://artifacthub.io/packages/helm/external-secrets-operator/external-secrets
 
   // https://github.com/external-secrets/external-secrets/releases/latest
-  'external-secrets': $.new(registry='oci.external-secrets.io', name='external-secrets/external-secrets', version='v2.14.0'),
+  'external-secrets': $.new(registry='oci.external-secrets.io', name='external-secrets/external-secrets', version='v2.15.0'),
   // https://github.com/external-secrets/bitwarden-sdk-server/releases/latest
   'bitwarden-sdk-server': $.new(registry='ghcr.io', name='external-secrets/bitwarden-sdk-server', version='v0.8.1'),
 } +
@@ -205,14 +205,14 @@ local k = import 'k.libsonnet';
   immich:: {
     // https://github.com/immich-app/immich/releases/latest
     // https://github.com/immich-app/immich-charts/releases/latest
-    version:: 'v3.3.6',
+    version:: 'v3.4.0',
 
     server: $.new(registry='ghcr.io', name='immich-app/immich-server', version=self.version),
     'machine-learning': $.new(registry='ghcr.io', name='immich-app/immich-machine-learning', version=self.version),
 
     // https://github.com/tedornitier/immich-pet-tagger/releases/latest
     // https://github.com/tedornitier/immich-pet-tagger/pkgs/container/immich-pet-tagger
-    'pet-tagger': $.new(registry='ghcr.io', name='tedornitier/immich-pet-tagger', version='v1.9.0-cpu'),
+    'pet-tagger': $.new(registry='ghcr.io', name='tedornitier/immich-pet-tagger', version='v1.10.0-cpu'),
 
     // https://github.com/valkey-io/valkey/releases/latest
     // https://github.com/valkey-io/valkey-container/pkgs/container/valkey
@@ -224,8 +224,7 @@ local k = import 'k.libsonnet';
 {
   conatus:: {
     // https://github.com/nojusmorkunas/conatus/releases/latest
-    // v1.3.0 released, but the app image isn't available: https://github.com/nojusmorkunas/conatus/issues/52
-    version:: '1.4.0',
+    version:: '1.4.2',
 
     conatus: $.new(registry='ghcr.io', name='nojusmorkunas/conatus', version=self.version),
     'conatus-ops': $.new(registry='ghcr.io', name='nojusmorkunas/conatus', version='%s-ops' % self.version),
@@ -233,7 +232,7 @@ local k = import 'k.libsonnet';
 } +
 {
   // https://github.com/dancwilliams/protonmail-bridge-docker/releases/latest
-  'protonmail-bridge': $.new(registry='ghcr.io', name='dancwilliams/protonmail-bridge-docker', version='v3.27.1-9'),
+  'protonmail-bridge': $.new(registry='ghcr.io', name='dancwilliams/protonmail-bridge-docker', version='v3.27.1-11'),
 } +
 {
   // https://github.com/alam00000/bentopdf/releases/latest

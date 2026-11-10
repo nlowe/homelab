@@ -388,7 +388,7 @@ local endpoint = pm.spec.podMetricsEndpoints;
         env.new('IMMICH_EXTERNAL_URL', 'https://immich.home.nlowe.dev'),
         env.new('TAG_NAME', 'immich-pet-tagger'),
         env.new('POLL_INTERVAL', '3600'),
-        env.new('GPU_WORKERS', '1'),
+        env.new('MODEL_WORKERS', '1'),
         env.new('YOLO_INPUT_SIZE', '640'),
         env.new('THRESHOLD', '0.8'),
         env.new('THRESHOLD_FALLBACK', '0.85'),
