@@ -33,6 +33,10 @@ local k = import 'k.libsonnet';
   // rke2: https://update.rke2.io/v1-release/channels/stable
   // Upgrade with the following as root:
   //   curl -sfL https://get.rke2.io | INSTALL_RKE2_CHANNEL=stable sh -
+  //
+  // TODO: Nodes have kernel.apparmor_restrict_unprivileged_unconfined=0
+  // Once https://github.com/containerd/containerd/issues/12886 is fixed,
+  // delete /etc/sysctl.d/20-apparmor.conf and reboot nodes.
 
   // https://github.com/cloudflare/cloudflared/releases/latest
   cloudflared: $.new(name='cloudflare/cloudflared', version='2026.10.7'),

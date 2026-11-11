@@ -227,6 +227,13 @@ local endpoint = pm.spec.podMetricsEndpoints;
     cluster:
       cluster.new('immich-db') +
       cluster.metadata.withNamespace($.namespace.metadata.name) +
+      // Ubuntu 26.04 broke stacked profiles which prevents postgres from starting:
+      // See: https://www.technowizardry.net/2026/08/upgrading-linux-broke-postgres/#only-for-postgres
+      cluster.metadata.withAnnotations({
+        'container.apparmor.security.beta.kubernetes.io/initdb': 'unconfined',
+        'container.apparmor.security.beta.kubernetes.io/postgres': 'unconfined',
+      }) +
+      cluster.spec.seccompProfile.withType('Unconfined') +
       cluster.spec.withInstances(1) +
       cluster.spec.withImageName(image['pg-vectorchord'].ref()) +
       cluster.spec.storage.withSize('10Gi') +
